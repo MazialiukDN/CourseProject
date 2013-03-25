@@ -1,31 +1,21 @@
 package by.bsu.courseproject.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
-import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import by.bsu.courseproject.R;
-import by.bsu.courseproject.db.ProjectManagerProvider;
+import by.bsu.courseproject.project.ProjectPriority;
+import by.bsu.courseproject.project.ProjectStatus;
+import by.bsu.courseproject.util.DateUtil;
 
-import static by.bsu.courseproject.db.DBConstants.*;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class NewProject extends Activity implements OnDateSetListener, View.OnClickListener {
+public class NewProject extends Activity /*implements OnDateSetListener, View.OnClickListener*/ {
 
   public static String FROM_LIST = "FROM_LIST";
   public static int ITEM = 1;
@@ -45,9 +35,9 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
   private int mCustId = -1;
 
   private int mPendingView;
-  private int mPriority = -1;
+  private ProjectPriority priority = ProjectPriority.NORMAL;
   private String mDate = "";
-  private int mStatus = -1;
+  private ProjectStatus status = ProjectStatus.PRORPOSED;
 
   private final int REQUEST_CUSTOMER = 101;
   private final int REQUEST_INVESTOR = 102;
@@ -57,37 +47,41 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.new_project_catalogue);
-    AddListeners();
+    //AddListeners();
     oldValues = new ContentValues();
 
     mPendingView = R.id.editDate;
 
     Intent intent = getIntent();
     if (intent != null && intent.getIntExtra(FROM_LIST, -1) == ITEM) {
-      completeForm(intent);
+      //completeForm(intent);
       mIsNew = false;
       this.setTitle("Проект");
     } else {
       mIsNew = true;
       this.setTitle("Новый проект");
-      ((EditText) findViewById(R.id.editTextPriority)).setText("Нормальный");
-      ((EditText) findViewById(R.id.editTextStatus)).setText("Предлагаемый");
-      mPriority = 3;
-      mStatus = 1;
 
-      String datePattern = "yyyyMMdd";
-      SimpleDateFormat sdf = new SimpleDateFormat();
-      sdf.applyPattern(datePattern);
+      ArrayAdapter<ProjectPriority> projectPriorityArrayAdapter =
+          new ArrayAdapter<ProjectPriority>(this, android.R.layout.simple_spinner_item, ProjectPriority.values());
+      projectPriorityArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      Spinner projectPirority = ((Spinner) findViewById(R.id.spinnerProjectPriority));
+      projectPirority.setAdapter(projectPriorityArrayAdapter);
+
+      ArrayAdapter<ProjectStatus> projectStatusArrayAdapter =
+          new ArrayAdapter<ProjectStatus>(this, android.R.layout.simple_spinner_item, ProjectStatus.values());
+      projectStatusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      Spinner projectStatus = ((Spinner) findViewById(R.id.spinnerProjectStatus));
+      projectStatus.setAdapter(projectStatusArrayAdapter);
+
+      priority = ProjectPriority.NORMAL;
+      status = ProjectStatus.PRORPOSED;
+
       int days = 30;
       Calendar calendar = Calendar.getInstance();
       calendar.add(Calendar.DAY_OF_MONTH, days);
       Date date = new Date(calendar.getTimeInMillis());
-      sdf.applyPattern(datePattern);
-      mDate = sdf.format(date);
-
-      ((EditText) findViewById(R.id.editDate)).setText(
-          mDate.substring(6, 8) + "-" +
-          mDate.substring(4, 6) + "-" + mDate.substring(0, 4));
+      mDate = DateUtil.dateToString(date);
+      ((EditText) findViewById(R.id.editDate)).setText(mDate);
 
     }
 
@@ -112,6 +106,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
     Tools.setTime(this);
   }
 
+/*
 
   @Override
   protected Dialog onCreateDialog(int dialogId) {
@@ -140,7 +135,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
                 ((EditText) findViewById(R.id.editTextPriority)).setText("Самый низкий");
                 break;
               }
-              mPriority = ++whichButton;
+              priority = ++whichButton;
 
             }
           })
@@ -172,7 +167,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
                 ((EditText) findViewById(R.id.editTextStatus)).setText("Отклоненный");
                 break;
               }
-              mStatus = ++whichButton;
+              status = ++whichButton;
 
 
             }
@@ -204,10 +199,10 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
       }
       break;
     case DIALOG_PRIORITY:
-      ((AlertDialog) dialog).getListView().setItemChecked(mPriority - 1, true);
+      ((AlertDialog) dialog).getListView().setItemChecked(priority - 1, true);
       break;
     case DIALOG_STATUS:
-      ((AlertDialog) dialog).getListView().setItemChecked(mStatus - 1, true);
+      ((AlertDialog) dialog).getListView().setItemChecked(status - 1, true);
       break;
     }
   }
@@ -245,11 +240,11 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
         if (colIndex != -1) {
           ((EditText) findViewById(R.id.editTextStatus)).setText(c.getString(colIndex));
           oldValues.put(Columns.PROJECT_STATUS, c.getString(colIndex));
-          if (c.getString(colIndex).equals("Предлагаемый")) mStatus = 1;
-          if (c.getString(colIndex).equals("Действующий")) mStatus = 2;
-          if (c.getString(colIndex).equals("Прерванный")) mStatus = 3;
-          if (c.getString(colIndex).equals("Закрытый")) mStatus = 4;
-          if (c.getString(colIndex).equals("Отклоненный")) mStatus = 5;
+          if (c.getString(colIndex).equals("Предлагаемый")) status = 1;
+          if (c.getString(colIndex).equals("Действующий")) status = 2;
+          if (c.getString(colIndex).equals("Прерванный")) status = 3;
+          if (c.getString(colIndex).equals("Закрытый")) status = 4;
+          if (c.getString(colIndex).equals("Отклоненный")) status = 5;
 
         }
 
@@ -272,7 +267,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
             ((EditText) findViewById(R.id.editTextPriority)).setText("Самый низкий");
             break;
           }
-          mPriority = c.getInt(colIndex);
+          priority = c.getInt(colIndex);
           oldValues.put(Columns.PROJECT_PRIORITY, ((EditText) findViewById(R.id.editTextPriority)).getText().toString());
         }
 
@@ -358,20 +353,20 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
   }
 
   protected void AddListeners() {
-    findViewById(R.id.buttonCancel).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.buttonSave).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editDate).setOnClickListener((android.view.View.OnClickListener) this);
+    findViewById(R.id.buttonCancel).setOnClickListener(this);
+    findViewById(R.id.buttonSave).setOnClickListener(this);
+    findViewById(R.id.editDate).setOnClickListener(this);
 
-    findViewById(R.id.editTextCustf).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextCustm).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextCustl).setOnClickListener((android.view.View.OnClickListener) this);
+    findViewById(R.id.editTextCustf).setOnClickListener(this);
+    findViewById(R.id.editTextCustm).setOnClickListener(this);
+    findViewById(R.id.editTextCustl).setOnClickListener(this);
 
-    findViewById(R.id.editTextInvf).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextInvm).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextInvl).setOnClickListener((android.view.View.OnClickListener) this);
+    findViewById(R.id.editTextInvf).setOnClickListener(this);
+    findViewById(R.id.editTextInvm).setOnClickListener(this);
+    findViewById(R.id.editTextInvl).setOnClickListener(this);
 
-    findViewById(R.id.editTextPriority).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextStatus).setOnClickListener((android.view.View.OnClickListener) this);
+    findViewById(R.id.editTextPriority).setOnClickListener(this);
+    findViewById(R.id.editTextStatus).setOnClickListener(this);
 
   }
 
@@ -579,7 +574,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
     cv.put(Columns.PROJECT_PROJECTDUEDATE, mDate);
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
-    cv.put(Columns.PROJECT_PRIORITY, mPriority);
+    cv.put(Columns.PROJECT_PRIORITY, priority);
 
     if (mIsNew) {
       Uri uri = getContentResolver().insert(ProjectManagerProvider.PROJECT_URI, cv);
@@ -614,6 +609,7 @@ public class NewProject extends Activity implements OnDateSetListener, View.OnCl
     ((EditText) findViewById(mPendingView)).setText(val);
 
   }
+*/
 
 
 }

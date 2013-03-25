@@ -26,4 +26,8 @@ public enum ProjectCategory {
   }
 
 
+  @Override
+  public String toString() {
+    return idName;
+  }
 }

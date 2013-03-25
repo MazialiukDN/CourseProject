@@ -38,42 +38,42 @@ public class PMDB {
       "INSERT INTO \"person\" VALUES(13,'C','1111',   '1111',  '11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23-01-1991','','IBA','','');",
       "INSERT INTO \"person\" VALUES(14,'I', '11',    '11111','11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23-01-1991','','IBA','','');",
 
-      "INSERT INTO \"project\" VALUES(1,'P1','20120522','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
-      "INSERT INTO \"project\" VALUES(2,'P2','20120622','EDUCATION', 'ACTIVE', 'NORMAL', 13, 12)",
-      "INSERT INTO \"project\" VALUES(3,'P3','20120506','EDUCATION', 'ACTIVE', 'NORMAL', 13, 14);",
-      "INSERT INTO \"project\" VALUES(4,'P4','20120423','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
-      "INSERT INTO \"project\" VALUES(5,'P5','20120711','EDUCATION', 'ACTIVE', 'NORMAL', 11, 12)"
+      "INSERT INTO \"project\" VALUES(1,'P1','2012-05-22','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
+      "INSERT INTO \"project\" VALUES(2,'P2','2012-06-22','EDUCATION', 'ACTIVE', 'NORMAL', 13, 12)",
+      "INSERT INTO \"project\" VALUES(3,'P3','2012-05-06','EDUCATION', 'ACTIVE', 'NORMAL', 13, 14);",
+      "INSERT INTO \"project\" VALUES(4,'P4','2012-04-23','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
+      "INSERT INTO \"project\" VALUES(5,'P5','2012-07-11','EDUCATION', 'ACTIVE', 'NORMAL', 11, 12)"
   };
   private final String CREATE_TABLE_PROJECT = "CREATE TABLE " + Tables.PROJECT + "("
-                                                + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                + Columns.PROJECT_PROJECTNAME + " TEXT NOT NULL,"
-                                                + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
-                                                + Columns.PROJECT_CATEGORY + " TEXT,"
-                                                + Columns.PROJECT_STATUS + " TEXT,"
-                                                + Columns.PROJECT_PRIORITY + " TEXT,"
-                                                + Columns.PROJECT_CUSTOMER_ID + " INTEGER,"
-                                                + Columns.PROJECT_INVESTOR_ID + " INTEGER );";
+                                              + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                              + Columns.PROJECT_PROJECTNAME + " TEXT NOT NULL,"
+                                              + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
+                                              + Columns.PROJECT_CATEGORY + " TEXT,"
+                                              + Columns.PROJECT_STATUS + " TEXT,"
+                                              + Columns.PROJECT_PRIORITY + " TEXT,"
+                                              + Columns.PROJECT_CUSTOMER_ID + " INTEGER,"
+                                              + Columns.PROJECT_INVESTOR_ID + " INTEGER );";
 
   private final String CREATE_TABLE_AUTHORIZATION = "CREATE TABLE " + Tables.AUTHORIZATION + " ("
-                                                      + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                      + Columns.LOGIN + " BLOB,"
-                                                      + Columns.SALT + " TEXT,"
-                                                      + Columns.PASSWORD + " BLOB );";
+                                                    + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                    + Columns.LOGIN + " BLOB,"
+                                                    + Columns.SALT + " TEXT,"
+                                                    + Columns.PASSWORD + " BLOB );";
 
   private final String CREATE_TABLE_PERSON = "CREATE TABLE " + Tables.PERSON + " ("
-                                               + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                               + Columns.PERSON_DISCRIMINATOR + "TEXT,"
-                                               + Columns.PERSON_LASTNAME + " TEXT,"
-                                               + Columns.PERSON_FIRSTNAME + " TEXT,"
-                                               + Columns.PERSON_MIDDLENAME + " TEXT,"
-                                               + Columns.PERSON_EMAIL + " TEXT,"
-                                               + Columns.PERSON_SKYPE + " TEXT,"
-                                               + Columns.PERSON_PHONE + " TEXT,"
-                                               + Columns.PERSON_BIRTHDAY + " TEXT,"
-                                               + Columns.PERSON_INFO + " TEXT,"
-                                               + Columns.CUSTOMER_INVESTOR_COMPANY + " TEXT,"
-                                               + Columns.EMPLOYEE_EXPERIENCE + " TEXT,"
-                                               + Columns.EMPLOYEE_EDUCATION + " TEXT );";
+                                             + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                             + Columns.PERSON_DISCRIMINATOR + "TEXT,"
+                                             + Columns.PERSON_LASTNAME + " TEXT,"
+                                             + Columns.PERSON_FIRSTNAME + " TEXT,"
+                                             + Columns.PERSON_MIDDLENAME + " TEXT,"
+                                             + Columns.PERSON_EMAIL + " TEXT,"
+                                             + Columns.PERSON_SKYPE + " TEXT,"
+                                             + Columns.PERSON_PHONE + " TEXT,"
+                                             + Columns.PERSON_BIRTHDAY + " TEXT,"
+                                             + Columns.PERSON_INFO + " TEXT,"
+                                             + Columns.CUSTOMER_INVESTOR_COMPANY + " TEXT,"
+                                             + Columns.EMPLOYEE_EXPERIENCE + " TEXT,"
+                                             + Columns.EMPLOYEE_EDUCATION + " TEXT );";
 
 /*  private final String CREATE_VIEW_PROJECT = "CREATE VIEW "
                                                + Tables.PROJECT_VIEW
@@ -97,15 +97,15 @@ public class PMDB {
                                                + " LEFT OUTER JOIN " + Tables.PERSON + " cust ON  p._ID = cust._id ";*/
 
   private final String CREATE_TABLE_STAGE_EMPLOYEE = "CREATE TABLE " + Tables.STAGE_EMPLOYEE + " ("
-                                                       + Columns._ID + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                       + Columns.STAGE_ID + "STAGE_ID C,"
-                                                       + Columns.EMPLOYEE_ID + " INTEGER );";
+                                                     + Columns._ID + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                     + Columns.STAGE_ID + "STAGE_ID C,"
+                                                     + Columns.EMPLOYEE_ID + " INTEGER );";
 
   private final String CREATE_TABLE_STAGE = "CREATE TABLE " + Tables.STAGE + " ("
-                                              + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                              + Columns.STAGE_TYPE + " TEXT,"
-                                              + Columns.STAGE_PROJECT_ID + " INTEGER,"
-                                              + Columns.STAGE_MANAGER + " INTEGER );";
+                                            + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                            + Columns.STAGE_TYPE + " TEXT,"
+                                            + Columns.STAGE_PROJECT_ID + " INTEGER,"
+                                            + Columns.STAGE_MANAGER + " INTEGER );";
 
   private final String DROP_TABLE_STAGE = "DROP TABLE IF EXISTS " + Tables.STAGE;
   private final String DROP_TABLE_STAGE_EMPLOYEE = "DROP TABLE IF EXISTS " + Tables.STAGE_EMPLOYEE;
@@ -116,7 +116,7 @@ public class PMDB {
   public PMDB(Context context) {
     this.context = context;
     db = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
-    if (isNotInitialized){
+    if (isNotInitialized) {
       createDBStructure();
       dumpImport();
       isNotInitialized = false;
@@ -169,20 +169,20 @@ public class PMDB {
     */
   }
 
-  private void dumpImport(){
+  private void dumpImport() {
     for (int i = 0; i < sqlDump.length; i++) {
       db.execSQL(sqlDump[i]);
     }
   }
 
- public  SQLiteDatabase getDB(){
-   return db;
- }
+  public SQLiteDatabase getDB() {
+    return db;
+  }
 
- public  ProjectDataSource getProjectDataSource(){
-   if(projectDataSource == null){
-     projectDataSource = new ProjectDataSource(db);
-   }
-   return projectDataSource;
+  public ProjectDataSource getProjectDataSource() {
+    if (projectDataSource == null) {
+      projectDataSource = new ProjectDataSource(db);
+    }
+    return projectDataSource;
   }
 }

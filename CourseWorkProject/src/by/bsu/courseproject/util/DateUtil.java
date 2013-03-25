@@ -1,4 +1,4 @@
-package by.bsu.courseproject;
+package by.bsu.courseproject.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,7 +13,7 @@ import java.util.Date;
 public class DateUtil {
   public static final String DATE_FORMAT = "yyyy-MM-dd";
 
-  public static Date stringToDate(String date){
+  public static Date stringToDate(String date) {
     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
     Date result = null;
     try {
@@ -24,9 +24,9 @@ public class DateUtil {
     return result;
   }
 
-  public static String dateToString(Date date){
-    String result = null;
-    return result;
+  public static String dateToString(Date date) {
+    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    return dateFormat.format(date);
   }
 
 }

@@ -3,17 +3,13 @@ package by.bsu.courseproject.services;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import by.bsu.courseproject.DateUtil;
 import by.bsu.courseproject.model.Project;
 import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.project.ProjectStatus;
+import by.bsu.courseproject.util.DateUtil;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
@@ -35,7 +31,7 @@ public class ProjectDataSource {
     this.db = db;
   }
 
-  private Project cursorToProject(Cursor cursor){
+  private Project cursorToProject(Cursor cursor) {
     Project project = new Project();
     project.setId(cursor.getLong(cursor.getColumnIndex(Columns._ID)));
     project.setName(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME)));
@@ -65,7 +61,7 @@ public class ProjectDataSource {
     project.setId(insertId);
   }
 
-  public void updateProject(Project project){
+  public void updateProject(Project project) {
     ContentValues values = new ContentValues();
     long id = project.getId();
     db.update(Tables.PROJECT, values, Columns._ID + " = " + id, null);
