@@ -43,10 +43,10 @@ public class DBConstants {
     public static final String STAGE_TYPE = "STAGE_TYPE";
     public static final String STAGE_PROJECT_ID = "PROJECT_ID";
 
-    public static final String SORT_ORDER_ASC = "_id ASC";
+/*    public static final String SORT_ORDER_ASC = "_id ASC";
     public static final String SORT_ORDER_EMP = "LASTNAME ASC";
     public static final String SORT_ORDER_DESC = "_id DESC";
-    public static final String SORT_ORDER_PROJECT = "PRIORITY ASC";
+    public static final String SORT_ORDER_PROJECT = "PRIORITY ASC";*/
 
     public static final String INVESTOR_FIRSTNAME = "INVESTOR_FIRSTNAME";
     public static final String INVESTOR_MIDDLENAME = "INVESTOR_MIDDLENAME";

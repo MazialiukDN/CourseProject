@@ -5,7 +5,7 @@ package by.bsu.courseproject.model;
  * Date: 17.02.13
  * Time: 18:58
  */
-public class Customer {
+public class Customer extends Person{
   private String company;
 
   public String getCompany() {

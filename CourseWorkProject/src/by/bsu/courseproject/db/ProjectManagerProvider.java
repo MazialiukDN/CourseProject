@@ -3,18 +3,18 @@ package by.bsu.courseproject.db;
 
 import android.content.*;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.support.v4.database.DatabaseUtilsCompat;
+import by.bsu.courseproject.PMApplication;
+
 import static by.bsu.courseproject.db.DBConstants.*;
 
 import java.util.HashMap;
 
 public class ProjectManagerProvider extends ContentProvider {
 
-  private PMDBSQLiteHelper mDataBaseHelper = null;
+  private PMDB mDataBaseHelper = null;
 
   public static final String AUTHORITY = "by.bsu.courseproject.ProjectManagerProvider";
 
@@ -124,7 +124,7 @@ public class ProjectManagerProvider extends ContentProvider {
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
 
-    SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+    SQLiteDatabase db = PMApplication.getPMDB().getDB();
     String finalWhere;
     int count = 0;
 /*
@@ -290,7 +290,7 @@ public class ProjectManagerProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    mDataBaseHelper = new PMDBSQLiteHelper(getContext());
+    mDataBaseHelper = new PMDB(getContext());
     return true;
   }
 
@@ -415,7 +415,7 @@ public class ProjectManagerProvider extends ContentProvider {
   public int update(Uri uri, ContentValues values, String selection,
                     String[] selectionArgs) {
 
-    SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+    SQLiteDatabase db = PMApplication.getPMDB().getDB();
     int count = 0;
     /*String finalWhere;
 

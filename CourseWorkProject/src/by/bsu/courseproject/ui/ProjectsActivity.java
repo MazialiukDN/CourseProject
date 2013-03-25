@@ -11,21 +11,18 @@ import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.PMDB;
 import by.bsu.courseproject.db.ProjectManagerProvider;
+import by.bsu.courseproject.model.Project;
+
+import java.util.List;
 
 import static by.bsu.courseproject.db.DBConstants.*;
 
 public class ProjectsActivity extends FragmentActivity {
   private static final int IDM_NEW_PROJECT = 101;
-
-  static final String[] PROJECTION = new String[]{Columns._ID,
-                                                  Columns.PROJECT_PROJECTNAME,
-                                                  Columns.PROJECT_CATEGORY, Columns.PROJECT_PRIORITY,
-                                                  Columns.PROJECT_PROJECTDUEDATE,
-                                                  Columns.PROJECT_STATUS,
-
-  };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -37,22 +34,11 @@ public class ProjectsActivity extends FragmentActivity {
   protected void onResume() {
     super.onResume();
     ((TableLayout) findViewById(R.id.tableProjects)).removeAllViews();
-
-    Cursor cursor = managedQuery(ProjectManagerProvider.CONTENT_URI, PROJECTION, null,
-                                 null, null);
-
-    if (cursor != null && cursor.moveToFirst()) {
-      do {
-        String projectName = cursor.getString(cursor
-                                                  .getColumnIndex(Columns.PROJECT_PROJECTNAME));
-
-        addRow(projectName);
-
-      } while (cursor.moveToNext());
+    List<Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
+    for (Project project : projects){
+         addRow(project);
     }
-  }
-
-  ;
+  };
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,7 +61,7 @@ public class ProjectsActivity extends FragmentActivity {
     return true;
   }
 
-  private void addRow(String projectName) {
+  private void addRow(Project project) {
     TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -83,7 +69,7 @@ public class ProjectsActivity extends FragmentActivity {
                                                     null);
 
     TextView tv = (TextView) tableRow.findViewById(R.id.projectName);
-    tv.setText(projectName);
+    tv.setText(project.getName());
 
 		/*tv = (TextView) tableRow.findViewById(R.id.managerNameI);
     tv.setText(employeeName1);
