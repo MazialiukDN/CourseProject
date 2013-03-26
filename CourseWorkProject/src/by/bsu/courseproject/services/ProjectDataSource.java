@@ -3,6 +3,7 @@ package by.bsu.courseproject.services;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import by.bsu.courseproject.model.Project;
 import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
@@ -10,6 +11,7 @@ import by.bsu.courseproject.project.ProjectStatus;
 import by.bsu.courseproject.util.DateUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
@@ -22,9 +24,17 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  * Time: 19:19
  */
 public class ProjectDataSource {
-  private String[] allColumns = {Columns._ID, Columns.PROJECT_PROJECTNAME, Columns.PROJECT_PROJECTDUEDATE, Columns.PROJECT_CATEGORY,
-                                 Columns.PROJECT_STATUS, Columns.PROJECT_PRIORITY, Columns.PROJECT_CUSTOMER_ID,
-                                 Columns.PROJECT_INVESTOR_ID};
+  private final HashMap<String, String> projectProjectionMap = new HashMap<String, String>();
+
+  {
+    projectProjectionMap.put(Columns._ID, Columns._ID);
+    projectProjectionMap.put(Columns.PROJECT_PROJECTNAME, Columns.PROJECT_PROJECTNAME);
+    projectProjectionMap.put(Columns.PROJECT_PROJECTDUEDATE, Columns.PROJECT_PROJECTDUEDATE);
+    projectProjectionMap.put(Columns.PROJECT_CATEGORY, Columns.PROJECT_CATEGORY);
+    projectProjectionMap.put(Columns.PROJECT_STATUS, Columns.PROJECT_STATUS);
+    projectProjectionMap.put(Columns.PROJECT_PRIORITY, Columns.PROJECT_PRIORITY);
+  }
+
   private SQLiteDatabase db;
 
   public ProjectDataSource(SQLiteDatabase db) {
@@ -61,6 +71,17 @@ public class ProjectDataSource {
     project.setId(insertId);
   }
 
+  public Project load(Long id) {
+    SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+    queryBuilder.setProjectionMap(projectProjectionMap);
+    queryBuilder.setTables(Tables.PROJECT);
+    queryBuilder.appendWhere(Columns._ID + " = " + id);
+    Cursor cursor = queryBuilder.query(db, null, null, null, null, null, null);
+    cursor.moveToFirst();
+    //TODO:add validation
+    return cursorToProject(cursor);
+  }
+
   public void updateProject(Project project) {
     ContentValues values = new ContentValues();
     long id = project.getId();
@@ -78,7 +99,7 @@ public class ProjectDataSource {
     List<Project> Projects = new ArrayList<Project>();
 
     Cursor cursor = db.query(Tables.PROJECT,
-                             allColumns, null, null, null, null, null);
+                             projectProjectionMap.keySet().toArray(new String[0]), null, null, null, null, null);
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {

@@ -24,11 +24,12 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 import by.bsu.courseproject.R;
-import static by.bsu.courseproject.db.DBConstants.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static by.bsu.courseproject.db.DBConstants.Columns;
 
 
 public class CatalogueListFragment extends ListFragment
@@ -70,12 +71,12 @@ public class CatalogueListFragment extends ListFragment
 
     int[] to = data.getIntArrayExtra(ARG_ADAPTER_TO);
 
-    if (data.getIntExtra(CatalogueFragmentActivity.FROM_LIST, -1) != -1 && data.getIntExtra(CatalogueFragmentActivity.FROM_LIST, -1) != CatalogueList.PROJECT) {
+    if (data.getIntExtra(CatalogueFragment.FROM_LIST, -1) != -1 && data.getIntExtra(CatalogueFragment.FROM_LIST, -1) != CatalogueList.PROJECT) {
       mAdapter = new SimpleCursorAdapter(getActivity(),
                                          R.layout.man_item, null,
                                          from, to, 0);
     }
-    if (data.getIntExtra(CatalogueFragmentActivity.FROM_LIST, -1) == CatalogueList.PROJECT) {
+    if (data.getIntExtra(CatalogueFragment.FROM_LIST, -1) == CatalogueList.PROJECT) {
       mAdapter = new SimpleCursorAdapter(getActivity(),
                                          android.R.layout.simple_list_item_2, null,
                                          from, to, 0);
@@ -154,7 +155,7 @@ public class CatalogueListFragment extends ListFragment
     String tempSelect = "";
     int days = 0;
 
-    if (data.getExtras().getInt(CatalogueFragmentActivity.FROM_LIST, -1) == CatalogueList.PROJECT) {
+    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.PROJECT) {
 
       Calendar calendar = Calendar.getInstance();
       String datePattern = "yyyyMMdd";
@@ -216,12 +217,12 @@ public class CatalogueListFragment extends ListFragment
 
     String sel;
 
-    if (data.getExtras().getInt(CatalogueFragmentActivity.FROM_LIST, -1) == CatalogueList.INVESTOR) {
+    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.INVESTOR) {
       sel = Columns.PERSON_DISCRIMINATOR + "=\"I\"";
       select = (select == null) ? sel : select + " AND " + sel;
     }
 
-    if (data.getExtras().getInt(CatalogueFragmentActivity.FROM_LIST, -1) == CatalogueList.CUSTOMER) {
+    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.CUSTOMER) {
       sel = Columns.PERSON_DISCRIMINATOR + "=\"C\"";
       select = (select == null) ? sel : select + " AND " + sel;
     }
@@ -253,7 +254,7 @@ public class CatalogueListFragment extends ListFragment
                                                              new String[]{Columns._ID}, null, null, null);
     if (cursor.moveToFirst()) {
       menu.setHeaderIcon(android.R.drawable.ic_menu_more);
-      switch (data.getIntExtra(CatalogueFragmentActivity.FROM_LIST, -1)) {
+      switch (data.getIntExtra(CatalogueFragment.FROM_LIST, -1)) {
       case CatalogueList.PROJECT:
         menu.setHeaderTitle(R.string.label_project);
         break;
@@ -308,23 +309,23 @@ public class CatalogueListFragment extends ListFragment
       getActivity().setResult(Activity.RESULT_OK, intent);
       getActivity().finish();
     } else {
-      switch (data.getIntExtra(CatalogueFragmentActivity.FROM_LIST, -1)) {
+      switch (data.getIntExtra(CatalogueFragment.FROM_LIST, -1)) {
       case CatalogueList.PROJECT:
-        intent.setClass(getActivity(), NewProject.class);
+        intent.setClass(getActivity(), Project.class);
         break;
       case CatalogueList.EMPLOYEE:
-        intent.setClass(getActivity(), NewEmployeeActivity.class);
+        intent.setClass(getActivity(), Employee.class);
         break;
       case CatalogueList.CUSTOMER:
-        intent.putExtra(NewCustomerInvestorActivity.INV, NewCustomerInvestorActivity.cust);
-        intent.setClass(getActivity(), NewCustomerInvestorActivity.class);
+        intent.putExtra(CustomerInvestor.INV, CustomerInvestor.cust);
+        intent.setClass(getActivity(), CustomerInvestor.class);
         break;
       case CatalogueList.INVESTOR:
-        intent.putExtra(NewCustomerInvestorActivity.INV, NewCustomerInvestorActivity.inv);
-        intent.setClass(getActivity(), NewCustomerInvestorActivity.class);
+        intent.putExtra(CustomerInvestor.INV, CustomerInvestor.inv);
+        intent.setClass(getActivity(), CustomerInvestor.class);
         break;
       }
-      intent.putExtra(NewEmployeeActivity.FROM_LIST, NewEmployeeActivity.ITEM);
+      intent.putExtra(Employee.FROM_LIST, Employee.ITEM);
       startActivity(intent);
     }
   }

@@ -2,7 +2,6 @@ package by.bsu.courseproject.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -13,15 +12,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
-import by.bsu.courseproject.db.PMDB;
-import by.bsu.courseproject.db.ProjectManagerProvider;
-import by.bsu.courseproject.model.Project;
 
 import java.util.List;
 
-import static by.bsu.courseproject.db.DBConstants.*;
-
-public class ProjectsActivity extends FragmentActivity {
+public class Projects extends FragmentActivity {
   private static final int IDM_NEW_PROJECT = 101;
 
   @Override
@@ -34,11 +28,13 @@ public class ProjectsActivity extends FragmentActivity {
   protected void onResume() {
     super.onResume();
     ((TableLayout) findViewById(R.id.tableProjects)).removeAllViews();
-    List<Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
-    for (Project project : projects){
-         addRow(project);
+    List<by.bsu.courseproject.model.Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
+    for (by.bsu.courseproject.model.Project project : projects) {
+      addRow(project);
     }
-  };
+  }
+
+  ;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,7 +48,7 @@ public class ProjectsActivity extends FragmentActivity {
     Intent intent = new Intent();
     switch (item.getItemId()) {
     case IDM_NEW_PROJECT:
-      intent.setClass(getApplicationContext(), NewProjectActivity.class);
+      intent.setClass(getApplicationContext(), Project.class);
       break;
     default:
       return false;
@@ -61,7 +57,7 @@ public class ProjectsActivity extends FragmentActivity {
     return true;
   }
 
-  private void addRow(Project project) {
+  private void addRow(by.bsu.courseproject.model.Project project) {
     TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

@@ -10,7 +10,7 @@ import android.widget.ListView;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 
-import static by.bsu.courseproject.db.DBConstants.*;
+import static by.bsu.courseproject.db.DBConstants.Columns;
 
 public class CatalogueList extends ListActivity {
 
@@ -73,9 +73,9 @@ public class CatalogueList extends ListActivity {
     super.onListItemClick(l, v, position, id);
 
     Intent intent = new Intent();
-    intent.setClass(CatalogueList.this, CatalogueFragmentActivity.class);
+    intent.setClass(CatalogueList.this, CatalogueFragment.class);
     String[] projection = null;
-    intent.putExtra(CatalogueFragmentActivity.FROM_LIST, position);
+    intent.putExtra(CatalogueFragment.FROM_LIST, position);
 
     switch (position) {
     case PROJECT:

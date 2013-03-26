@@ -2,7 +2,7 @@ package by.bsu.courseproject.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import by.bsu.courseproject.services.ProjectDataSource;
+import by.bsu.courseproject.services.*;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
 import static by.bsu.courseproject.db.DBConstants.Tables;
@@ -20,6 +20,10 @@ public class PMDB {
   //TODO:delete static
   private SQLiteDatabase db;
   private ProjectDataSource projectDataSource;
+  private EmployeeDataSource employeeDataSource;
+  private CustomerDataSource customerDataSource;
+  private InvestorDataSource investorDataSource;
+  private StageDataSource stageDataSource;
   private static boolean isNotInitialized = true;
 
   private final String[] sqlDump = {
@@ -38,11 +42,11 @@ public class PMDB {
       "INSERT INTO \"person\" VALUES(13,'C','1111',   '1111',  '11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23-01-1991','','IBA','','');",
       "INSERT INTO \"person\" VALUES(14,'I', '11',    '11111','11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23-01-1991','','IBA','','');",
 
-      "INSERT INTO \"project\" VALUES(1,'P1','2012-05-22','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
-      "INSERT INTO \"project\" VALUES(2,'P2','2012-06-22','EDUCATION', 'ACTIVE', 'NORMAL', 13, 12)",
+      "INSERT INTO \"project\" VALUES(1,'P1','2012-05-22','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10);",
+      "INSERT INTO \"project\" VALUES(2,'P2','2012-06-22','EDUCATION', 'ACTIVE', 'NORMAL', 13, 12);",
       "INSERT INTO \"project\" VALUES(3,'P3','2012-05-06','EDUCATION', 'ACTIVE', 'NORMAL', 13, 14);",
-      "INSERT INTO \"project\" VALUES(4,'P4','2012-04-23','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10)",
-      "INSERT INTO \"project\" VALUES(5,'P5','2012-07-11','EDUCATION', 'ACTIVE', 'NORMAL', 11, 12)"
+      "INSERT INTO \"project\" VALUES(4,'P4','2012-04-23','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10);",
+      "INSERT INTO \"project\" VALUES(5,'P5','2012-07-11','EDUCATION', 'ACTIVE', 'NORMAL', 11, 12);"
   };
   private final String CREATE_TABLE_PROJECT = "CREATE TABLE " + Tables.PROJECT + "("
                                               + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -184,5 +188,33 @@ public class PMDB {
       projectDataSource = new ProjectDataSource(db);
     }
     return projectDataSource;
+  }
+
+  public EmployeeDataSource getEmployeeDataSource() {
+    if (employeeDataSource == null) {
+      employeeDataSource = new EmployeeDataSource(db);
+    }
+    return employeeDataSource;
+  }
+
+  public CustomerDataSource getCustomerDataSource() {
+    if (customerDataSource == null) {
+      customerDataSource = new CustomerDataSource(db);
+    }
+    return customerDataSource;
+  }
+
+  public InvestorDataSource getInvestorDataSource() {
+    if (investorDataSource == null) {
+      investorDataSource = new InvestorDataSource(db);
+    }
+    return investorDataSource;
+  }
+
+  public StageDataSource getStageDataSource() {
+    if (stageDataSource == null) {
+      stageDataSource = new StageDataSource(db);
+    }
+    return stageDataSource;
   }
 }
