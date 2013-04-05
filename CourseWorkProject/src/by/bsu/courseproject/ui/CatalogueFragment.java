@@ -122,13 +122,13 @@ public class CatalogueFragment extends FragmentActivity {
       startActivity(intent);
       break;
     case IDM_NEW_CUSTOMER:
-      intent.putExtra(CustomerInvestor.INV, CustomerInvestor.cust);
+      //intent.putExtra(CustomerInvestor.INV, CustomerInvestor.cust);
       intent.setClass(getApplicationContext(), CustomerInvestor.class);
       startActivity(intent);
       break;
 
     case IDM_NEW_INVESTOR:
-      intent.putExtra(CustomerInvestor.INV, CustomerInvestor.inv);
+      //intent.putExtra(CustomerInvestor.INV, CustomerInvestor.inv);
       intent.setClass(getApplicationContext(), CustomerInvestor.class);
       startActivity(intent);
       break;

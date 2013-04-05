@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="select_priority">
-        <item>Самый высокий</item>
-        <item>Высокий</item>
-        <item>Нормальный</item>
-        <item>Низкий</item>
-        <item>Самый низкий</item>
-    </string-array>
-    
-    <string-array name="select_status">
-        <item>Предлагаемый</item>
-        <item>Действующий</item>
-        <item>Прерванный</item>
-        <item>Закрытый</item>
-        <item>Отклоненный</item>
-    </string-array>
+  <string-array name="select_priority">
+    <item>Самый высокий</item>
+    <item>Высокий</item>
+    <item>Нормальный</item>
+    <item>Низкий</item>
+    <item>Самый низкий</item>
+  </string-array>
+
+  <string-array name="select_status">
+    <item>Предлагаемый</item>
+    <item>Действующий</item>
+    <item>Прерванный</item>
+    <item>Закрытый</item>
+    <item>Отклоненный</item>
+  </string-array>
 
 </resources>

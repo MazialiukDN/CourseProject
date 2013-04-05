@@ -50,6 +50,7 @@ public class ProjectDataSource {
     project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
     project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
     project.setPriority(ProjectPriority.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))));
+
     //TODO:use investor and customer datasource for load investor and customer
     /*project.setCustomer();
     project.setInverstor();*/

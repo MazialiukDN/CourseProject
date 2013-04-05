@@ -263,6 +263,7 @@ public class Employee extends Activity implements OnDateSetListener, View.OnClic
 
   private void saveToDB() {
     ContentValues cv = new ContentValues();
+    cv.put(Columns.PERSON_DISCRIMINATOR, "E");
     cv.put(Columns.PERSON_FIRSTNAME, ((EditText) findViewById(R.id.editTextEmployeeFirstName)).getText().toString());
     cv.put(Columns.PERSON_MIDDLENAME, ((EditText) findViewById(R.id.editTextEmployeeMiddleName)).getText().toString());
     cv.put(Columns.PERSON_LASTNAME, ((EditText) findViewById(R.id.editTextEmployeeLastName)).getText().toString());
