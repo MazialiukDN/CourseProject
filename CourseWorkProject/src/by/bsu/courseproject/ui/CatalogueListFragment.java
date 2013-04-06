@@ -227,6 +227,11 @@ public class CatalogueListFragment extends ListFragment
       select = (select == null) ? sel : select + " AND " + sel;
     }
 
+    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.EMPLOYEE) {
+      sel = Columns.PERSON_DISCRIMINATOR + "=\"E\"";
+      select = (select == null) ? sel : select + " AND " + sel;
+    }
+
     return new CursorLoader(getActivity(), contentURI,
                             projection, select, null,
                             filterColumns[0] + " ASC");

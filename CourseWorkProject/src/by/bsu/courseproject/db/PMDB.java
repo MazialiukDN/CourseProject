@@ -66,7 +66,7 @@ public class PMDB {
 
   private final String CREATE_TABLE_PERSON = "CREATE TABLE " + Tables.PERSON + " ("
                                              + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                             + Columns.PERSON_DISCRIMINATOR + "TEXT,"
+                                             + Columns.PERSON_DISCRIMINATOR + " TEXT,"
                                              + Columns.PERSON_LASTNAME + " TEXT,"
                                              + Columns.PERSON_FIRSTNAME + " TEXT,"
                                              + Columns.PERSON_MIDDLENAME + " TEXT,"
