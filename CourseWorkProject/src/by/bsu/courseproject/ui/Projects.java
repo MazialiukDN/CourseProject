@@ -61,13 +61,15 @@ public class Projects extends FragmentActivity {
     TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-    TableRow tableRow = (TableRow) inflater.inflate(R.layout.row_project,
+    TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
                                                     null);
 
-    TextView tv = (TextView) tableRow.findViewById(R.id.projectName);
-    tv.setText(project.getName());
+    TextView projectName = (TextView) tableRow.findViewById(R.id.projectName);
+    projectName.setText(project.getName());
 
-		/*tv = (TextView) tableRow.findViewById(R.id.managerNameI);
+    TextView projectCategory = (TextView) tableRow.findViewById(R.id.projectCategory);
+    projectCategory.setText(project.getCategory().getIdName());
+    /*tv = (TextView) tableRow.findViewById(R.id.managerNameI);
     tv.setText(employeeName1);
 		tv = (TextView) tableRow.findViewById(R.id.managerNameP);
 		tv.setText(employeeName2);
