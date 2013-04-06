@@ -69,6 +69,12 @@ public class Projects extends FragmentActivity {
 
     TextView projectCategory = (TextView) tableRow.findViewById(R.id.projectCategory);
     projectCategory.setText(project.getCategory().getIdName());
+
+    TextView projectCustomerFirstName = (TextView) tableRow.findViewById(R.id.customerFirstName);
+    projectCustomerFirstName.setText(project.getCustomer().getLastName());
+
+    TextView projectCustomerLastName = (TextView) tableRow.findViewById(R.id.customerLastName);
+    projectCustomerLastName.setText(project.getCustomer().getLastName());
     /*tv = (TextView) tableRow.findViewById(R.id.managerNameI);
     tv.setText(employeeName1);
 		tv = (TextView) tableRow.findViewById(R.id.managerNameP);

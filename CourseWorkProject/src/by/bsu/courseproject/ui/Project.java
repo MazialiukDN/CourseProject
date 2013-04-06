@@ -58,14 +58,14 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.new_project_catalogue);
-    //AddListeners();
+    AddListeners();
     oldValues = new ContentValues();
 
     mPendingView = R.id.editDate;
 
     Intent intent = getIntent();
     if (intent != null && intent.getIntExtra(FROM_LIST, -1) == ITEM) {
-      //completeForm(intent);
+      completeForm(intent);
       mIsNew = false;
       this.setTitle("Проект");
     } else {

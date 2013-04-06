@@ -2,7 +2,9 @@ package by.bsu.courseproject.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import by.bsu.courseproject.services.*;
+import by.bsu.courseproject.datasources.PersonDataSource;
+import by.bsu.courseproject.datasources.ProjectDataSource;
+import by.bsu.courseproject.datasources.StageDataSource;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
 import static by.bsu.courseproject.db.DBConstants.Tables;
@@ -20,27 +22,25 @@ public class PMDB {
   //TODO:delete static
   private SQLiteDatabase db;
   private ProjectDataSource projectDataSource;
-  private EmployeeDataSource employeeDataSource;
-  private CustomerDataSource customerDataSource;
-  private InvestorDataSource investorDataSource;
+  private PersonDataSource personDataSource;
   private StageDataSource stageDataSource;
   private static boolean isNotInitialized = true;
 
   private final String[] sqlDump = {
-      "INSERT INTO \"person\" VALUES(1,'E',  '1111',   '111',   '1111',       'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 234-89-23','23-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(2,'E',  '11111', '1111',  '1111111', 'dmitry@yandex.ru',  'misha.ivanov',    '(8-025) 988-45-34','25-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(3,'E',  '111',    '111',   '11111',     'misha@yandex.ru',   'misha.ivanov',    '(8-025) 453-45-34','26-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(4,'E',  '1111',   '11111','1111',      'misha@yandex.ru',   'misha.ivanov',    '(8-044) 534-43-23','24-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(5,'E',  '1111',   '1111',  '11111',    'misha@yandex.ru',   'misha.ivanov',    '(8-029) 432-54-45','24-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(6,'E',  '1111',   '1111',  '11111',    'misha@yandex.ru',   'misha.ivanov',    '(8-025) 234-43-44','22-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(7,'E',  '1111',   '1111',  '1111',       'misha@yandex.ru',   'misha.ivanov',    '(8-029) 454-62-55','20-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(8,'E',  '1111',   '111',   '11111',     'misha@yandex.ru',   'misha.ivanov',    '(8-029) 948-50-05','24-01-1991','', '',  '','1111-111111');",
-      "INSERT INTO \"person\" VALUES(9,'C', '1111',   '111',   '1111',       'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 234-89-23','23-01-1991','','IBA','','');",
-      "INSERT INTO \"person\" VALUES(10,'I', '1111',   '1111',  '11111',    'sokolov@gmail.com', 'mishail.sokolov', '(8-044) 678-89-23','23-01-1991','','IBA','','');",
-      "INSERT INTO \"person\" VALUES(11,'C', '1111',   '111',   '1111',      'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 676-80-23','23-01-1991','','IBA','','');",
-      "INSERT INTO \"person\" VALUES(12,'I', '1111',   '1111',  '1111111', 'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 435-54-23','23-01-1991','','IBA','','');",
-      "INSERT INTO \"person\" VALUES(13,'C','1111',   '1111',  '11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23-01-1991','','IBA','','');",
-      "INSERT INTO \"person\" VALUES(14,'I', '11',    '11111','11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23-01-1991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(1,'E',  '1111',   '111',   '1111',       'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 234-89-23','23011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(2,'E',  '11111', '1111',  '1111111', 'dmitry@yandex.ru',  'misha.ivanov',    '(8-025) 988-45-34','25011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(3,'E',  '111',    '111',   '11111',     'misha@yandex.ru',   'misha.ivanov',    '(8-025) 453-45-34','26011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(4,'E',  '1111',   '11111','1111',      'misha@yandex.ru',   'misha.ivanov',    '(8-044) 534-43-23','24011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(5,'E',  '1111',   '1111',  '11111',    'misha@yandex.ru',   'misha.ivanov',    '(8-029) 432-54-45','24011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(6,'E',  '1111',   '1111',  '11111',    'misha@yandex.ru',   'misha.ivanov',    '(8-025) 234-43-44','22011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(7,'E',  '1111',   '1111',  '1111',       'misha@yandex.ru',   'misha.ivanov',    '(8-029) 454-62-55','20011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(8,'E',  '1111',   '111',   '11111',     'misha@yandex.ru',   'misha.ivanov',    '(8-029) 948-50-05','24011991','', '',  '','1111-111111');",
+      "INSERT INTO \"person\" VALUES(9,'C', '1111',   '111',   '1111',       'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 234-89-23','23011991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(10,'I', '1111',   '1111',  '11111',    'sokolov@gmail.com', 'mishail.sokolov', '(8-044) 678-89-23','23011991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(11,'C', '1111',   '111',   '1111',      'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 676-80-23','23011991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(12,'I', '1111',   '1111',  '1111111', 'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 435-54-23','23011991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(13,'C','1111',   '1111',  '11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23011991','','IBA','','');",
+      "INSERT INTO \"person\" VALUES(14,'I', '11',    '11111','11111',     'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23011991','','IBA','','');",
 
       "INSERT INTO \"project\" VALUES(1,'P1','2012-05-22','EDUCATION', 'ACTIVE', 'NORMAL', 11, 10);",
       "INSERT INTO \"project\" VALUES(2,'P2','2012-06-22','EDUCATION', 'ACTIVE', 'NORMAL', 13, 12);",
@@ -186,30 +186,18 @@ public class PMDB {
   public ProjectDataSource getProjectDataSource() {
     if (projectDataSource == null) {
       projectDataSource = new ProjectDataSource(db);
+      projectDataSource.setPersonDataSource(getPersonDataSource());
     }
     return projectDataSource;
   }
 
-  public EmployeeDataSource getEmployeeDataSource() {
-    if (employeeDataSource == null) {
-      employeeDataSource = new EmployeeDataSource(db);
+  public PersonDataSource getPersonDataSource() {
+    if (personDataSource == null) {
+      personDataSource = new PersonDataSource(db);
     }
-    return employeeDataSource;
+    return personDataSource;
   }
 
-  public CustomerDataSource getCustomerDataSource() {
-    if (customerDataSource == null) {
-      customerDataSource = new CustomerDataSource(db);
-    }
-    return customerDataSource;
-  }
-
-  public InvestorDataSource getInvestorDataSource() {
-    if (investorDataSource == null) {
-      investorDataSource = new InvestorDataSource(db);
-    }
-    return investorDataSource;
-  }
 
   public StageDataSource getStageDataSource() {
     if (stageDataSource == null) {

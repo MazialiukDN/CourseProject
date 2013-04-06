@@ -11,14 +11,14 @@ import java.util.Date;
  * Date: 17.02.13
  * Time: 18:38
  */
-public class Project extends BasicEntity{
+public class Project extends BasicEntity {
 
   private String name;
   private Date dueDate;
   private ProjectCategory category;
   private ProjectStatus status;
   private ProjectPriority priority;
-  private Inverstor inverstor;
+  private Investor investor;
   private Customer customer;
 
 
@@ -62,12 +62,12 @@ public class Project extends BasicEntity{
     this.priority = priority;
   }
 
-  public Inverstor getInverstor() {
-    return inverstor;
+  public Investor getInvestor() {
+    return investor;
   }
 
-  public void setInverstor(Inverstor inverstor) {
-    this.inverstor = inverstor;
+  public void setInvestor(Investor investor) {
+    this.investor = investor;
   }
 
   public Customer getCustomer() {

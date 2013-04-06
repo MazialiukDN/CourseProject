@@ -1,84 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android">
-
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="ProjectName"
-          android:id="@+id/projectName"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="ProjectCategory"
-          android:id="@+id/projectCategory"/>
-
-      <LinearLayout
-          android:orientation="horizontal"
-          android:layout_width="wrap_content"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FirstName"
-            android:id="@+id/customerFirstName"/>
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_gravity="left">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LastName"
-            android:id="@+id/lastName"/>
-
-      </LinearLayout>
-    </LinearLayout>
-
-    <include
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/project_stage"
-        android:id="@+id/stage1"/>
+        android:text="ProjectName"
+        android:id="@+id/projectName"/>
 
-    <include
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/project_stage"
-        android:id="@+id/stage2"/>
+        android:text="ProjectCategory"
+        android:id="@+id/projectCategory"/>
 
-    <include
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/project_stage"
-        android:id="@+id/stage3"/>
+        android:text="FirstName"
+        android:id="@+id/customerFirstName"/>
 
-    <include
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/project_stage"
-        android:id="@+id/stage4"/>
-
-    <include
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/project_stage"
-        android:id="@+id/stage5"
-        />
+        android:text="LastName"
+        android:id="@+id/customerLastName"/>
 
   </LinearLayout>
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      layout="@layout/project_stage"
+      android:id="@+id/stage1"/>
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      layout="@layout/project_stage"
+      android:id="@+id/stage2"/>
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      layout="@layout/project_stage"
+      android:id="@+id/stage3"/>
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      layout="@layout/project_stage"
+      android:id="@+id/stage4"/>
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      layout="@layout/project_stage"
+      android:id="@+id/stage5"
+      />
+
 </TableRow>
