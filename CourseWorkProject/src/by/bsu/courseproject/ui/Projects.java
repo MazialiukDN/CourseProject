@@ -1,22 +1,27 @@
 package by.bsu.courseproject.ui;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.ProjectManagerProvider;
 
 import java.util.List;
 
-public class Projects extends FragmentActivity {
+public class Projects extends FragmentActivity implements View.OnClickListener {
   private static final int IDM_NEW_PROJECT = 101;
+  private static final int PROJECT_INFO_ID = 200;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,9 @@ public class Projects extends FragmentActivity {
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
                                                     null);
 
+    View projectInfo = tableRow.findViewById(R.id.projectInfo);
+    projectInfo.setId(PROJECT_INFO_ID);
+    projectInfo.setTag(project.getId());
     TextView projectName = (TextView) tableRow.findViewById(R.id.projectName);
     projectName.setText(project.getName());
 
@@ -91,6 +99,18 @@ public class Projects extends FragmentActivity {
 
     tableLayout.addView(tableRow);
 
+  }
+
+  @Override
+  public void onClick(View view) {
+    if (PROJECT_INFO_ID == view.getId()) {
+      Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());
+      Intent intent = new Intent();
+      intent.setData(uri);
+      intent.setClass(getApplicationContext(), Project.class);
+      intent.putExtra(Employee.FROM_LIST, 1);
+      startActivity(intent);
+    }
   }
 
   /*
@@ -136,4 +156,6 @@ public class Projects extends FragmentActivity {
 
 	}
   * */
+
+
 }

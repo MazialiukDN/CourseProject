@@ -8,7 +8,10 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:layout_gravity="left">
+      android:layout_gravity="left"
+      android:clickable="true"
+      android:onClick="onClick"
+      android:id="@+id/projectInfo">
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,28 +44,32 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
-      android:id="@+id/stage1"/>
+      android:id="@+id/stage1"
+      android:clickable="true"/>
 
   <include
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
-      android:id="@+id/stage2"/>
+      android:id="@+id/stage2"
+      android:clickable="true"/>
 
   <include
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
-      android:id="@+id/stage3"/>
+      android:id="@+id/stage3"
+      android:clickable="true"/>
 
   <include
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
-      android:id="@+id/stage4"/>
+      android:id="@+id/stage4"
+      android:clickable="true"/>
 
   <include
       android:layout_width="match_parent"
@@ -70,6 +77,6 @@
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage5"
-      />
+      android:clickable="true"/>
 
 </TableRow>
