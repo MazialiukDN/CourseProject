@@ -1,5 +1,7 @@
 package by.bsu.courseproject.ui;
 
+import java.util.List;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +18,6 @@ import android.widget.TextView;
 import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.ProjectManagerProvider;
-
-import java.util.List;
 
 public class Projects extends FragmentActivity implements View.OnClickListener {
   private static final int IDM_NEW_PROJECT = 101;
@@ -101,7 +101,6 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
 
   }
 
-  @Override
   public void onClick(View view) {
     if (PROJECT_INFO_ID == view.getId()) {
       Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());

@@ -1,5 +1,9 @@
 package by.bsu.courseproject.ui;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -16,13 +20,9 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.util.DateUtil;
-
-import java.util.Calendar;
-import java.util.Date;
-
-import static by.bsu.courseproject.db.DBConstants.Columns;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
@@ -198,9 +198,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     case DATE_PICKER_DIALOG:
       String val = ((EditText) findViewById(mPendingView)).getText().toString();
       if (!val.equals("")) {
-        int day = Integer.parseInt(val.substring(0, 2));
-        int month = Integer.parseInt(val.substring(3, 5));
-        int year = Integer.parseInt(val.substring(6, 10));
+        StringTokenizer strtok = new StringTokenizer(val, "-");
+        int day = Integer.parseInt(strtok.nextToken());
+        int month = Integer.parseInt(strtok.nextToken());
+        int year = Integer.parseInt(strtok.nextToken());
         ((DatePickerDialog) dialog).updateDate(year, month - 1, day);
       } else {
         final Calendar c = Calendar.getInstance();
@@ -281,12 +282,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
         }
 
         colIndex = c.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE);
-        if (colIndex != -1) {
-          ((EditText) findViewById(R.id.editDate)).setText(
-              (c.getString(colIndex)).substring(6, 8) + "-" +
-              (c.getString(colIndex)).substring(4, 6) + "-" + (c.getString(colIndex)).substring(0, 4));
-          oldValues.put(Columns.PROJECT_PROJECTDUEDATE, c.getString(colIndex));
-          mDate = c.getString(colIndex);
+          
+          if (colIndex != -1) {
+              ((EditText) findViewById(R.id.editDate)).setText(c.getString(colIndex));
+              oldValues.put(Columns.PROJECT_PROJECTDUEDATE, c.getString(colIndex));
         }
 
 
@@ -574,13 +573,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
   private void saveToDB() {
     ContentValues cv = new ContentValues();
-    mDate = ((EditText) findViewById(R.id.editDate)).getText().toString().substring(6, 10) +
-            ((EditText) findViewById(R.id.editDate)).getText().toString().substring(3, 5) +
-            ((EditText) findViewById(R.id.editDate)).getText().toString().substring(0, 2);
     cv.put(Columns.PROJECT_PROJECTNAME, ((EditText) findViewById(R.id.editTextProjectName)).getText().toString());
     cv.put(Columns.PROJECT_CATEGORY, ((EditText) findViewById(R.id.editTextCategory)).getText().toString());
     cv.put(Columns.PROJECT_STATUS, ((EditText) findViewById(R.id.editTextStatus)).getText().toString());
-    cv.put(Columns.PROJECT_PROJECTDUEDATE, mDate);
+    cv.put(Columns.PROJECT_PROJECTDUEDATE, ((EditText) findViewById(R.id.editDate)).getText().toString());
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
     cv.put(Columns.PROJECT_PRIORITY, mPriority);
@@ -613,11 +609,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   }
 
   public void onDateSet(DatePicker view, int year, int monthOfYear,
-                        int dayOfMonth) {
-    String val = String.format("%02d-%02d-%d", dayOfMonth, monthOfYear + 1, year);
-    ((EditText) findViewById(mPendingView)).setText(val);
+          int dayOfMonth) {
+String val = String.format("%02d-%02d-%d", dayOfMonth, monthOfYear + 1, year);
+((EditText) findViewById(mPendingView)).setText(val);
 
-  }
+}
 
 
 }
