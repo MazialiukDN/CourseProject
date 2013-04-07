@@ -89,7 +89,7 @@ public class CatalogueListFragment extends ListFragment
     setListAdapter(mAdapter);
 
     TextView filter = (TextView) getActivity().findViewById(R.id.editFilter);
-    if (filter != null) filter.addTextChangedListener((TextWatcher) this);
+    if (filter != null) filter.addTextChangedListener(this);
     registerForContextMenu(getListView());
 
   }
@@ -111,7 +111,7 @@ public class CatalogueListFragment extends ListFragment
 
           String dateDB = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
           ((TextView) view).setText(cursor.getString(columnIndex));
-          View parentView = (View) ((TextView) view).getParent();
+          View parentView = (View) view.getParent();
           if (dateDB != null && dateDB.compareTo(today) < 0) {
             parentView.setBackgroundColor(getResources().getColor(R.color.red));
           } else {
@@ -224,6 +224,11 @@ public class CatalogueListFragment extends ListFragment
 
     if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.CUSTOMER) {
       sel = Columns.PERSON_DISCRIMINATOR + "=\"C\"";
+      select = (select == null) ? sel : select + " AND " + sel;
+    }
+
+    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.EMPLOYEE) {
+      sel = Columns.PERSON_DISCRIMINATOR + "=\"E\"";
       select = (select == null) ? sel : select + " AND " + sel;
     }
 

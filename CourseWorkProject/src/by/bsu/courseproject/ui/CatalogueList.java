@@ -85,10 +85,10 @@ public class CatalogueList extends ListActivity {
           Columns.PROJECT_CATEGORY,
           Columns.PROJECT_PRIORITY,
           Columns.PROJECT_STATUS,
-          Columns.PROJECT_PROJECTDUEDATE,
+          Columns.PROJECT_PROJECTDUEDATE/*,
           Columns.PERSON_FIRSTNAME,
           Columns.PERSON_MIDDLENAME,
-          Columns.PERSON_LASTNAME
+          Columns.PERSON_LASTNAME*/
       };
 
       intent.setData(ProjectManagerProvider.CONTENT_URI);
@@ -97,13 +97,13 @@ public class CatalogueList extends ListActivity {
                                    Columns.PROJECT_CATEGORY,
                                    Columns.PROJECT_PRIORITY,
                                    Columns.PROJECT_STATUS,
-                                   Columns.PROJECT_PROJECTDUEDATE,
+                                   Columns.PROJECT_PROJECTDUEDATE/*,
                                    Columns.PERSON_FIRSTNAME,
                                    Columns.PERSON_MIDDLENAME,
                                    Columns.PERSON_LASTNAME,
                                    Columns.PERSON_FIRSTNAME,
                                    Columns.PERSON_MIDDLENAME,
-                                   Columns.PERSON_LASTNAME});
+                                   Columns.PERSON_LASTNAME*/});
       intent.putExtra(CatalogueListFragment.ARG_ADAPTER_FROM,
 
                       new String[]{Columns.PROJECT_PROJECTNAME, Columns.PROJECT_CATEGORY, Columns.PROJECT_PROJECTDUEDATE});

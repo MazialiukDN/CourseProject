@@ -1,4 +1,4 @@
-package by.bsu.courseproject.services;
+package by.bsu.courseproject.datasources;
 
 import android.database.sqlite.SQLiteDatabase;
 

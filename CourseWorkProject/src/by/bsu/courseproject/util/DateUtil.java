@@ -12,11 +12,11 @@ import java.util.Date;
  * Time: 22:49
  */
 public class DateUtil {
-  public static final String DATE_FORMAT = "yyyy-MM-dd";
+  public static final String DATE_FORMAT = "yyyyMMdd";
   public static final int DEFAULT_OFFSET = 30;
 
   public static Date stringToDate(String date) {
-    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
     Date result = null;
     try {
       result = dateFormat.parse(date);
@@ -27,7 +27,7 @@ public class DateUtil {
   }
 
   public static String dateToString(Date date) {
-    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
     return dateFormat.format(date);
   }
 

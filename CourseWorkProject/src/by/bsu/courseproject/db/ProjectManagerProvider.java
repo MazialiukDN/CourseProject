@@ -1,20 +1,24 @@
 package by.bsu.courseproject.db;
 
 
-import android.content.*;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.v4.database.DatabaseUtilsCompat;
 import by.bsu.courseproject.PMApplication;
-
-import static by.bsu.courseproject.db.DBConstants.*;
 
 import java.util.HashMap;
 
-public class ProjectManagerProvider extends ContentProvider {
+import static by.bsu.courseproject.db.DBConstants.Columns;
+import static by.bsu.courseproject.db.DBConstants.Tables;
 
-  private PMDB mDataBaseHelper = null;
+public class ProjectManagerProvider extends ContentProvider {
 
   public static final String AUTHORITY = "by.bsu.courseproject.ProjectManagerProvider";
 
@@ -46,21 +50,21 @@ public class ProjectManagerProvider extends ContentProvider {
   private final HashMap<String, String> personProjectionMap;
   private final HashMap<String, String> authorizationProjectionMap;
 
-    public static final String CONTENT_NAME_PREFIX = "content://";
+  public static final String CONTENT_NAME_PREFIX = "content://";
 
-    //The content:// style URL for this table
-    public static final Uri PROJECT_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                    + AUTHORITY + "/" + Tables.PROJECT);
-    public static final Uri AUTHORIZATION_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                          + AUTHORITY + "/" + Tables.AUTHORIZATION);
-    public static final Uri PERSON_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                     + AUTHORITY + "/" + Tables.PERSON);
-    public static final Uri STAGE_EMPLOYEE_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                           + AUTHORITY + "/" + Tables.STAGE_EMPLOYEE);
-    public static final Uri STAGE_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                  + AUTHORITY + "/" + Tables.STAGE);
-    public static final Uri CONTENT_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                    + AUTHORITY + "/" + Tables.PROJECT);
+  //The content:// style URL for this table
+  public static final Uri PROJECT_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                  + AUTHORITY + "/" + Tables.PROJECT);
+  public static final Uri AUTHORIZATION_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                        + AUTHORITY + "/" + Tables.AUTHORIZATION);
+  public static final Uri PERSON_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                 + AUTHORITY + "/" + Tables.PERSON);
+  public static final Uri STAGE_EMPLOYEE_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                         + AUTHORITY + "/" + Tables.STAGE_EMPLOYEE);
+  public static final Uri STAGE_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                + AUTHORITY + "/" + Tables.STAGE);
+  public static final Uri CONTENT_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                  + AUTHORITY + "/" + Tables.PROJECT);
 
 
   public ProjectManagerProvider() {
@@ -106,11 +110,11 @@ public class ProjectManagerProvider extends ContentProvider {
 
     personProjectionMap = new HashMap<String, String>();
     personProjectionMap.put(Columns._ID, Columns._ID);
+    personProjectionMap.put(Columns.PERSON_DISCRIMINATOR, Columns.PERSON_DISCRIMINATOR);
     personProjectionMap.put(Columns.PERSON_FIRSTNAME, Columns.PERSON_FIRSTNAME);
     personProjectionMap.put(Columns.PERSON_MIDDLENAME, Columns.PERSON_MIDDLENAME);
     personProjectionMap.put(Columns.PERSON_LASTNAME, Columns.PERSON_LASTNAME);
     personProjectionMap.put(Columns.PERSON_EMAIL, Columns.PERSON_EMAIL);
-
     personProjectionMap.put(Columns.PERSON_SKYPE, Columns.PERSON_SKYPE);
     personProjectionMap.put(Columns.PERSON_PHONE, Columns.PERSON_PHONE);
     personProjectionMap.put(Columns.PERSON_BIRTHDAY, Columns.PERSON_BIRTHDAY);
@@ -121,74 +125,67 @@ public class ProjectManagerProvider extends ContentProvider {
 
   }
 
+
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
 
     SQLiteDatabase db = PMApplication.getPMDB().getDB();
     String finalWhere;
-    int count = 0;
-/*
+    int count;
+
     switch (mUriMatcher.match(uri)) {
     case PROJECT:
       count = db.delete(Tables.PROJECT, selection, selectionArgs);
       break;
 
     case PROJECT_ID:
-			*//*finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.STAGE_EMPLOYEE_PROJECT_ID
-					+ " = " + ContentUris.parseId(uri), null);
 
-			count = db.delete(Columns.STAGE_EMPLOYEE, finalWhere, null);*//*
-
-      finalWhere = Columns._ID + " = " + ContentUris.parseId(uri);
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
+                                                        + " = " + ContentUris.parseId(uri), null);
 
       count = db.delete(Tables.PROJECT, finalWhere, selectionArgs);
 
       break;
     case EMPLOYEE:
-      count = db.delete(Columns.EMPLOYEE_TABLE_NAME, selection, selectionArgs);
+      count = db.delete(Tables.PERSON, selection, selectionArgs);
       break;
     case EMPLOYEE_ID:
-      //finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.STAGE_EMPLOYEE_PROJECT_ID
-      //		+ " = " + ContentUris.parseId(uri), null);
-
-      //count = db.delete(Columns.STAGE_EMPLOYEE, finalWhere, null);
-
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), null);
 
-      count = db.delete(Columns.EMPLOYEE_TABLE_NAME, finalWhere, selectionArgs);
+      count = db.delete(Tables.PERSON, finalWhere, selectionArgs);
 
       break;
     case STAGE_EMPLOYEE:
-      count = db.delete(Columns.STAGE_EMPLOYEE_TABLE_NAME, selection, selectionArgs);
+      count = db.delete(Tables.STAGE_EMPLOYEE, selection, selectionArgs);
       break;
     case STAGE_EMPLOYEE_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.delete(Columns.STAGE_EMPLOYEE_TABLE_NAME, finalWhere, selectionArgs);
+      count = db.delete(Tables.STAGE_EMPLOYEE, finalWhere, selectionArgs);
       break;
     case STAGE:
-      count = db.delete(Columns.STAGE_TABLE_NAME, selection, selectionArgs);
+      count = db.delete(Tables.STAGE, selection, selectionArgs);
       break;
     case STAGE_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.delete(Columns.STAGE_TABLE_NAME, finalWhere, selectionArgs);
+      count = db.delete(Tables.STAGE, finalWhere, selectionArgs);
       break;
 
     case CUSTOMER_INVESTOR:
-      count = db.delete(Columns.CUST_INV_TABLE_NAME, selection, selectionArgs);
+      count = db.delete(Tables.PERSON, selection, selectionArgs);
       break;
     case CUSTOMER_INVESTOR_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.delete(Columns.CUST_INV_TABLE_NAME, finalWhere, selectionArgs);
+      count = db.delete(Tables.PERSON, finalWhere, selectionArgs);
       break;
 
     default:
       throw new IllegalArgumentException("Unsupported URI: " + uri);
     }
-    getContext().getContentResolver().notifyChange(uri, null);*/
+    getContext().getContentResolver().notifyChange(uri, null);
     return count;
   }
 
@@ -199,14 +196,14 @@ public class ProjectManagerProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-/*    switch (mUriMatcher.match(uri)) {
+    SQLiteDatabase db = PMApplication.getPMDB().getDB();
+    switch (mUriMatcher.match(uri)) {
     case PROJECT:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.PROJECT_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.PROJECT, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.PROJECT_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(PROJECT_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -215,11 +212,10 @@ public class ProjectManagerProvider extends ContentProvider {
       throw new SQLException("Failed to insert row into " + uri);
     case EMPLOYEE:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.EMPLOYEE_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.PERSON, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.EMPLOYEE_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(PERSON_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -228,11 +224,10 @@ public class ProjectManagerProvider extends ContentProvider {
       throw new SQLException("Failed to insert row into " + uri);
     case AUTHORIZATION:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.AUTHORIZATION_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.AUTHORIZATION, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.AUTHORIZATION_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(AUTHORIZATION_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -242,11 +237,10 @@ public class ProjectManagerProvider extends ContentProvider {
 
     case STAGE_EMPLOYEE:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.STAGE_EMPLOYEE_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.STAGE_EMPLOYEE, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.STAGE_EMPLOYEE_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(STAGE_EMPLOYEE_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -256,11 +250,10 @@ public class ProjectManagerProvider extends ContentProvider {
 
     case CUSTOMER_INVESTOR:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.CUST_INV_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.PERSON, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.CUST_INV_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(PERSON_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -270,11 +263,10 @@ public class ProjectManagerProvider extends ContentProvider {
 
     case STAGE:
       if (values != null) {
-        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        long rowId = db.insert(Columns.STAGE_TABLE_NAME, null, values);
+        long rowId = db.insert(Tables.STAGE, null, values);
 
         if (rowId > 0) {
-          Uri noteUri = ContentUris.withAppendedId(Columns.STAGE_URI, rowId);
+          Uri noteUri = ContentUris.withAppendedId(STAGE_URI, rowId);
           getContext().getContentResolver().notifyChange(noteUri, null);
           return noteUri;
 
@@ -284,13 +276,12 @@ public class ProjectManagerProvider extends ContentProvider {
 
     default:
       throw new IllegalArgumentException("Unknown URI " + uri);
-    }*/
-   return null;
+    }
+
   }
 
   @Override
   public boolean onCreate() {
-    mDataBaseHelper = new PMDB(getContext());
     return true;
   }
 
@@ -300,7 +291,7 @@ public class ProjectManagerProvider extends ContentProvider {
 
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-    /*switch (mUriMatcher.match(uri)) {
+    switch (mUriMatcher.match(uri)) {
     case PROJECT:
       qb.setTables(uri.getLastPathSegment());
       qb.setProjectionMap(projectProjectionMap);
@@ -315,49 +306,49 @@ public class ProjectManagerProvider extends ContentProvider {
       break;
 
     case EMPLOYEE:
-      qb.setTables(Columns.EMPLOYEE_TABLE_NAME);
+      qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
       sortOrder = Columns.SORT_ORDER_EMP;
       break;
 
     case AUTHORIZATION:
-      qb.setTables(Columns.AUTHORIZATION_TABLE_NAME);
+      qb.setTables(Tables.AUTHORIZATION);
       qb.setProjectionMap(authorizationProjectionMap);
       sortOrder = Columns.SORT_ORDER_ASC;
       break;
 
     case AUTHORIZATION_ID:
-      qb.setTables(Columns.AUTHORIZATION_TABLE_NAME);
+      qb.setTables(Tables.AUTHORIZATION);
       qb.setProjectionMap(authorizationProjectionMap);
-      qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
+      qb.appendWhere(Columns._ID + "=?");
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
 
 
     case EMPLOYEE_ID:
-      qb.setTables(Columns.EMPLOYEE_TABLE_NAME);
+      qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
-      qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
+      qb.appendWhere(Columns._ID + "=?");
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
 
     case CUSTOMER_INVESTOR:
-      qb.setTables(Columns.CUST_INV_TABLE_NAME);
-      qb.setProjectionMap(customerInvProjectionMap);
+      qb.setTables(Tables.PERSON);
+      qb.setProjectionMap(personProjectionMap);
       sortOrder = Columns.SORT_ORDER_EMP;
       break;
 
     case CUSTOMER_INVESTOR_ID:
-      qb.setTables(Columns.CUST_INV_TABLE_NAME);
-      qb.setProjectionMap(customerInvProjectionMap);
-      qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
+      qb.setTables(Tables.PERSON);
+      qb.setProjectionMap(personProjectionMap);
+      qb.appendWhere(Columns._ID + "=?");
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
     case STAGE_EMPLOYEE:
-      qb.setTables(Columns.STAGE_EMPLOYEE_TABLE_NAME);
+      qb.setTables(Tables.STAGE_EMPLOYEE);
       qb.setProjectionMap(personProjectionMap);
       if (sortOrder == null) {
         sortOrder = Columns.SORT_ORDER_ASC;
@@ -365,48 +356,20 @@ public class ProjectManagerProvider extends ContentProvider {
       break;
 
     case STAGE_EMPLOYEE_ID:
-      qb.setTables(Columns.STAGE_EMPLOYEE_TABLE_NAME);
+      qb.setTables(Tables.STAGE_EMPLOYEE);
       qb.setProjectionMap(personProjectionMap);
-      qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
+      qb.appendWhere(Columns._ID + "=?");
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
-		*//*case PROJECT_VIEW:
-
-			qb.setTables(uri.getLastPathSegment());
-			sortOrder = Columns.SORT_ORDER_PROJECT;
-			break;
-		case VIEW_NAME_ID:
-			// The incoming URI is for a single row.
-			qb.setTables(uri.getPathSegments().get(uri.getPathSegments().size()-2));
-			//qb.setProjectionMap(columnsProjectionMap);
-			qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
-			selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
-					selectionArgs, new String[] { uri.getLastPathSegment() });
-			break;*//*
-			*//*case STAGE:
-			qb.setTables(Columns.STAGE);
-			qb.setProjectionMap(stageProjectionMap);
-			if (sortOrder == null)
-				sortOrder = Columns.SORT_ORDER_ASC;
-			break;
-
-		case STAGE_ID:
-			qb.setTables(Columns.STAGE);
-			qb.setProjectionMap(stageProjectionMap);
-			qb.appendWhere(Columns.COLUMN_NAME_ID + "=?");
-			selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
-					selectionArgs, new String[] {uri.getLastPathSegment()});
-			break;*//*
     default:
       throw new IllegalArgumentException("Unknown URI " + uri);
     }
 
-    SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+    SQLiteDatabase db = PMApplication.getPMDB().getDB();
     Cursor cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 
-    cursor.setNotificationUri(getContext().getContentResolver(), uri);*/
-    Cursor cursor = null;
+    cursor.setNotificationUri(getContext().getContentResolver(), uri);
     return cursor;
 
   }
@@ -416,64 +379,63 @@ public class ProjectManagerProvider extends ContentProvider {
                     String[] selectionArgs) {
 
     SQLiteDatabase db = PMApplication.getPMDB().getDB();
-    int count = 0;
-    /*String finalWhere;
+    int count;
+    String finalWhere;
 
     switch (mUriMatcher.match(uri)) {
     case PROJECT:
-      count = db.update(Columns.PROJECT_TABLE_NAME, values, selection, selectionArgs);
+      count = db.update(Tables.PROJECT, values, selection, selectionArgs);
       break;
     case PROJECT_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.update(Columns.PROJECT_TABLE_NAME, values, finalWhere, selectionArgs);
+      count = db.update(Tables.PROJECT, values, finalWhere, selectionArgs);
 
       break;
     case EMPLOYEE:
-      count = db.update(Columns.EMPLOYEE_TABLE_NAME, values, selection, selectionArgs);
+      count = db.update(Tables.PERSON, values, selection, selectionArgs);
       break;
     case EMPLOYEE_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.update(Columns.EMPLOYEE_TABLE_NAME, values, finalWhere, selectionArgs);
+      count = db.update(Tables.PERSON, values, finalWhere, selectionArgs);
 
       break;
 
     case CUSTOMER_INVESTOR:
-      count = db.update(Columns.CUST_INV_TABLE_NAME, values, selection, selectionArgs);
+      count = db.update(Tables.PERSON, values, selection, selectionArgs);
       break;
     case CUSTOMER_INVESTOR_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.update(Columns.CUST_INV_TABLE_NAME, values, finalWhere, selectionArgs);
+      count = db.update(Tables.PERSON, values, finalWhere, selectionArgs);
 
       break;
 
     case STAGE_EMPLOYEE:
-      count = db.update(Columns.STAGE_EMPLOYEE_TABLE_NAME, values, selection, selectionArgs);
+      count = db.update(Tables.STAGE_EMPLOYEE, values, selection, selectionArgs);
       break;
     case STAGE_EMPLOYEE_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.update(Columns.STAGE_EMPLOYEE_TABLE_NAME, values, finalWhere, selectionArgs);
+      count = db.update(Tables.STAGE_EMPLOYEE, values, finalWhere, selectionArgs);
 
       break;
     case STAGE:
-      count = db.update(Columns.STAGE_TABLE_NAME, values, selection, selectionArgs);
+      count = db.update(Tables.STAGE, values, selection, selectionArgs);
       break;
     case STAGE_ID:
-      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns.COLUMN_NAME_ID
+      finalWhere = DatabaseUtilsCompat.concatenateWhere(Columns._ID
                                                         + " = " + ContentUris.parseId(uri), selection);
-      count = db.update(Columns.STAGE_TABLE_NAME, values, finalWhere, selectionArgs);
+      count = db.update(Tables.STAGE, values, finalWhere, selectionArgs);
 
       break;
     default:
       throw new IllegalArgumentException("Unknown URI " + uri);
     }
     getContext().getContentResolver().notifyChange(uri, null);
-*/
+
     return count;
   }
 
 }
-

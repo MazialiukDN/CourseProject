@@ -1,9 +1,11 @@
-package by.bsu.courseproject.services;
+package by.bsu.courseproject.datasources;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import by.bsu.courseproject.model.Customer;
+import by.bsu.courseproject.model.Investor;
 import by.bsu.courseproject.model.Project;
 import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
@@ -24,6 +26,8 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  * Time: 19:19
  */
 public class ProjectDataSource {
+  private PersonDataSource personDataSource;
+  private StageDataSource stageDataSource;
   private final HashMap<String, String> projectProjectionMap = new HashMap<String, String>();
 
   {
@@ -33,6 +37,8 @@ public class ProjectDataSource {
     projectProjectionMap.put(Columns.PROJECT_CATEGORY, Columns.PROJECT_CATEGORY);
     projectProjectionMap.put(Columns.PROJECT_STATUS, Columns.PROJECT_STATUS);
     projectProjectionMap.put(Columns.PROJECT_PRIORITY, Columns.PROJECT_PRIORITY);
+    projectProjectionMap.put(Columns.PROJECT_CUSTOMER_ID, Columns.PROJECT_CUSTOMER_ID);
+    projectProjectionMap.put(Columns.PROJECT_INVESTOR_ID, Columns.PROJECT_INVESTOR_ID);
   }
 
   private SQLiteDatabase db;
@@ -50,9 +56,14 @@ public class ProjectDataSource {
     project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
     project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
     project.setPriority(ProjectPriority.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))));
-    //TODO:use investor and customer datasource for load investor and customer
-    /*project.setCustomer();
-    project.setInverstor();*/
+    Long customerId = cursor.getLong(cursor.getColumnIndex(Columns.PROJECT_CUSTOMER_ID));
+    if (customerId != null) {
+      project.setCustomer((Customer) personDataSource.load(customerId));
+    }
+    Long investorId = cursor.getLong(cursor.getColumnIndex(Columns.PROJECT_INVESTOR_ID));
+    if (investorId != null) {
+      project.setInvestor((Investor) personDataSource.load(investorId));
+    }
     return project;
   }
 
@@ -64,7 +75,7 @@ public class ProjectDataSource {
     values.put(Columns.PROJECT_STATUS, project.getStatus().toString());
     values.put(Columns.PROJECT_PRIORITY, project.getPriority().toString());
     values.put(Columns.PROJECT_CUSTOMER_ID, project.getCustomer().getId());
-    values.put(Columns.PROJECT_INVESTOR_ID, project.getInverstor().getId());
+    values.put(Columns.PROJECT_INVESTOR_ID, project.getInvestor().getId());
 
     long insertId = db.insert(Tables.PROJECT, null,
                               values);
@@ -111,4 +122,11 @@ public class ProjectDataSource {
     return Projects;
   }
 
+  public void setPersonDataSource(PersonDataSource personDataSource) {
+    this.personDataSource = personDataSource;
+  }
+
+  public void setStageDataSource(StageDataSource stageDataSource) {
+    this.stageDataSource = stageDataSource;
+  }
 }
