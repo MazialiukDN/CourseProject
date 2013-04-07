@@ -37,7 +37,7 @@ public class CatalogueList extends ListActivity {
 
     setListAdapter(new ArrayAdapter<String>(this,
                                             android.R.layout.simple_list_item_1, mCategories));
-
+    getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
 
   public static final String PROJECT_PROJECTNAME = "PROJECTNAME";
@@ -48,24 +48,7 @@ public class CatalogueList extends ListActivity {
   public static final String PROJECT_PROJECTDESCRIPTION = "PROJECTDESCRIPTION";
 
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    if (!Tools.checkTimeLoggedOn(this)) {
-      Intent intent = new Intent();
-      intent.setClass(this, Startup.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-      intent.putExtra(Startup.EXTRA_INTENT, getIntent());
-      startActivity(intent);
-      finish();
-    }
-  }
 
-  @Override
-  protected void onPause() {
-    super.onPause();
-    Tools.setTime(this);
-  }
 
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {

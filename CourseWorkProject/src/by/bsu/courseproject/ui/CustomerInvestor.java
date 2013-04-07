@@ -70,25 +70,6 @@ public class CustomerInvestor extends Activity implements View.OnClickListener {
   }
 
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    if (!Tools.checkTimeLoggedOn(this)) {
-      Intent intent = new Intent();
-      intent.setClass(this, Startup.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-      intent.putExtra(Startup.EXTRA_INTENT, getIntent());
-      startActivity(intent);
-      finish();
-    }
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    Tools.setTime(this);
-  }
-
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), null, null, null, null);
 

@@ -91,7 +91,7 @@ public class CatalogueListFragment extends ListFragment
     TextView filter = (TextView) getActivity().findViewById(R.id.editFilter);
     if (filter != null) filter.addTextChangedListener(this);
     registerForContextMenu(getListView());
-
+getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
 
 

@@ -21,24 +21,7 @@ public class Navigator extends Activity implements View.OnClickListener {
     findViewById(R.id.imageView_projects).setOnClickListener((android.view.View.OnClickListener) this);
   }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    if (!Tools.checkTimeLoggedOn(this)) {
-      Intent intent = new Intent();
-      intent.setClass(this, Startup.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-      intent.putExtra(Startup.EXTRA_INTENT, getIntent());
-      startActivity(intent);
-      finish();
-    }
-  }
 
-  @Override
-  protected void onPause() {
-    super.onPause();
-    Tools.setTime(this);
-  }
 
   public void onClick(View v) {
     Intent intent = new Intent();

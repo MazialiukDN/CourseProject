@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#DFE0E1">
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -17,7 +18,8 @@
         android:layout_marginLeft="5dip"
         android:layout_marginRight="13dip"
         android:layout_weight="1"
-        android:text="Отменить"/>
+        android:text="Отменить"
+        />
 
     <Button
         android:id="@+id/buttonSave"
@@ -26,7 +28,8 @@
         android:layout_marginLeft="7dip"
         android:layout_marginRight="8dip"
         android:layout_weight="1"
-        android:text="Сохранить"/>
+        android:text="Сохранить"
+        />
   </LinearLayout>
 
   <LinearLayout
