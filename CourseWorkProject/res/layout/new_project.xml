@@ -1,154 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#DFE0E1">
 
-    <TableRow
-        android:id="@+id/tableRowProjectName"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectName"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="0.4"
-            android:text="Имя" />
+    <TextView
+        android:id="@+id/textViewProjectName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.4"
+        android:text="Имя"/>
 
-        <EditText
-            android:id="@+id/editTextProjectName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="1" >
+    <EditText
+        android:id="@+id/editTextProjectName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_weight="1">
 
-            <requestFocus />
-        </EditText>
-    </TableRow>
+      <requestFocus/>
+    </EditText>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowProjectDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectDescription"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.4"
-            android:text="Описание" />
+    <TextView
+        android:id="@+id/textViewProjectDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_weight="0.4"
+        android:text="Описание"/>
 
-        <EditText
-            android:id="@+id/editTextProjectDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:inputType="textMultiLine" />
-    </TableRow>
+    <EditText
+        android:id="@+id/editTextProjectDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:inputType="textMultiLine"/>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowProjectCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectCategory"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:text="Категория" />
+    <TextView
+        android:id="@+id/textViewProjectCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:text="Категория"/>
 
-        <Spinner
-            android:id="@+id/spinnerProjectCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </TableRow>
+    <Spinner
+        android:id="@+id/spinnerProjectCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowProjectFinalDate"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectFinalDate"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectFinalDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:text="Срок сдачи" />
+    <TextView
+        android:id="@+id/textViewProjectFinalDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:text="Срок сдачи"/>
 
-        <DatePicker
-            android:id="@+id/datePickerProjectFinalDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </TableRow>
+    <DatePicker
+        android:id="@+id/datePickerProjectFinalDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowProjectStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectStatus"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:text="Статус" />
+    <TextView
+        android:id="@+id/textViewProjectStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:text="Статус"/>
 
-        <Spinner
-            android:id="@+id/spinnerProjectStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </TableRow>
+    <Spinner
+        android:id="@+id/spinnerProjectStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowProjectPriority"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+  <TableRow
+      android:id="@+id/tableRowProjectPriority"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewProjectPriority"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:text="Приоритет" />
+    <TextView
+        android:id="@+id/textViewProjectPriority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:text="Приоритет"/>
 
-        <Spinner
-            android:id="@+id/spinnerProjectPriority"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </TableRow>
+    <Spinner
+        android:id="@+id/spinnerProjectPriority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+  </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRowSaveProject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+  <TableRow
+      android:id="@+id/tableRowSaveProject"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/buttonCancelProject"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Отменить" />
+    <Button
+        android:id="@+id/buttonCancelProject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Отменить"/>
 
-        <Button
-            android:id="@+id/buttonSaveProject"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Сохранить" />
-    </TableRow>
+    <Button
+        android:id="@+id/buttonSaveProject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Сохранить"/>
+  </TableRow>
 
 </TableLayout>

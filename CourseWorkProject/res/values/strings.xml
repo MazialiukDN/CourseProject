@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, CourseProjectActivity!</string>
-     <string name="app_auth">Авторизация</string>
-    <string name="app_name">Проекты</string>
-    <string name="app_title">Система управления человеческими ресурсами проектов</string>
-    <string name="label_initiating">Инициация</string>
-    <string name="label_planning">Планирование</string>
-    <string name="label_executing">Выполнение</string>
-    <string name="label_controlling">Контроль</string>
-    <string name="label_closing">Завершение</string>
-    <string name="label_new_project">Новый проект</string>
-    <string name="label_new_employee">Новый исполнитель</string>
-    <string name="label_new_customer">Новый заказчик</string>
-    <string name="label_new_investor">Новый инвестор</string>
-    <string name="label_projects">Проекты</string>
-    <string name="label_catalogues">Каталоги</string>
-    <string name="label_customers">Заказчики</string>
-    <string name="label_investors">Инвесторы</string>
-    <string name="label_employees">Исполнители</string>
-    <string name="label_project">Проект</string>
-    <string name="label_customer">Заказчик</string>
-    <string name="label_investor">Инвестор</string>
-    <string name="label_employee">Исполнитель</string>
-    <string name="label_no_data">Нет данных</string>
-    <string name="label_delete">Удалить</string>
-    <string name="alert_dialog_ok">ОК</string>
-    <string name="alert_dialog_cancel">Отмена</string>
-    <string name="name_dialog_title">Введите фамилию и имя</string>
+  <string name="app_auth">Авторизация</string>
+  <string name="app_name">Проекты</string>
+  <string name="app_title">Система управления человеческими ресурсами проектов</string>
+  <string name="label_initiating">Инициация</string>
+  <string name="label_planning">Планирование</string>
+  <string name="label_executing">Выполнение</string>
+  <string name="label_controlling">Контроль</string>
+  <string name="label_closing">Завершение</string>
+  <string name="label_new_project">Новый проект</string>
+  <string name="label_new_employee">Новый исполнитель</string>
+  <string name="label_new_customer">Новый заказчик</string>
+  <string name="label_new_investor">Новый инвестор</string>
+  <string name="label_projects">Проекты</string>
+  <string name="label_catalogues">Каталоги</string>
+  <string name="label_customers">Заказчики</string>
+  <string name="label_investors">Инвесторы</string>
+  <string name="label_employees">Исполнители</string>
+  <string name="label_project">Проект</string>
+  <string name="label_customer">Заказчик</string>
+  <string name="label_investor">Инвестор</string>
+  <string name="label_employee">Исполнитель</string>
+  <string name="label_no_data">Нет данных</string>
+  <string name="label_delete">Удалить</string>
+  <string name="alert_dialog_ok">ОК</string>
+  <string name="alert_dialog_cancel">Отмена</string>
+  <string name="name_dialog_title">Введите фамилию и имя</string>
+  <string name="label_stage">Стадия</string>
 
 </resources>
