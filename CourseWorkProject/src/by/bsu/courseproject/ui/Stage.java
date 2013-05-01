@@ -1,11 +1,15 @@
 package by.bsu.courseproject.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
@@ -51,7 +55,21 @@ public class Stage extends Activity implements View.OnClickListener {
         ((EditText) findViewById(R.id.stageManagerLN)).setText(manager.getLastName());
       }
     }
+    TableLayout tableLayout = (TableLayout) findViewById(R.id.employeeTable);
+    for (Employee employee : stage.getEmployees()) {
+      addEmployee(tableLayout, employee);
+    }
 
+  }
+
+  private void addEmployee(TableLayout tableLayout, Employee employee) {
+    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    TableRow tableRow = (TableRow) inflater.inflate(R.layout.stage_employees,
+                                                    null);
+    ((TextView) tableRow.findViewById(R.id.empFN)).setText(employee.getFirstName());
+    ((TextView) tableRow.findViewById(R.id.empLN)).setText(employee.getLastName());
+    ((TextView) tableRow.findViewById(R.id.empMN)).setText(employee.getMiddleName());
+    tableLayout.addView(tableRow);
   }
 
   private void addListeners() {
@@ -160,7 +178,12 @@ public class Stage extends Activity implements View.OnClickListener {
         if (stageEmployeesIds.add(employeeId)) {
           Employee employee = new Employee();
           employee.setId(employeeId);
+          employee.setLastName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_LASTNAME)));
+          employee.setFirstName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_FIRSTNAME)));
+          employee.setMiddleName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_MIDDLENAME)));
           stage.getEmployees().add(employee);
+          TableLayout tableLayout = (TableLayout) findViewById(R.id.employeeTable);
+          addEmployee(tableLayout, employee);
         }
       }
     }
