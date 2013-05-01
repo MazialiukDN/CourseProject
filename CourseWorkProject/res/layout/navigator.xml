@@ -1,71 +1,71 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout3"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFFFF" >
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#DFE0E1">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
+  <RelativeLayout
+      android:id="@+id/relativeLayout1"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/relativeLayout2">
+
+    <TableLayout
+        android:id="@+id/NavigatorTable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/relativeLayout2" >
+        android:shrinkColumns="0,1"
+        android:stretchColumns="0,1">
 
-        <TableLayout
-            android:id="@+id/NavigatorTable"
+      <TableRow
+          android:id="@+id/tableRow3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="2dip"
+          android:layout_marginTop="20dip">
+
+        <ImageView
+            android:id="@+id/imageView_projects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/label_projects"
+            android:gravity="center"
+            android:src="@drawable/projects"/>
+
+        <ImageView
+            android:id="@+id/imageView_catalogue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/label_catalogues"
+            android:gravity="center"
+            android:src="@drawable/catalogue"/>
+      </TableRow>
+
+      <TableRow
+          android:id="@+id/tableRow4"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:shrinkColumns="0,1"
-            android:stretchColumns="0,1" >
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/label_projects"
+            android:textColor="#000000"
+            android:textSize="16dip"/>
 
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dip"
-                android:layout_marginTop="20dip" >
-
-                <ImageView
-                    android:id="@+id/imageView_projects"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/label_projects"
-                    android:gravity="center"
-                    android:src="@drawable/projects" />
-
-                <ImageView
-                    android:id="@+id/imageView_catalogue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/label_catalogues"
-                    android:gravity="center"
-                    android:src="@drawable/catalogue" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/label_projects"
-                    android:textColor="#000000"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/label_catalogues"
-                    android:textColor="#000000"
-                    android:textSize="16dip" />
-            </TableRow>
-        </TableLayout>
-    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/label_catalogues"
+            android:textColor="#000000"
+            android:textSize="16dip"/>
+      </TableRow>
+    </TableLayout>
+  </RelativeLayout>
 
 </RelativeLayout>
