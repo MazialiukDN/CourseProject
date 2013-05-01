@@ -1,7 +1,5 @@
 package by.bsu.courseproject.ui;
 
-import java.util.List;
-
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +10,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
+import by.bsu.courseproject.stage.StageType;
+
+import java.util.List;
 
 public class Projects extends FragmentActivity implements View.OnClickListener {
   private static final int IDM_NEW_PROJECT = 101;
@@ -69,6 +72,22 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
                                                     null);
 
+    LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
+    prepareStageCell(StageType.INITIATION, project, stageInitiationLayout);
+
+    LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
+    prepareStageCell(StageType.PLANNING_AND_DESIGN, project, stagePlanningLayout);
+
+    LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
+    prepareStageCell(StageType.EXECUTING, project, stageExecutingLayout);
+
+    LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
+    prepareStageCell(StageType.MONITORING_AND_CONTROLLING, project, stageMonitoringLayout);
+
+    LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
+    prepareStageCell(StageType.CLOSING, project, stageClosingLayout);
+
+
     View projectInfo = tableRow.findViewById(R.id.projectInfo);
     projectInfo.setId(PROJECT_INFO_ID);
     projectInfo.setTag(project.getId());
@@ -77,84 +96,79 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
 
     TextView projectCategory = (TextView) tableRow.findViewById(R.id.projectCategory);
     projectCategory.setText(project.getCategory().getIdName());
+    if (project.getCustomer() != null) {
+      TextView projectCustomerFirstName = (TextView) tableRow.findViewById(R.id.customerFirstName);
+      projectCustomerFirstName.setText(project.getCustomer().getLastName());
 
-    TextView projectCustomerFirstName = (TextView) tableRow.findViewById(R.id.customerFirstName);
-    projectCustomerFirstName.setText(project.getCustomer().getLastName());
-
-    TextView projectCustomerLastName = (TextView) tableRow.findViewById(R.id.customerLastName);
-    projectCustomerLastName.setText(project.getCustomer().getLastName());
-    /*tv = (TextView) tableRow.findViewById(R.id.managerNameI);
-    tv.setText(employeeName1);
-		tv = (TextView) tableRow.findViewById(R.id.managerNameP);
-		tv.setText(employeeName2);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameE);
-		tv.setText(employeeName3);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameC);
-		tv.setText(employeeName4);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameCl);
-		tv.setText(employeeName5);*/
+      TextView projectCustomerLastName = (TextView) tableRow.findViewById(R.id.customerLastName);
+      projectCustomerLastName.setText(project.getCustomer().getLastName());
+    }
 
     tableLayout.addView(tableRow);
 
   }
 
-  public void onClick(View view) {
-    if (PROJECT_INFO_ID == view.getId()) {
-      Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());
-      Intent intent = new Intent();
-      intent.setData(uri);
-      intent.setClass(getApplicationContext(), Project.class);
-      intent.putExtra(Employee.FROM_LIST, 1);
-      startActivity(intent);
-    }
+  private void prepareStageCell(StageType stageType, by.bsu.courseproject.model.Project project, LinearLayout stageLayout) {
+    stageLayout.setId(stageType.ordinal());
+    stageLayout.setTag(project.getId());
+    stageLayout.setTag(R.id.projectName, project.getName());
+    by.bsu.courseproject.model.Stage stageData = PMApplication.getPMDB().getStageDataSource().load(project.getId(), stageType.ordinal());
+    setStageData(stageLayout, stageData);
   }
 
-  /*
-  private void addRow(Long projectID, String projectName, String employeeName1,
-			String employeeName2, String employeeName3, String employeeName4,
-			String employeeName5) {
-		TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  private void setStageData(LinearLayout stageLayout, by.bsu.courseproject.model.Stage stage) {
+    if (stage.getManager() != null) {
+      TextView managerFirstName = (TextView) stageLayout.findViewById(R.id.ManagerFirstName);
+      managerFirstName.setText(stage.getManager().getFirstName());
+      TextView managerLastName = (TextView) stageLayout.findViewById(R.id.ManagerLastName);
+      managerLastName.setText(stage.getManager().getLastName());
+      TextView managerPatronymic = (TextView) stageLayout.findViewById(R.id.ManagerPatronymic);
+      managerPatronymic.setText(stage.getManager().getMiddleName());
+    }
+    /*TextView stageStatus = (TextView)stageLayout.findViewById(R.id.StageStatus);
+    stageStatus.setText(stage);*/
+  }
 
-		TableRow tableRow = (TableRow) inflater.inflate(R.layout.row_project,
-				null);
-		TextView tv = (TextView) tableRow.findViewById(R.id.projectName);
-		tv.setText(projectName);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
+  public void onClick(View view) {
+    Intent intent = new Intent();
+    intent.putExtra(DBConstants.Columns.STAGE_PROJECT_ID, (Long) view.getTag());
+    intent.putExtra(DBConstants.Columns.PROJECT_PROJECTNAME, (String) view.getTag(R.id.projectName));
+    switch (view.getId()) {
+    case PROJECT_INFO_ID: {
+      Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());
+      intent.setData(uri);
+      intent.setClass(this, Project.class);
+      intent.putExtra(Employee.FROM_LIST, 1);
+      break;
+    }
+    case 0: {
+      prepareStageIntent(intent, StageType.INITIATION);
+      break;
+    }
+    case 1: {
+      prepareStageIntent(intent, StageType.PLANNING_AND_DESIGN);
+      break;
+    }
+    case 2: {
+      prepareStageIntent(intent, StageType.EXECUTING);
+      break;
+    }
+    case 3: {
+      prepareStageIntent(intent, StageType.MONITORING_AND_CONTROLLING);
+      break;
+    }
+    case 4: {
+      prepareStageIntent(intent, StageType.CLOSING);
+      break;
+    }
+    }
+    startActivity(intent);
+  }
 
-		tv = (TextView) tableRow.findViewById(R.id.managerNameI);
-		tv.setText(employeeName1);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameP);
-		tv.setText(employeeName2);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameE);
-		tv.setText(employeeName3);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameC);
-		tv.setText(employeeName4);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
-
-		tv = (TextView) tableRow.findViewById(R.id.managerNameCl);
-		tv.setText(employeeName5);
-		tv.setTag(projectID);
-		tv.setOnClickListener(this);
-
-		tableLayout.addView(tableRow);
-
-	}
-  * */
+  private void prepareStageIntent(Intent intent, StageType stageType) {
+    intent.setClass(getApplicationContext(), Stage.class);
+    intent.putExtra(DBConstants.Columns.STAGE_TYPE, stageType.ordinal());
+  }
 
 
 }

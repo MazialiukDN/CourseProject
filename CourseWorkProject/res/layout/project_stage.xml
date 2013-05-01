@@ -4,7 +4,8 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-    >
+              android:clickable="true"
+              android:onClick="onClick">
 
   <LinearLayout
       android:orientation="horizontal"
@@ -14,7 +15,6 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="FirstName"
         android:id="@+id/ManagerFirstName"
         android:layout_gravity="center_vertical|left"/>
 
@@ -23,21 +23,18 @@
   <TextView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="LastName"
       android:id="@+id/ManagerLastName"
       android:layout_gravity="center_vertical|left"/>
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Patronymic"
       android:id="@+id/ManagerPatronymic"
       android:layout_gravity="center_vertical|left"/>
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Status"
       android:id="@+id/StageStatus"
       android:layout_gravity="center_vertical|left"/>
 

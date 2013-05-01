@@ -1,9 +1,5 @@
 package by.bsu.courseproject.ui;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.StringTokenizer;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -19,10 +15,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
+import by.bsu.courseproject.model.Employee;
+import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
@@ -72,20 +75,6 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       mIsNew = true;
       this.setTitle("Новый проект");
 
-//      ArrayAdapter<ProjectPriority> projectPriorityArrayAdapter =
-//          new ArrayAdapter<ProjectPriority>(this, android.R.layout.simple_spinner_item, ProjectPriority.values());
-//      projectPriorityArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//      Spinner projectPirority = ((Spinner) findViewById(R.id.spinnerProjectPriority));
-//      projectPirority.setAdapter(projectPriorityArrayAdapter);
-//
-//      ArrayAdapter<ProjectStatus> projectStatusArrayAdapter =
-//          new ArrayAdapter<ProjectStatus>(this, android.R.layout.simple_spinner_item, ProjectStatus.values());
-//      projectStatusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//      Spinner projectStatus = ((Spinner) findViewById(R.id.spinnerProjectStatus));
-//      projectStatus.setAdapter(projectStatusArrayAdapter);
-//
-//      priority = ProjectPriority.NORMAL;
-//      status = ProjectStatus.PRORPOSED;
       ((EditText) findViewById(R.id.editTextPriority)).setText("Нормальный");
       ((EditText) findViewById(R.id.editTextStatus)).setText("Предлагаемый");
       mPriority = 3;
@@ -96,7 +85,6 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     }
 
   }
-
 
 
   @Override
@@ -264,10 +252,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
         }
 
         colIndex = c.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE);
-          
-          if (colIndex != -1) {
-              ((EditText) findViewById(R.id.editDate)).setText(c.getString(colIndex));
-              oldValues.put(Columns.PROJECT_PROJECTDUEDATE, c.getString(colIndex));
+
+        if (colIndex != -1) {
+          ((EditText) findViewById(R.id.editDate)).setText(c.getString(colIndex));
+          oldValues.put(Columns.PROJECT_PROJECTDUEDATE, c.getString(colIndex));
         }
 
 
@@ -568,6 +556,15 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       if (uri == null) {
         Log.e("HLAG", "Failed to insert into " + ProjectManagerProvider.PROJECT_URI);
       }
+      for (StageType stageType : StageType.values()) {
+        by.bsu.courseproject.model.Stage stage = new by.bsu.courseproject.model.Stage();
+        by.bsu.courseproject.model.Project project = new by.bsu.courseproject.model.Project();
+        project.setId(ContentUris.parseId(uri));
+        stage.setProject(project);
+        stage.setType(stageType);
+        by.bsu.courseproject.model.Employee manager = new Employee();
+        PMApplication.getPMDB().getStageDataSource().persistStage(stage);
+      }
     } else {
       getContentResolver().update(ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, mId), cv, null, null);
     }
@@ -591,11 +588,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   }
 
   public void onDateSet(DatePicker view, int year, int monthOfYear,
-          int dayOfMonth) {
-String val = String.format("%02d-%02d-%d", dayOfMonth, monthOfYear + 1, year);
-((EditText) findViewById(mPendingView)).setText(val);
+                        int dayOfMonth) {
+    String val = String.format("%02d-%02d-%d", dayOfMonth, monthOfYear + 1, year);
+    ((EditText) findViewById(mPendingView)).setText(val);
 
-}
+  }
 
 
 }

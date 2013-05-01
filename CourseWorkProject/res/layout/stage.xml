@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DFE0E1">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginLeft="10dip"
+      android:layout_marginRight="10dip">
+
+    <Button
+        android:id="@+id/stageButtonCancel"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="13dip"
+        android:layout_weight="1"
+        android:text="Отменить"/>
+
+    <Button
+        android:id="@+id/stageButtonSave"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dip"
+        android:layout_marginRight="8dip"
+        android:layout_weight="1"
+        android:text="Сохранить"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:orientation="horizontal"
+      android:padding="10dip">
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:text="Стадия"
+          android:textSize="24dip"
+          android:id="@+id/stageName"/>
+
+      <TableLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:orientation="vertical"
+          android:padding="10dip">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Имя проекта"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/editTextProjectName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:ems="10"
+              android:enabled="false">
+
+            <requestFocus/>
+          </EditText>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:text="Менеджер"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/stageManagerFN"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="text"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/stageManagerLN"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="text"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/stageManagerP"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="text"/>
+        </TableRow>
+
+      </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="5dip">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginBottom="5dip"
+          android:text="Исполнители"
+          android:textSize="24dip"/>
+
+      <TableLayout
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:layout_gravity="center"
+          android:id="@+id/employeeTable">
+      </TableLayout>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Добавить исполнителя"
+          android:id="@+id/addEmloyee"
+          android:layout_gravity="center"/>
+
+    </LinearLayout>
+  </LinearLayout>
+
+</RelativeLayout>

@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import by.bsu.courseproject.model.Customer;
 import by.bsu.courseproject.model.Investor;
 import by.bsu.courseproject.model.Project;
+import by.bsu.courseproject.model.Stage;
 import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.project.ProjectStatus;
+import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
 
 import java.util.ArrayList;
@@ -53,15 +55,19 @@ public class ProjectDataSource {
     project.setName(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME)));
     String date = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
     project.setDueDate(DateUtil.stringToDate(date));
-    project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
-    project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
-    project.setPriority(ProjectPriority.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))));
+    //TODO: Use enum constants in all places or change field types
+//    project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
+//    project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
+//    project.setPriority(ProjectPriority.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))));
+    project.setCategory(ProjectCategory.CONSULTING_SERVICE);
+    project.setStatus(ProjectStatus.ACTIVE);
+    project.setPriority(ProjectPriority.NORMAL);
     Long customerId = cursor.getLong(cursor.getColumnIndex(Columns.PROJECT_CUSTOMER_ID));
-    if (customerId != null) {
+    if (customerId != null && customerId != -1) {
       project.setCustomer((Customer) personDataSource.load(customerId));
     }
     Long investorId = cursor.getLong(cursor.getColumnIndex(Columns.PROJECT_INVESTOR_ID));
-    if (investorId != null) {
+    if (investorId != null && investorId != -1) {
       project.setInvestor((Investor) personDataSource.load(investorId));
     }
     return project;
@@ -80,6 +86,12 @@ public class ProjectDataSource {
     long insertId = db.insert(Tables.PROJECT, null,
                               values);
     project.setId(insertId);
+    for (StageType stageType : StageType.values()) {
+      Stage stage = new Stage();
+      stage.setProject(project);
+      stage.setType(stageType);
+      stageDataSource.persistStage(stage);
+    }
   }
 
   public Project load(Long id) {

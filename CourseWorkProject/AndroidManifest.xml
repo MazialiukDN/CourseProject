@@ -75,6 +75,14 @@
         android:screenOrientation="landscape">
     </activity>
 
+    <activity
+        android:name=".ui.Stage"
+        android:label="@string/label_stage"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+
+    </activity>
+
     <provider
         android:name=".db.ProjectManagerProvider"
         android:authorities="by.bsu.courseproject.ProjectManagerProvider">
