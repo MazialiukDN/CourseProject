@@ -124,6 +124,7 @@ public class StageDataSource {
     while (!cursor.isAfterLast()) {
       Long employeeId = cursor.getLong(cursor.getColumnIndex(Columns.EMPLOYEE_ID));
       employees.add((Employee) personDataSource.load(employeeId));
+      cursor.moveToNext();
     }
     stage.setEmployees(employees);
   }

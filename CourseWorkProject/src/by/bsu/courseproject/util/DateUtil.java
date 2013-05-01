@@ -12,7 +12,7 @@ import java.util.Date;
  * Time: 22:49
  */
 public class DateUtil {
-  public static final String DATE_FORMAT = "yyyyMMdd";
+  public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final int DEFAULT_OFFSET = 30;
 
   public static Date stringToDate(String date) {
