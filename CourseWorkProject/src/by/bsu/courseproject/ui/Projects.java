@@ -98,7 +98,7 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
     projectCategory.setText(project.getCategory().getIdName());
     if (project.getCustomer() != null) {
       TextView projectCustomerFirstName = (TextView) tableRow.findViewById(R.id.customerFirstName);
-      projectCustomerFirstName.setText(project.getCustomer().getLastName());
+      projectCustomerFirstName.setText(project.getCustomer().getFirstName());
 
       TextView projectCustomerLastName = (TextView) tableRow.findViewById(R.id.customerLastName);
       projectCustomerLastName.setText(project.getCustomer().getLastName());
