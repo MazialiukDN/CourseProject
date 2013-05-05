@@ -1,5 +1,7 @@
 package by.bsu.courseproject.ui;
 
+import java.util.List;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,8 +22,6 @@ import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.stage.StageType;
-
-import java.util.List;
 
 public class Projects extends FragmentActivity implements View.OnClickListener {
   private static final int IDM_NEW_PROJECT = 101;
@@ -36,6 +37,7 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
   protected void onResume() {
     super.onResume();
     ((TableLayout) findViewById(R.id.tableProjects)).removeAllViews();
+    addHeader();
     List<by.bsu.courseproject.model.Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
     for (by.bsu.courseproject.model.Project project : projects) {
       addRow(project);
@@ -65,6 +67,64 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
     return true;
   }
 
+  private void addHeader() {
+	   TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
+	    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+	    TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
+	                                                    null);
+
+	   LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
+	   LinearLayout stageLayout = (LinearLayout) stageInitiationLayout.findViewById(R.id.infoStages);
+	   stageLayout.setVisibility(View.GONE);
+	   TextView title = (TextView) stageInitiationLayout.findViewById(R.id.titleStage);
+	   title.setVisibility(View.VISIBLE);
+	   title.setText(getResources().getString(R.string.label_initiating));
+	   
+	   LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
+	   stageLayout = (LinearLayout) stagePlanningLayout.findViewById(R.id.infoStages);
+	   stageLayout.setVisibility(View.GONE);
+	   title = (TextView) stagePlanningLayout.findViewById(R.id.titleStage);
+	   title.setVisibility(View.VISIBLE);
+	   title.setText(getResources().getString(R.string.label_planning));
+	   
+	    LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
+	    stageLayout = (LinearLayout) stageExecutingLayout.findViewById(R.id.infoStages);
+		   stageLayout.setVisibility(View.GONE);
+		   title = (TextView) stageExecutingLayout.findViewById(R.id.titleStage);
+		   title.setVisibility(View.VISIBLE);
+		   title.setText(getResources().getString(R.string.label_executing));
+		   
+	    LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
+	    stageLayout = (LinearLayout) stageMonitoringLayout.findViewById(R.id.infoStages);
+		   stageLayout.setVisibility(View.GONE);
+		   title = (TextView) stageMonitoringLayout.findViewById(R.id.titleStage);
+		   title.setVisibility(View.VISIBLE);
+		   title.setText(getResources().getString(R.string.label_controlling));
+		   
+	    LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
+	    stageLayout = (LinearLayout) stageClosingLayout.findViewById(R.id.infoStages);
+		   stageLayout.setVisibility(View.GONE);
+		   title = (TextView) stageClosingLayout.findViewById(R.id.titleStage);
+		   title.setVisibility(View.VISIBLE);
+		   title.setText(getResources().getString(R.string.label_closing));
+
+
+	    View projectInfo = tableRow.findViewById(R.id.projectInfo);
+	    projectInfo.setVisibility(View.GONE);
+
+	    View titleProject = tableRow.findViewById(R.id.titleProjects);
+	    titleProject.setVisibility(View.VISIBLE);
+	    
+	    tableLayout.addView(tableRow);
+	    
+	    View v = new View(this);
+	    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
+	    v.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+	    v.setLayoutParams(params);
+	    tableLayout.addView(v);
+  }
+ 
   private void addRow(by.bsu.courseproject.model.Project project) {
     TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,30 +132,56 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
                                                     null);
 
+    
+    
+
+    
+    
     LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
     prepareStageCell(StageType.INITIATION, project, stageInitiationLayout);
-
+    //LayoutParams params = (LinearLayout.LayoutParams)stageInitiationLayout.getLayoutParams();
+    //params.height = height;
+   // stageInitiationLayout.setLayoutParams(params);
+    
     LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
     prepareStageCell(StageType.PLANNING_AND_DESIGN, project, stagePlanningLayout);
-
+   // stagePlanningLayout.setLayoutParams(params);
     LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
     prepareStageCell(StageType.EXECUTING, project, stageExecutingLayout);
-
+    //stageExecutingLayout.setLayoutParams(params);
     LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
     prepareStageCell(StageType.MONITORING_AND_CONTROLLING, project, stageMonitoringLayout);
-
+   // stageMonitoringLayout.setLayoutParams(params);
     LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
     prepareStageCell(StageType.CLOSING, project, stageClosingLayout);
+  // stageClosingLayout.setLayoutParams(params);
 
-
+    /*TableRow.LayoutParams paramst = new TableRow.LayoutParams(1, height);
+    paramst.height = height;
+    View v = tableRow.findViewById(R.id.sep1);
+    v.setLayoutParams(paramst);
+    v = tableRow.findViewById(R.id.sep2);
+    v.setLayoutParams(paramst);
+    v = tableRow.findViewById(R.id.sep3);
+    v.setLayoutParams(paramst);
+    v = tableRow.findViewById(R.id.sep4);
+    v.setLayoutParams(paramst);
+    v = tableRow.findViewById(R.id.sep5);
+    v.setLayoutParams(paramst);*/
     View projectInfo = tableRow.findViewById(R.id.projectInfo);
+    projectInfo.setVisibility(View.VISIBLE);
+
+    View titleProject = tableRow.findViewById(R.id.titleProjects);
+    titleProject.setVisibility(View.GONE);
+    
     projectInfo.setId(PROJECT_INFO_ID);
     projectInfo.setTag(project.getId());
     TextView projectName = (TextView) tableRow.findViewById(R.id.projectName);
     projectName.setText(project.getName());
 
+    
     TextView projectCategory = (TextView) tableRow.findViewById(R.id.projectCategory);
-    projectCategory.setText(project.getCategory().getIdName());
+    projectCategory.setText("( " + project.getCategory().getIdName() + " )");
     if (project.getCustomer() != null) {
       TextView projectCustomerFirstName = (TextView) tableRow.findViewById(R.id.customerFirstName);
       projectCustomerFirstName.setText(project.getCustomer().getFirstName());
@@ -103,8 +189,13 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
       TextView projectCustomerLastName = (TextView) tableRow.findViewById(R.id.customerLastName);
       projectCustomerLastName.setText(project.getCustomer().getLastName());
     }
-
     tableLayout.addView(tableRow);
+    
+    View v = new View(this);
+    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
+    v.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+    v.setLayoutParams(params);
+    tableLayout.addView(v);
 
   }
 
