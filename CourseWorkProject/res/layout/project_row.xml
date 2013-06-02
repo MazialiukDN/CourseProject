@@ -5,74 +5,132 @@
 
   <LinearLayout
       android:orientation="vertical"
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:layout_gravity="left"
+      android:layout_marginLeft="12dip"
       android:clickable="true"
       android:onClick="onClick"
-      android:id="@+id/projectInfo">
+      >
 
+      <LinearLayout 
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_marginTop="10dip"
+      android:id="@+id/projectInfo"
+      >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18dip"
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dip"
         android:id="@+id/projectName"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:layout_marginBottom="8dip"
+        android:textColor="@color/blue"
         android:id="@+id/projectCategory"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/customerFirstName"/>
+        android:id="@+id/customerFirstName"
+        android:layout_marginLeft="8dip"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/customerLastName"/>
+        android:id="@+id/customerLastName"
+        android:layout_marginLeft="8dip"
+        android:layout_marginBottom="8dip"/>
+    </LinearLayout>
+   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Проекты"
+        android:id="@+id/titleProjects"
+        android:textSize="18dip"
+        android:visibility="gone"
+        android:layout_marginBottom="10dip"
+        android:layout_marginTop="10dip"/>
 
+   
   </LinearLayout>
+  
+   <View
+    android:layout_width="1px"
+    android:layout_height="match_parent"
+    android:id="@+id/sep1"
+    android:background="@android:color/darker_gray"
+/>
 
   <include
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage1"
       android:clickable="true"/>
-
+<View
+    android:layout_width="1px"
+    android:layout_height="match_parent"
+    android:id="@+id/sep2"
+    android:background="@android:color/darker_gray"
+ />
   <include
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage2"
       android:clickable="true"/>
-
+<View
+    android:layout_width="1px"
+    android:layout_height="match_parent"
+    android:id="@+id/sep3"
+     android:background="@android:color/darker_gray"
+ />
   <include
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage3"
       android:clickable="true"/>
-
+<View
+    android:layout_width="1px"
+    android:layout_height="match_parent"
+    android:id="@+id/sep4"
+     android:background="@android:color/darker_gray"
+ />
   <include
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage4"
       android:clickable="true"/>
-
+<View
+    android:layout_width="1px"
+    android:layout_height="match_parent"
+    android:id="@+id/sep5"
+     android:background="@android:color/darker_gray"
+ />
   <include
-      android:layout_width="match_parent"
+      android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       layout="@layout/project_stage"
       android:id="@+id/stage5"
       android:clickable="true"/>
+  
+
 
 </TableRow>
