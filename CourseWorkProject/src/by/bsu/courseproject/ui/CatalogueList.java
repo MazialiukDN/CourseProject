@@ -37,7 +37,7 @@ public class CatalogueList extends ListActivity {
 
     setListAdapter(new ArrayAdapter<String>(this,
                                             android.R.layout.simple_list_item_1, mCategories));
-    getListView().setBackgroundColor(getResources().getColor(R.color.gray));
+  //  getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
 
   public static final String PROJECT_PROJECTNAME = "PROJECTNAME";

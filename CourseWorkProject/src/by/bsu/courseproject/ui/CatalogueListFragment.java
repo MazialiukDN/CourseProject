@@ -91,7 +91,7 @@ public class CatalogueListFragment extends ListFragment
     TextView filter = (TextView) getActivity().findViewById(R.id.editFilter);
     if (filter != null) filter.addTextChangedListener(this);
     registerForContextMenu(getListView());
-getListView().setBackgroundColor(getResources().getColor(R.color.gray));
+//getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
 
 
@@ -113,7 +113,8 @@ getListView().setBackgroundColor(getResources().getColor(R.color.gray));
           ((TextView) view).setText(cursor.getString(columnIndex));
           View parentView = (View) view.getParent();
           if (dateDB != null && dateDB.compareTo(today) < 0) {
-            parentView.setBackgroundColor(getResources().getColor(R.color.red));
+           // parentView.setBackgroundColor(getResources().getColor(R.color.red));
+            parentView.setBackgroundColor(0);
           } else {
             parentView.setBackgroundColor(0);
           }

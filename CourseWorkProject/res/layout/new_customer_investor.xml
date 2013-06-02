@@ -1,48 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#DFE0E1">
+                android:layout_height="match_parent">
+<LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_marginLeft="10dip"
-      android:layout_marginRight="10dip">
-
-    <Button
-        android:id="@+id/buttonCancel"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="13dip"
-        android:layout_weight="1"
-        android:text="Отменить"
-        />
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="7dip"
-        android:layout_marginRight="8dip"
-        android:layout_weight="1"
-        android:text="Сохранить"
-        />
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
       android:orientation="horizontal"
       android:padding="10dip">
 
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -52,12 +27,12 @@
           android:layout_gravity="center"
           android:gravity="center"
           android:text="Личная информация"
+          android:textColor="@color/dark_blue"
           android:textSize="24dip"/>
 
       <TableLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
           android:orientation="vertical"
           android:padding="10dip">
 
@@ -177,6 +152,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Телефон"
+              android:textColor="@color/dark_blue"
               android:textAppearance="?android:attr/textAppearanceMedium"/>
 
           <EditText
@@ -205,6 +181,7 @@
           android:layout_gravity="center"
           android:layout_marginBottom="5dip"
           android:text="Дополнительная информация"
+          android:textColor="@color/dark_blue"
           android:textSize="24dip"/>
 
       <EditText
@@ -218,5 +195,33 @@
           android:scrollbars="vertical"/>
     </LinearLayout>
   </LinearLayout>
+  
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10dip"
+      android:layout_marginRight="10dip">
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="13dip"
+        android:layout_weight="1"
+        android:text="Отменить"
+        />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dip"
+        android:layout_marginRight="8dip"
+        android:layout_weight="1"
+        android:text="Сохранить"
+        />
+  </LinearLayout>
+  
+ </LinearLayout>
+</ScrollView>
