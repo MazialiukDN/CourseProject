@@ -94,6 +94,9 @@ public class StageDataSource {
 
 
   public void deleteProjectStages(Long projectId) {
+    db.delete(Tables.STAGE_EMPLOYEE,
+              Columns.STAGE_ID + " IN ( SELECT " + Columns._ID + " FROM " + Tables.STAGE + " WHERE " + Columns.STAGE_PROJECT_ID + " = " + projectId + ")",
+              null);
     db.delete(Tables.STAGE, Columns.STAGE_PROJECT_ID + " = " + projectId, null);
   }
 

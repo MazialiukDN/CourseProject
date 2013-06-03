@@ -218,6 +218,7 @@ public class PMDB {
     if (projectDataSource == null) {
       projectDataSource = new ProjectDataSource(db);
       projectDataSource.setPersonDataSource(getPersonDataSource());
+      projectDataSource.setStageDataSource(getStageDataSource());
     }
     return projectDataSource;
   }

@@ -111,10 +111,9 @@ public class ProjectDataSource {
     db.update(Tables.PROJECT, values, Columns._ID + " = " + id, null);
   }
 
-  public void deleteProject(Project project) {
-    long id = project.getId();
+  public void deleteProject(Long id) {
     System.out.println("Project deleted with id: " + id);
-    //TODO: delete stages and stage_employee
+    stageDataSource.deleteProjectStages(id);
     db.delete(Tables.PROJECT, Columns._ID + " = " + id, null);
   }
 

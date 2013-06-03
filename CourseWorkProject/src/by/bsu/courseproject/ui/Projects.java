@@ -1,10 +1,11 @@
 package by.bsu.courseproject.ui;
 
-import java.util.List;
-
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -23,9 +23,14 @@ import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.stage.StageType;
 
-public class Projects extends FragmentActivity implements View.OnClickListener {
+import java.util.List;
+
+import static android.view.View.*;
+
+public class Projects extends FragmentActivity implements OnClickListener {
   private static final int IDM_NEW_PROJECT = 101;
   private static final int PROJECT_INFO_ID = 200;
+  private boolean afterLongClick = false;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -68,93 +73,91 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
   }
 
   private void addHeader() {
-	   TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
-	    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row, null);
 
-	    TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
-	                                                    null);
+    LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
+    stageInitiationLayout.setClickable(false);
+    LinearLayout stageLayout = (LinearLayout) stageInitiationLayout.findViewById(R.id.infoStages);
+    stageLayout.setVisibility(GONE);
+    TextView title = (TextView) stageInitiationLayout.findViewById(R.id.titleStage);
+    title.setVisibility(VISIBLE);
+    title.setText(getResources().getString(R.string.label_initiating));
 
-	   LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
-	   LinearLayout stageLayout = (LinearLayout) stageInitiationLayout.findViewById(R.id.infoStages);
-	   stageLayout.setVisibility(View.GONE);
-	   TextView title = (TextView) stageInitiationLayout.findViewById(R.id.titleStage);
-	   title.setVisibility(View.VISIBLE);
-	   title.setText(getResources().getString(R.string.label_initiating));
-	   
-	   LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
-	   stageLayout = (LinearLayout) stagePlanningLayout.findViewById(R.id.infoStages);
-	   stageLayout.setVisibility(View.GONE);
-	   title = (TextView) stagePlanningLayout.findViewById(R.id.titleStage);
-	   title.setVisibility(View.VISIBLE);
-	   title.setText(getResources().getString(R.string.label_planning));
-	   
-	    LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
-	    stageLayout = (LinearLayout) stageExecutingLayout.findViewById(R.id.infoStages);
-		   stageLayout.setVisibility(View.GONE);
-		   title = (TextView) stageExecutingLayout.findViewById(R.id.titleStage);
-		   title.setVisibility(View.VISIBLE);
-		   title.setText(getResources().getString(R.string.label_executing));
-		   
-	    LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
-	    stageLayout = (LinearLayout) stageMonitoringLayout.findViewById(R.id.infoStages);
-		   stageLayout.setVisibility(View.GONE);
-		   title = (TextView) stageMonitoringLayout.findViewById(R.id.titleStage);
-		   title.setVisibility(View.VISIBLE);
-		   title.setText(getResources().getString(R.string.label_controlling));
-		   
-	    LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
-	    stageLayout = (LinearLayout) stageClosingLayout.findViewById(R.id.infoStages);
-		   stageLayout.setVisibility(View.GONE);
-		   title = (TextView) stageClosingLayout.findViewById(R.id.titleStage);
-		   title.setVisibility(View.VISIBLE);
-		   title.setText(getResources().getString(R.string.label_closing));
+    LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
+    stagePlanningLayout.setClickable(false);
+    stageLayout = (LinearLayout) stagePlanningLayout.findViewById(R.id.infoStages);
+    stageLayout.setVisibility(GONE);
+    title = (TextView) stagePlanningLayout.findViewById(R.id.titleStage);
+    title.setVisibility(VISIBLE);
+    title.setText(getResources().getString(R.string.label_planning));
+
+    LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
+    stageExecutingLayout.setClickable(false);
+    stageLayout = (LinearLayout) stageExecutingLayout.findViewById(R.id.infoStages);
+    stageLayout.setVisibility(GONE);
+    title = (TextView) stageExecutingLayout.findViewById(R.id.titleStage);
+    title.setVisibility(VISIBLE);
+    title.setText(getResources().getString(R.string.label_executing));
+
+    LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
+    stageMonitoringLayout.setClickable(false);
+    stageLayout = (LinearLayout) stageMonitoringLayout.findViewById(R.id.infoStages);
+    stageLayout.setVisibility(GONE);
+    title = (TextView) stageMonitoringLayout.findViewById(R.id.titleStage);
+    title.setVisibility(VISIBLE);
+    title.setText(getResources().getString(R.string.label_controlling));
+
+    LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
+    stageClosingLayout.setClickable(false);
+    stageLayout = (LinearLayout) stageClosingLayout.findViewById(R.id.infoStages);
+    stageLayout.setVisibility(GONE);
+    title = (TextView) stageClosingLayout.findViewById(R.id.titleStage);
+    title.setVisibility(VISIBLE);
+    title.setText(getResources().getString(R.string.label_closing));
 
 
-	    View projectInfo = tableRow.findViewById(R.id.projectInfo);
-	    projectInfo.setVisibility(View.GONE);
+    View projectInfo = tableRow.findViewById(R.id.projectInfo);
+    projectInfo.setClickable(false);
+    projectInfo.setVisibility(GONE);
+    View titleProject = tableRow.findViewById(R.id.titleProjects);
+    titleProject.setVisibility(VISIBLE);
 
-	    View titleProject = tableRow.findViewById(R.id.titleProjects);
-	    titleProject.setVisibility(View.VISIBLE);
-	    
-	    tableLayout.addView(tableRow);
-	    
-	    View v = new View(this);
-	    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
-	    v.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-	    v.setLayoutParams(params);
-	    tableLayout.addView(v);
+    TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
+    tableRow.setBackgroundColor(Color.GRAY);
+    tableLayout.addView(tableRow);
+
+    View v = new View(this);
+    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
+    v.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+    v.setLayoutParams(params);
+    tableLayout.addView(v);
   }
- 
+
   private void addRow(by.bsu.courseproject.model.Project project) {
     TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.project_row,
                                                     null);
-
-    
-    
-
-    
-    
     LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
     prepareStageCell(StageType.INITIATION, project, stageInitiationLayout);
     //LayoutParams params = (LinearLayout.LayoutParams)stageInitiationLayout.getLayoutParams();
     //params.height = height;
-   // stageInitiationLayout.setLayoutParams(params);
-    
+    // stageInitiationLayout.setLayoutParams(params);
+
     LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
     prepareStageCell(StageType.PLANNING_AND_DESIGN, project, stagePlanningLayout);
-   // stagePlanningLayout.setLayoutParams(params);
+    // stagePlanningLayout.setLayoutParams(params);
     LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
     prepareStageCell(StageType.EXECUTING, project, stageExecutingLayout);
     //stageExecutingLayout.setLayoutParams(params);
     LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
     prepareStageCell(StageType.MONITORING_AND_CONTROLLING, project, stageMonitoringLayout);
-   // stageMonitoringLayout.setLayoutParams(params);
+    // stageMonitoringLayout.setLayoutParams(params);
     LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
     prepareStageCell(StageType.CLOSING, project, stageClosingLayout);
-  // stageClosingLayout.setLayoutParams(params);
+    // stageClosingLayout.setLayoutParams(params);
 
     /*TableRow.LayoutParams paramst = new TableRow.LayoutParams(1, height);
     paramst.height = height;
@@ -169,17 +172,25 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
     v = tableRow.findViewById(R.id.sep5);
     v.setLayoutParams(paramst);*/
     View projectInfo = tableRow.findViewById(R.id.projectInfo);
-    projectInfo.setVisibility(View.VISIBLE);
+    projectInfo.setOnLongClickListener(new OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View view) {
+        afterLongClick = true;
+        showDialog(view);
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+      }
+    });
+    projectInfo.setVisibility(VISIBLE);
 
     View titleProject = tableRow.findViewById(R.id.titleProjects);
-    titleProject.setVisibility(View.GONE);
-    
+    titleProject.setVisibility(GONE);
+
     projectInfo.setId(PROJECT_INFO_ID);
     projectInfo.setTag(project.getId());
     TextView projectName = (TextView) tableRow.findViewById(R.id.projectName);
     projectName.setText(project.getName());
 
-    
+
     TextView projectCategory = (TextView) tableRow.findViewById(R.id.projectCategory);
     projectCategory.setText("( " + project.getCategory().getIdName() + " )");
     if (project.getCustomer() != null) {
@@ -190,13 +201,42 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
       projectCustomerLastName.setText(project.getCustomer().getLastName());
     }
     tableLayout.addView(tableRow);
-    
+
     View v = new View(this);
     TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
     v.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
     v.setLayoutParams(params);
     tableLayout.addView(v);
 
+  }
+
+  private void showDialog(final View view) {
+    final Long id = (Long) view.getTag();
+    final TableRow row = (TableRow) view.getParent().getParent();
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(R.string.label_warning);
+    builder.setMessage(R.string.label_delete_project);
+    builder.setCancelable(true)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setCancelable(true)
+        .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialogInterface, int whichButton) {
+            PMApplication.getPMDB().getProjectDataSource().deleteProject(id);
+            TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
+            tableLayout.removeView(row);
+//            Intent intent = getIntent();
+//            finish();
+//            startActivity(intent);
+          }
+        }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        dialogInterface.cancel();
+      }
+    });
+
+    AlertDialog alert = builder.create();
+    alert.show();
   }
 
   private void prepareStageCell(StageType stageType, by.bsu.courseproject.model.Project project, LinearLayout stageLayout) {
@@ -221,45 +261,48 @@ public class Projects extends FragmentActivity implements View.OnClickListener {
   }
 
   public void onClick(View view) {
-    Intent intent = new Intent();
-    intent.putExtra(DBConstants.Columns.STAGE_PROJECT_ID, (Long) view.getTag());
-    intent.putExtra(DBConstants.Columns.PROJECT_PROJECTNAME, (String) view.getTag(R.id.projectName));
-    switch (view.getId()) {
-    case PROJECT_INFO_ID: {
-      Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());
-      intent.setData(uri);
-      intent.setClass(this, Project.class);
-      intent.putExtra(Employee.FROM_LIST, 1);
-      break;
+    if (!afterLongClick) {
+      Intent intent = new Intent();
+      intent.putExtra(DBConstants.Columns.STAGE_PROJECT_ID, (Long) view.getTag());
+      intent.putExtra(DBConstants.Columns.PROJECT_PROJECTNAME, (String) view.getTag(R.id.projectName));
+      switch (view.getId()) {
+      case PROJECT_INFO_ID: {
+        Uri uri = ContentUris.withAppendedId(ProjectManagerProvider.PROJECT_URI, (Long) view.getTag());
+        intent.setData(uri);
+        intent.setClass(this, Project.class);
+        intent.putExtra(Employee.FROM_LIST, 1);
+        break;
+      }
+      case 0: {
+        prepareStageIntent(intent, StageType.INITIATION);
+        break;
+      }
+      case 1: {
+        prepareStageIntent(intent, StageType.PLANNING_AND_DESIGN);
+        break;
+      }
+      case 2: {
+        prepareStageIntent(intent, StageType.EXECUTING);
+        break;
+      }
+      case 3: {
+        prepareStageIntent(intent, StageType.MONITORING_AND_CONTROLLING);
+        break;
+      }
+      case 4: {
+        prepareStageIntent(intent, StageType.CLOSING);
+        break;
+      }
+      }
+      startActivity(intent);
+    } else {
+      afterLongClick = false;
     }
-    case 0: {
-      prepareStageIntent(intent, StageType.INITIATION);
-      break;
-    }
-    case 1: {
-      prepareStageIntent(intent, StageType.PLANNING_AND_DESIGN);
-      break;
-    }
-    case 2: {
-      prepareStageIntent(intent, StageType.EXECUTING);
-      break;
-    }
-    case 3: {
-      prepareStageIntent(intent, StageType.MONITORING_AND_CONTROLLING);
-      break;
-    }
-    case 4: {
-      prepareStageIntent(intent, StageType.CLOSING);
-      break;
-    }
-    }
-    startActivity(intent);
   }
 
   private void prepareStageIntent(Intent intent, StageType stageType) {
     intent.setClass(getApplicationContext(), Stage.class);
     intent.putExtra(DBConstants.Columns.STAGE_TYPE, stageType.ordinal());
   }
-
 
 }
