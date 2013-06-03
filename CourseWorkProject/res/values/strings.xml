@@ -28,6 +28,7 @@
   <string name="name_dialog_title">Введите фамилию и имя</string>
   <string name="label_stage">Стадия</string>
   <string name="label_delete_project">Удалить проект</string>
+  <string name="label_delete_employee">Удалить исполнителя</string>
   <string name="label_warning">Предупреждение</string>
 
 </resources>
