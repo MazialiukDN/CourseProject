@@ -1,7 +1,9 @@
 package by.bsu.courseproject.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -66,6 +68,34 @@ public class Stage extends Activity implements View.OnClickListener {
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.stage_employees,
                                                     null);
+    tableRow.setTag(employee.getId());
+    tableRow.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(final View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Stage.this);
+        builder.setTitle(R.string.label_warning);
+        builder.setMessage(R.string.label_delete_employee);
+        builder.setCancelable(true)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setCancelable(true)
+            .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialogInterface, int whichButton) {
+                stageEmployeesIds.remove(view.getTag());
+                TableLayout tableLayout = (TableLayout) findViewById(R.id.employeeTable);
+                tableLayout.removeView(view);
+              }
+            }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.cancel();
+          }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        return false;
+      }
+    });
     ((TextView) tableRow.findViewById(R.id.empFN)).setText(employee.getFirstName());
     ((TextView) tableRow.findViewById(R.id.empLN)).setText(employee.getLastName());
     ((TextView) tableRow.findViewById(R.id.empMN)).setText(employee.getMiddleName());
