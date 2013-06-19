@@ -173,7 +173,6 @@ public class Projects extends FragmentActivity implements OnClickListener {
     v.setLayoutParams(paramst);*/
     View projectInfo = tableRow.findViewById(R.id.projectInfo);
     projectInfo.setOnLongClickListener(new OnLongClickListener() {
-      @Override
       public boolean onLongClick(View view) {
         afterLongClick = true;
         showDialog(view);
@@ -229,7 +228,6 @@ public class Projects extends FragmentActivity implements OnClickListener {
 //            startActivity(intent);
           }
         }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
-      @Override
       public void onClick(DialogInterface dialogInterface, int i) {
         dialogInterface.cancel();
       }
@@ -239,6 +237,7 @@ public class Projects extends FragmentActivity implements OnClickListener {
     alert.show();
   }
 
+  
   private void prepareStageCell(StageType stageType, by.bsu.courseproject.model.Project project, LinearLayout stageLayout) {
     stageLayout.setId(stageType.ordinal());
     stageLayout.setTag(project.getId());

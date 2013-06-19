@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.ProjectManagerProvider;
@@ -70,6 +71,11 @@ public class CustomerInvestor extends Activity implements View.OnClickListener {
   }
 
 
+  @Override protected void onResume() {
+	  super.onResume();
+	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  };
+  
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), null, null, null, null);
 

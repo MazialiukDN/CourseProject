@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="by.bsu.courseproject"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+  <uses-sdk android:minSdkVersion="10"/>
+
+  <application
+      android:debuggable="true"
+      android:name=".PMApplication"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme">
+
+    <activity
+        android:name=".ui.Navigator"
+        android:label="@string/app_title"
+        android:screenOrientation="landscape"
+        android:theme="@style/AppTheme">
+      <!--      <intent-filter>
+              <action android:name="android.intent.action.MAIN"/>
+              <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>-->
+    </activity>
+
+    <activity
+        android:name=".ui.Startup"
+        android:label="@string/app_title"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".ui.Projects"
+        android:label="@string/label_projects"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+
+    </activity>
+    <activity
+        android:name=".ui.Employee"
+        android:label="@string/label_new_employee"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+    </activity>
+    <activity
+        android:name=".ui.CustomerInvestor"
+        android:theme="@style/AppTheme"
+
+        android:screenOrientation="landscape">
+    </activity>
+
+    <activity
+        android:name=".ui.Project"
+        android:label="Проект"
+        android:theme="@style/AppTheme"
+
+        android:screenOrientation="landscape">
+    </activity>
+
+    <activity
+        android:name=".ui.CatalogueFragment"
+        android:theme="@style/AppTheme"
+
+        android:screenOrientation="landscape">
+    </activity>
+    <activity
+        android:name=".ui.CatalogueList"
+        android:label="@string/label_catalogues"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+    </activity>
+
+    <activity
+        android:name=".ui.Stage"
+        android:label="@string/label_stage"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+
+    </activity>
+
+    <provider
+        android:name=".db.ProjectManagerProvider"
+        android:authorities="by.bsu.courseproject.ProjectManagerProvider">
+      <grant-uri-permission android:pathPattern=".*"/>
+    </provider>
+  </application>
+
+</manifest>

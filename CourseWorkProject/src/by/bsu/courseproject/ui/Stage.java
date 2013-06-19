@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -47,7 +48,25 @@ public class Stage extends Activity implements View.OnClickListener {
     Long projectId = intent.getLongExtra(DBConstants.Columns.STAGE_PROJECT_ID, -1L);
     int stageType = intent.getIntExtra(DBConstants.Columns.STAGE_TYPE, -1);
     if (!projectId.equals(-1L) && stageType != -1) {
-      ((TextView) findViewById(R.id.stageName)).setText(StageType.values()[stageType].toString());
+     // ((TextView) findViewById(R.id.stageName)).setText(StageType.values()[stageType].toString());
+      switch(stageType) {
+      case 0:
+          ((TextView) findViewById(R.id.stageName)).setText("Инициация");
+          break;
+        case 1:
+          ((TextView) findViewById(R.id.stageName)).setText("Планирование");
+          break;
+        case 2:
+          ((TextView) findViewById(R.id.stageName)).setText("Выполнение");
+          break;
+        case 3:
+          ((TextView) findViewById(R.id.stageName)).setText("Контроль");
+          break;
+        case 4:
+          ((TextView) findViewById(R.id.stageName)).setText("Завершение");
+          break;
+        
+      }
       ((EditText) findViewById(R.id.editTextProjectName)).setText(intent.getStringExtra(DBConstants.Columns.PROJECT_PROJECTNAME));
       stage = PMApplication.getPMDB().getStageDataSource().load(projectId, stageType, true);
       Employee manager = stage.getManager();
@@ -64,13 +83,13 @@ public class Stage extends Activity implements View.OnClickListener {
 
   }
 
+  
   private void addEmployee(TableLayout tableLayout, Employee employee) {
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.stage_employees,
                                                     null);
     tableRow.setTag(employee.getId());
     tableRow.setOnLongClickListener(new View.OnLongClickListener() {
-      @Override
       public boolean onLongClick(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Stage.this);
         builder.setTitle(R.string.label_warning);
@@ -85,7 +104,6 @@ public class Stage extends Activity implements View.OnClickListener {
                 tableLayout.removeView(view);
               }
             }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
-          @Override
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.cancel();
           }
@@ -112,10 +130,7 @@ public class Stage extends Activity implements View.OnClickListener {
     findViewById(R.id.stageManagerP).setOnClickListener(this);
   }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-  }
+
 
   public void onClick(View view) {
     switch (view.getId()) {
@@ -178,6 +193,11 @@ public class Stage extends Activity implements View.OnClickListener {
 
   }
 
+  @Override protected void onResume() {
+	  super.onResume();
+	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  };
+  
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);

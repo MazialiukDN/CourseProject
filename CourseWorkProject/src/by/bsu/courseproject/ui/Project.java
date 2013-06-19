@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import by.bsu.courseproject.PMApplication;
@@ -87,6 +88,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   }
 
 
+  @Override protected void onResume() {
+	  super.onResume();
+	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  };
+  
   @Override
   protected Dialog onCreateDialog(int dialogId) {
     switch (dialogId) {
@@ -227,8 +233,23 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
           if (c.getString(colIndex).equals("Отклоненный")) mStatus = 5;
 
         }
-
+        
+     
         colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
+        if (colIndex != -1) {
+          ((EditText) findViewById(R.id.editTextPriority)).setText(c.getString(colIndex));
+          oldValues.put(Columns.PROJECT_PRIORITY, c.getString(colIndex));
+          if (c.getString(colIndex).equals("Самый высокий")) mPriority = 1;
+          if (c.getString(colIndex).equals("Высокий")) mPriority = 2;
+          if (c.getString(colIndex).equals("Нормальный")) mPriority = 3;
+          if (c.getString(colIndex).equals("Низкий")) mPriority = 4;
+          if (c.getString(colIndex).equals("Самый низкий")) mPriority = 5;
+
+        }
+        
+        
+
+       /* colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
         if (colIndex != -1) {
           switch (c.getInt(colIndex)) {
           case 1:
@@ -249,7 +270,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
           }
           mPriority = c.getInt(colIndex);
           oldValues.put(Columns.PROJECT_PRIORITY, ((EditText) findViewById(R.id.editTextPriority)).getText().toString());
-        }
+        }*/
 
         colIndex = c.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE);
 
@@ -549,7 +570,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     cv.put(Columns.PROJECT_PROJECTDUEDATE, ((EditText) findViewById(R.id.editDate)).getText().toString());
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
-    cv.put(Columns.PROJECT_PRIORITY, mPriority);
+    cv.put(Columns.PROJECT_PRIORITY, ((EditText) findViewById(R.id.editTextPriority)).getText().toString());
 
     if (mIsNew) {
       Uri uri = getContentResolver().insert(ProjectManagerProvider.PROJECT_URI, cv);

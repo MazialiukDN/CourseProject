@@ -1,5 +1,8 @@
 package by.bsu.courseproject.ui;
 
+import java.util.Calendar;
+import java.util.StringTokenizer;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -14,15 +17,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
-
-import java.util.Calendar;
-import java.util.StringTokenizer;
-
-import static by.bsu.courseproject.db.DBConstants.Columns;
 
 public class Employee extends Activity implements OnDateSetListener, View.OnClickListener {
 
@@ -87,6 +87,10 @@ public class Employee extends Activity implements OnDateSetListener, View.OnClic
     }
   }
 
+  @Override protected void onResume() {
+	  super.onResume();
+	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  };
 
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), null, null, null, null);
