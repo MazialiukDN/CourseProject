@@ -117,6 +117,7 @@ public class Stage extends Activity implements View.OnClickListener {
     ((TextView) tableRow.findViewById(R.id.empFN)).setText(employee.getFirstName());
     ((TextView) tableRow.findViewById(R.id.empLN)).setText(employee.getLastName());
     ((TextView) tableRow.findViewById(R.id.empMN)).setText(employee.getMiddleName());
+    ((TextView) tableRow.findViewById(R.id.phone)).setText(employee.getPhone());
     tableLayout.addView(tableRow);
   }
 
@@ -205,7 +206,8 @@ public class Stage extends Activity implements View.OnClickListener {
       Cursor cursor = managedQuery(data.getData(), new String[]{DBConstants.Columns._ID,
                                                                 DBConstants.Columns.PERSON_FIRSTNAME,
                                                                 DBConstants.Columns.PERSON_MIDDLENAME,
-                                                                DBConstants.Columns.PERSON_LASTNAME}, null, null, null);
+                                                                DBConstants.Columns.PERSON_LASTNAME
+                                                                }, null, null, null);
 
       if (cursor != null && cursor.moveToFirst()) {
         ((EditText) findViewById(R.id.stageManagerFN)).setText(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_FIRSTNAME)));
@@ -220,7 +222,8 @@ public class Stage extends Activity implements View.OnClickListener {
       Cursor cursor = managedQuery(data.getData(), new String[]{DBConstants.Columns._ID,
                                                                 DBConstants.Columns.PERSON_FIRSTNAME,
                                                                 DBConstants.Columns.PERSON_MIDDLENAME,
-                                                                DBConstants.Columns.PERSON_LASTNAME}, null, null, null);
+                                                                DBConstants.Columns.PERSON_LASTNAME,
+                                                                DBConstants.Columns.PERSON_PHONE}, null, null, null);
 
       if (cursor != null && cursor.moveToFirst()) {
         Long employeeId = cursor.getLong(cursor.getColumnIndex(DBConstants.Columns._ID));
@@ -230,6 +233,7 @@ public class Stage extends Activity implements View.OnClickListener {
           employee.setLastName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_LASTNAME)));
           employee.setFirstName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_FIRSTNAME)));
           employee.setMiddleName(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_MIDDLENAME)));
+          employee.setPhone(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_PHONE)));
           stage.getEmployees().add(employee);
           TableLayout tableLayout = (TableLayout) findViewById(R.id.employeeTable);
           addEmployee(tableLayout, employee);

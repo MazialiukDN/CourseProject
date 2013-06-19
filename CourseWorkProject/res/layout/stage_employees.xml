@@ -5,23 +5,31 @@
           android:layout_height="match_parent"
           android:longClickable="true">
 
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal">
+      
   <LinearLayout
       android:orientation="horizontal"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal|top">
+      android:layout_gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/empLN"
-        android:layout_gravity="left"/>
+        android:layout_gravity="left"
+        android:textSize="16dip"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/empFN"
         android:layout_gravity="center"
+        android:textSize="16dip"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -29,7 +37,26 @@
         android:layout_height="fill_parent"
         android:text="New Text"
         android:id="@+id/empMN"
+        android:textSize="16dip"
         android:layout_gravity="left|right"
         android:layout_marginLeft="10dp"/>
   </LinearLayout>
+  
+  <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:id="@+id/phone"
+        android:textSize="14dip"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="left|right"
+        />
+  
+  <View
+    android:layout_width="fill_parent"
+    android:layout_height="1px"
+    android:layout_marginTop="8dip"
+    android:layout_marginBottom="8dip"
+    android:background="@android:color/darker_gray"/>
+   </LinearLayout>
 </TableRow>
