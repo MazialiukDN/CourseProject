@@ -23,6 +23,8 @@ import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.stage.StageType;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static android.view.View.*;
@@ -44,6 +46,15 @@ public class Projects extends FragmentActivity implements OnClickListener {
     ((TableLayout) findViewById(R.id.tableProjects)).removeAllViews();
     addHeader();
     List<by.bsu.courseproject.model.Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
+//    Collections.sort(projects, new Comparator<by.bsu.courseproject.model.Project>() {
+//      @Override
+//      public int compare(by.bsu.courseproject.model.Project project, by.bsu.courseproject.model.Project project2) {
+//        if(project.getPriority().ordinal() == project2.getPriority().ordinal()){
+//          return (int) (project2.getId() - project.getId());
+//        }
+//        return project2.getPriority().ordinal() - project.getPriority().ordinal();
+//      }
+//    });
     for (by.bsu.courseproject.model.Project project : projects) {
       addRow(project);
     }

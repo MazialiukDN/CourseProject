@@ -2,11 +2,11 @@
 <resources>
 
   <string-array name="select_priority">
-    <item>Самый высокий</item>
-    <item>Высокий</item>
-    <item>Нормальный</item>
-    <item>Низкий</item>
     <item>Самый низкий</item>
+    <item>Низкий</item>
+    <item>Нормальный</item>
+    <item>Высокий</item>
+    <item>Самый высокий</item>
   </string-array>
 
   <string-array name="select_status">

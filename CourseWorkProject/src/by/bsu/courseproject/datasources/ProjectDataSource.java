@@ -58,7 +58,7 @@ public class ProjectDataSource {
     //TODO: Use enum constants in all places or change field types
 //    project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
 //    project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
-//    project.setPriority(ProjectPriority.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))));
+    project.setPriority(ProjectPriority.values()[cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))]);
     project.setCategory(ProjectCategory.CONSULTING_SERVICE);
     project.setStatus(ProjectStatus.ACTIVE);
     project.setPriority(ProjectPriority.NORMAL);
@@ -121,7 +121,7 @@ public class ProjectDataSource {
     List<Project> Projects = new ArrayList<Project>();
 
     Cursor cursor = db.query(Tables.PROJECT,
-                             projectProjectionMap.keySet().toArray(new String[0]), null, null, null, null, null);
+                             projectProjectionMap.keySet().toArray(new String[0]), null, null, null, null, Columns.SORT_ORDER_PROJECT);
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {

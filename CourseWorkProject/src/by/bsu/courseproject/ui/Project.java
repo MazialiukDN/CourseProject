@@ -21,12 +21,13 @@ import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.model.Employee;
+import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.StringTokenizer;
+import java.util.*;
+
+import static by.bsu.courseproject.project.ProjectPriority.*;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
@@ -51,12 +52,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   //  private ProjectPriority priority = ProjectPriority.NORMAL;
 //  private String mDate = "";
 //  private ProjectStatus status = ProjectStatus.PRORPOSED;
-  private int mPriority = -1;
+  private int mPriority = 2;
   private String mDate = "";
   private int mStatus = -1;
   private final int REQUEST_CUSTOMER = 101;
   private final int REQUEST_INVESTOR = 102;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +76,9 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       mIsNew = true;
       this.setTitle("Новый проект");
 
-      ((EditText) findViewById(R.id.editTextPriority)).setText("Нормальный");
+      ((EditText) findViewById(R.id.editTextPriority)).setText(NORMAL.getIdName());
       ((EditText) findViewById(R.id.editTextStatus)).setText("Предлагаемый");
-      mPriority = 3;
+      mPriority = 2;
       mStatus = 1;
       Date date = DateUtil.getCurrentDateWithDefaultOffset();
       mDate = DateUtil.dateToString(date);
@@ -101,27 +101,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     case DIALOG_PRIORITY:
       return new AlertDialog.Builder(Project.this)
           .setTitle("Приоритет")
-          .setSingleChoiceItems(R.array.select_priority, 0, new DialogInterface.OnClickListener() {
+          .setSingleChoiceItems(R.array.select_priority, mPriority, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-              switch (whichButton) {
-              case 0:
-                ((EditText) findViewById(R.id.editTextPriority)).setText("Самый высокий");
-                break;
-              case 1:
-                ((EditText) findViewById(R.id.editTextPriority)).setText("Высокий");
-                break;
-              case 2:
-                ((EditText) findViewById(R.id.editTextPriority)).setText("Нормальный");
-                break;
-              case 3:
-                ((EditText) findViewById(R.id.editTextPriority)).setText("Низкий");
-                break;
-              case 4:
-                ((EditText) findViewById(R.id.editTextPriority)).setText("Самый низкий");
-                break;
-              }
-              mPriority = ++whichButton;
-
+              ((EditText) findViewById(R.id.editTextPriority)).setText(ProjectPriority.values()[whichButton].getIdName());
+              mPriority = whichButton;
             }
           })
           .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
@@ -185,7 +168,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       }
       break;
     case DIALOG_PRIORITY:
-      ((AlertDialog) dialog).getListView().setItemChecked(mPriority - 1, true);
+      ((AlertDialog) dialog).getListView().setItemChecked(mPriority, true);
       break;
     case DIALOG_STATUS:
       ((AlertDialog) dialog).getListView().setItemChecked(mStatus - 1, true);
@@ -237,41 +220,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
      
         colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
         if (colIndex != -1) {
-          ((EditText) findViewById(R.id.editTextPriority)).setText(c.getString(colIndex));
-          oldValues.put(Columns.PROJECT_PRIORITY, c.getString(colIndex));
-          if (c.getString(colIndex).equals("Самый высокий")) mPriority = 1;
-          if (c.getString(colIndex).equals("Высокий")) mPriority = 2;
-          if (c.getString(colIndex).equals("Нормальный")) mPriority = 3;
-          if (c.getString(colIndex).equals("Низкий")) mPriority = 4;
-          if (c.getString(colIndex).equals("Самый низкий")) mPriority = 5;
-
-        }
-        
-        
-
-       /* colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
-        if (colIndex != -1) {
-          switch (c.getInt(colIndex)) {
-          case 1:
-            ((EditText) findViewById(R.id.editTextPriority)).setText("Самый высокий");
-            break;
-          case 2:
-            ((EditText) findViewById(R.id.editTextPriority)).setText("Высокий");
-            break;
-          case 3:
-            ((EditText) findViewById(R.id.editTextPriority)).setText("Нормальный");
-            break;
-          case 4:
-            ((EditText) findViewById(R.id.editTextPriority)).setText("Низкий");
-            break;
-          case 5:
-            ((EditText) findViewById(R.id.editTextPriority)).setText("Самый низкий");
-            break;
-          }
+          ((EditText) findViewById(R.id.editTextPriority)).setText(ProjectPriority.values()[c.getInt(colIndex)].getIdName());
+          oldValues.put(Columns.PROJECT_PRIORITY, c.getInt(colIndex));
           mPriority = c.getInt(colIndex);
-          oldValues.put(Columns.PROJECT_PRIORITY, ((EditText) findViewById(R.id.editTextPriority)).getText().toString());
-        }*/
-
+        }
         colIndex = c.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE);
 
         if (colIndex != -1) {
@@ -570,7 +522,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     cv.put(Columns.PROJECT_PROJECTDUEDATE, ((EditText) findViewById(R.id.editDate)).getText().toString());
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
-    cv.put(Columns.PROJECT_PRIORITY, ((EditText) findViewById(R.id.editTextPriority)).getText().toString());
+    cv.put(Columns.PROJECT_PRIORITY,mPriority);
 
     if (mIsNew) {
       Uri uri = getContentResolver().insert(ProjectManagerProvider.PROJECT_URI, cv);
