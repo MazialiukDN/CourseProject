@@ -235,7 +235,7 @@ public class CatalogueListFragment extends ListFragment
 
     return new CursorLoader(getActivity(), contentURI,
                             projection, select, null,
-                            filterColumns[0] + " ASC");
+                            null);
   }
 
   public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {

@@ -12,11 +12,10 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.v4.database.DatabaseUtilsCompat;
 import by.bsu.courseproject.PMApplication;
+import by.bsu.courseproject.db.DBConstants.Columns;
+import by.bsu.courseproject.db.DBConstants.Tables;
 
 import java.util.HashMap;
-
-import static by.bsu.courseproject.db.DBConstants.Columns;
-import static by.bsu.courseproject.db.DBConstants.Tables;
 
 public class ProjectManagerProvider extends ContentProvider {
 
@@ -48,6 +47,8 @@ public class ProjectManagerProvider extends ContentProvider {
 
   private final HashMap<String, String> projectProjectionMap;
   private final HashMap<String, String> personProjectionMap;
+  private final HashMap<String, String> stageProjectionMap;
+  private final HashMap<String, String> stageEmployeenProjectionMap;
   private final HashMap<String, String> authorizationProjectionMap;
 
   public static final String CONTENT_NAME_PREFIX = "content://";
@@ -103,11 +104,7 @@ public class ProjectManagerProvider extends ContentProvider {
     projectProjectionMap.put(Columns.PROJECT_PRIORITY, Columns.PROJECT_PRIORITY);
     projectProjectionMap.put(Columns.PROJECT_INVESTOR_ID, Columns.PROJECT_INVESTOR_ID);
     projectProjectionMap.put(Columns.PROJECT_CUSTOMER_ID, Columns.PROJECT_CUSTOMER_ID);
-
-    projectProjectionMap.put(Columns.PERSON_FIRSTNAME, Columns.PERSON_FIRSTNAME);
-    projectProjectionMap.put(Columns.PERSON_MIDDLENAME, Columns.PERSON_MIDDLENAME);
-    projectProjectionMap.put(Columns.PERSON_LASTNAME, Columns.PERSON_LASTNAME);
-
+   
     personProjectionMap = new HashMap<String, String>();
     personProjectionMap.put(Columns._ID, Columns._ID);
     personProjectionMap.put(Columns.PERSON_DISCRIMINATOR, Columns.PERSON_DISCRIMINATOR);
@@ -123,6 +120,17 @@ public class ProjectManagerProvider extends ContentProvider {
     personProjectionMap.put(Columns.EMPLOYEE_EXPERIENCE, Columns.EMPLOYEE_EXPERIENCE);
     personProjectionMap.put(Columns.EMPLOYEE_EDUCATION, Columns.EMPLOYEE_EDUCATION);
 
+    stageProjectionMap = new HashMap<String, String>();
+    stageProjectionMap.put(Columns._ID, Columns._ID);
+    stageProjectionMap.put(Columns.STAGE_TYPE, Columns.STAGE_TYPE);
+    stageProjectionMap.put(Columns.STAGE_PROJECT_ID, Columns.STAGE_PROJECT_ID);
+    stageProjectionMap.put(Columns.STAGE_MANAGER, Columns.STAGE_MANAGER);
+    
+    stageEmployeenProjectionMap = new HashMap<String, String>();
+    stageEmployeenProjectionMap.put(Columns._ID, Columns._ID);
+    stageEmployeenProjectionMap.put(Columns.STAGE_ID, Columns.STAGE_ID);
+    stageEmployeenProjectionMap.put(Columns.EMPLOYEE_ID, Columns.EMPLOYEE_ID);
+    
   }
 
 
@@ -295,7 +303,9 @@ public class ProjectManagerProvider extends ContentProvider {
     case PROJECT:
       qb.setTables(uri.getLastPathSegment());
       qb.setProjectionMap(projectProjectionMap);
-      sortOrder = Columns.SORT_ORDER_PROJECT;
+      if (sortOrder == null) {
+    	  sortOrder = Columns.SORT_ORDER_PROJECT;
+      }
       break;
     case PROJECT_ID:
       qb.setTables(uri.getPathSegments().get(uri.getPathSegments().size() - 2));
@@ -308,7 +318,9 @@ public class ProjectManagerProvider extends ContentProvider {
     case EMPLOYEE:
       qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
-      sortOrder = Columns.SORT_ORDER_EMP;
+      if (sortOrder == null) {
+    	  sortOrder = Columns.SORT_ORDER_EMP;
+      }
       break;
 
     case AUTHORIZATION:
@@ -337,7 +349,9 @@ public class ProjectManagerProvider extends ContentProvider {
     case CUSTOMER_INVESTOR:
       qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
-      sortOrder = Columns.SORT_ORDER_EMP;
+      if (sortOrder == null) {
+    	  sortOrder = Columns.SORT_ORDER_EMP;
+      }
       break;
 
     case CUSTOMER_INVESTOR_ID:
@@ -347,9 +361,24 @@ public class ProjectManagerProvider extends ContentProvider {
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
+    case STAGE:
+        qb.setTables(Tables.STAGE);
+        qb.setProjectionMap(stageProjectionMap);
+        if (sortOrder == null) {
+          sortOrder = Columns.SORT_ORDER_ASC;
+        }
+        break;
+
+      case STAGE_ID:
+        qb.setTables(Tables.STAGE);
+        qb.setProjectionMap(stageProjectionMap);
+        qb.appendWhere(Columns._ID + "=?");
+        selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
+            selectionArgs, new String[]{uri.getLastPathSegment()});
+        break;
     case STAGE_EMPLOYEE:
       qb.setTables(Tables.STAGE_EMPLOYEE);
-      qb.setProjectionMap(personProjectionMap);
+      qb.setProjectionMap(stageEmployeenProjectionMap);
       if (sortOrder == null) {
         sortOrder = Columns.SORT_ORDER_ASC;
       }
@@ -357,7 +386,7 @@ public class ProjectManagerProvider extends ContentProvider {
 
     case STAGE_EMPLOYEE_ID:
       qb.setTables(Tables.STAGE_EMPLOYEE);
-      qb.setProjectionMap(personProjectionMap);
+      qb.setProjectionMap(stageEmployeenProjectionMap);
       qb.appendWhere(Columns._ID + "=?");
       selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
           selectionArgs, new String[]{uri.getLastPathSegment()});

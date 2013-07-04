@@ -328,7 +328,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       break;
     case R.id.buttonSave:
       if (((EditText) findViewById(R.id.editTextProjectName)).getText().toString().equals("")) {
-        showDialog("??????? ??? ???????");
+        showDialog(getResources().getString(R.string.label_name_project));
       } else {
         if (mIsNew) {
           saveToDB();

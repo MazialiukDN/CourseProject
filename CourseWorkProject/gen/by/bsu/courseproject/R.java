@@ -212,6 +212,8 @@ public final class R {
         public static final int label_initiating=0x7f080003;
         public static final int label_investor=0x7f080013;
         public static final int label_investors=0x7f08000f;
+        public static final int label_load_data=0x7f08001e;
+        public static final int label_name_project=0x7f080021;
         public static final int label_new_customer=0x7f08000a;
         public static final int label_new_employee=0x7f080009;
         public static final int label_new_investor=0x7f08000b;
@@ -220,6 +222,8 @@ public final class R {
         public static final int label_planning=0x7f080004;
         public static final int label_project=0x7f080011;
         public static final int label_projects=0x7f08000c;
+        public static final int label_save_data=0x7f08001f;
+        public static final int label_saving_data=0x7f080020;
         public static final int label_stage=0x7f08001a;
         public static final int label_warning=0x7f08001d;
         public static final int name_dialog_title=0x7f080019;

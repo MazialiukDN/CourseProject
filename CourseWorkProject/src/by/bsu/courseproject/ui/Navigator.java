@@ -2,15 +2,25 @@ package by.bsu.courseproject.ui;
 
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.util.ExportData;
+import by.bsu.courseproject.util.SynchronizationTask;
 
 
 public class Navigator extends Activity implements View.OnClickListener {
 
 
+	private static final int LOAD_DATA = 0;
+	private static final int SAVE_DATA = 1;
+	private ProgressDialog mProgress;
+	
   @Override
   public void onCreate(Bundle savedInstanceState) {
 
@@ -21,7 +31,17 @@ public class Navigator extends Activity implements View.OnClickListener {
     findViewById(R.id.imageView_projects).setOnClickListener((android.view.View.OnClickListener) this);
   }
 
+  @Override
+	protected Dialog onCreateDialog(int id) {		
+		if (id == SynchronizationTask.PROGRESS_DLG_ID && mProgress != null) {			
+			mProgress.setCancelable(true);
+			mProgress.setIcon(0);
+			mProgress.setMessage(getResources().getString(R.string.label_saving_data));
+			return mProgress;
+		}
 
+		return null;
+	}
 
   public void onClick(View v) {
     Intent intent = new Intent();
@@ -35,11 +55,33 @@ public class Navigator extends Activity implements View.OnClickListener {
     default:
       break;
     }
-
     startActivity(intent);
     return;
-
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+	  menu.add(Menu.NONE, LOAD_DATA, Menu.NONE, R.string.label_load_data);
+	  menu.add(Menu.NONE, SAVE_DATA, Menu.NONE, R.string.label_save_data);
+	  return super.onCreateOptionsMenu(menu);
+  }
+
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case SAVE_DATA:
+    	mProgress  = new ProgressDialog(this);
+		new SynchronizationTask(this,
+				mProgress).execute();
+      break;
+    case LOAD_DATA:
+        break;
+    default:
+      return false;
+    }
+
+    return true;
+  }
 
 }

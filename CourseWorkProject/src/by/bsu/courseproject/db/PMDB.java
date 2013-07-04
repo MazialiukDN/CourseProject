@@ -133,14 +133,14 @@ public class PMDB {
 
   private final String CREATE_TABLE_STAGE_EMPLOYEE = "CREATE TABLE " + Tables.STAGE_EMPLOYEE + " ("
                                                      + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                     + Columns.STAGE_ID + " INTEGER,"
-                                                     + Columns.EMPLOYEE_ID + " INTEGER );";
+                                                     + Columns.STAGE_ID + " INTEGER NOT NULL ,"
+                                                     + Columns.EMPLOYEE_ID + " INTEGER NOT NULL );";
 
   private final String CREATE_TABLE_STAGE = "CREATE TABLE " + Tables.STAGE + " ("
                                             + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                            + Columns.STAGE_TYPE + " INTEGER,"
-                                            + Columns.STAGE_PROJECT_ID + " INTEGER,"
-                                            + Columns.STAGE_MANAGER + " INTEGER );";
+                                            + Columns.STAGE_TYPE + " INTEGER NOT NULL ,"
+                                            + Columns.STAGE_PROJECT_ID + " INTEGER NOT NULL ,"
+                                            + Columns.STAGE_MANAGER + " INTEGER NOT NULL );";
 
   private final String DROP_TABLE_STAGE = "DROP TABLE IF EXISTS " + Tables.STAGE;
   private final String DROP_TABLE_STAGE_EMPLOYEE = "DROP TABLE IF EXISTS " + Tables.STAGE_EMPLOYEE;

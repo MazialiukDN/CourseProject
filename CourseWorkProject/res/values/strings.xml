@@ -30,5 +30,8 @@
   <string name="label_delete_project">Удалить проект</string>
   <string name="label_delete_employee">Удалить исполнителя</string>
   <string name="label_warning">Предупреждение</string>
-
+	<string name="label_load_data">Загрузить данные</string>
+	<string name="label_save_data">Сохранить данные</string>
+	<string name="label_saving_data">Сохранение данных …</string>
+	<string name="label_name_project">Введите имя проекта</string>
 </resources>
