@@ -7,17 +7,15 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 
+import static by.bsu.courseproject.util.ImportExportUtil.*;
+
 public class ExportData {
-	
-	private final static String NULL_VALUE = "NULL";
-	
-	public static boolean exportData(Context context) {
+
+  public static boolean exportData(Context context) {
 		if (isExternalStorageReadable()) {
 			File dirPath = getStorageDir();
 			if (dirPath != null) {
@@ -37,22 +35,23 @@ public class ExportData {
 
 					out.write("Persons\r\n".getBytes());
 					Cursor cursor = context.getContentResolver().query(ProjectManagerProvider.PERSON_URI, null, null, null, Columns._ID + " ASC");
-					writePersons(out, cursor, 13);
+					writePersons(out, cursor);
 					out.write("\r\n".getBytes());
 					
 					out.write("Projects\r\n".getBytes());
 					cursor = context.getContentResolver().query(ProjectManagerProvider.PROJECT_URI, null, null, null, Columns._ID + " ASC");
-					writeProjects(out, cursor, 8);
+					writeProjects(out, cursor);
 					out.write("\r\n".getBytes());
 					
 					out.write("Stages\r\n".getBytes());
 					cursor = context.getContentResolver().query(ProjectManagerProvider.STAGE_URI, null, null, null, Columns._ID + " ASC");
-					writeStages(out, cursor, 4);
+					writeStages(out, cursor);
 					out.write("\r\n".getBytes());
 					
 					out.write("Stage-Person\r\n".getBytes());
 					cursor = context.getContentResolver().query(ProjectManagerProvider.STAGE_EMPLOYEE_URI, null, null, null, Columns._ID + " ASC");
-					writeStageEmployee(out, cursor, 3);
+					writeStageEmployee(out, cursor);
+          out.write("\r\n".getBytes());
 					
 					out.flush();
 					out.close();
@@ -72,7 +71,7 @@ public class ExportData {
 		return false;
 	}
 
-	private static void writeStages(FileOutputStream out, Cursor cursor, int count) {
+	private static void writeStages(FileOutputStream out, Cursor cursor) {
 		try {
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
@@ -88,7 +87,7 @@ public class ExportData {
 		}
 	}
 	
-	private static void writeStageEmployee(FileOutputStream out, Cursor cursor, int count) {
+	private static void writeStageEmployee(FileOutputStream out, Cursor cursor) {
 		try {
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
@@ -103,7 +102,7 @@ public class ExportData {
 		}
 	}
 
-	private static void writeProjects(FileOutputStream out, Cursor cursor, int count) {
+	private static void writeProjects(FileOutputStream out, Cursor cursor) {
 		try {
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
@@ -140,7 +139,7 @@ public class ExportData {
 		}
 	}
 
-	private static void writePersons(FileOutputStream out, Cursor cursor, int count) {
+	private static void writePersons(FileOutputStream out, Cursor cursor) {
 		try {
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
@@ -164,39 +163,5 @@ public class ExportData {
 			e.printStackTrace();
 		}
 	}
-	
-	private static byte[] getData(String str) {
-		 str = str == null ? NULL_VALUE : str;
-		 return str.getBytes();
-	}
-	
-	/* Checks if external storage is available for read and write */
-	public static boolean isExternalStorageWritable() {
-	    String state = Environment.getExternalStorageState();
-	    if (Environment.MEDIA_MOUNTED.equals(state)) {
-	        return true;
-	    }
-	    return false;
-	}
 
-	/* Checks if external storage is available to at least read */
-	public static boolean isExternalStorageReadable() {
-	    String state = Environment.getExternalStorageState();
-	    if (Environment.MEDIA_MOUNTED.equals(state) ||
-	        Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-	        return true;
-	    }
-	    return false;
-	}
-	
-	public static File getStorageDir() {
-	    // Get the directory for the user's public pictures directory. 
-	    File file = new File(Environment.getExternalStoragePublicDirectory(
-	            Environment.DIRECTORY_DOWNLOADS), "Portfolio");
-	    if (!file.mkdirs()) {
-	        Log.e("debug", "Directory not created");
-	    }
-	    return file;
-	}
-	
 }
