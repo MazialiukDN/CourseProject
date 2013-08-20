@@ -11,6 +11,7 @@ public class DBConstants {
   public static final class Columns implements BaseColumns {
 
     public static final String PROJECT_PROJECTNAME = "PROJECTNAME";
+    public static final String PROJECT_DESCRIPTION = "DESCRIPTION";
     public static final String PROJECT_PROJECTDUEDATE = "PROJECTDUEDATE";
     public static final String PROJECT_CATEGORY = "CATEGORY";
     public static final String PROJECT_STATUS = "STATUS";

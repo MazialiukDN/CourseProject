@@ -17,6 +17,7 @@ import by.bsu.courseproject.util.DateUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
 import static by.bsu.courseproject.db.DBConstants.Tables;
@@ -35,6 +36,7 @@ public class ProjectDataSource {
   {
     projectProjectionMap.put(Columns._ID, Columns._ID);
     projectProjectionMap.put(Columns.PROJECT_PROJECTNAME, Columns.PROJECT_PROJECTNAME);
+    projectProjectionMap.put(Columns.PROJECT_DESCRIPTION, Columns.PROJECT_DESCRIPTION);
     projectProjectionMap.put(Columns.PROJECT_PROJECTDUEDATE, Columns.PROJECT_PROJECTDUEDATE);
     projectProjectionMap.put(Columns.PROJECT_CATEGORY, Columns.PROJECT_CATEGORY);
     projectProjectionMap.put(Columns.PROJECT_STATUS, Columns.PROJECT_STATUS);
@@ -53,6 +55,7 @@ public class ProjectDataSource {
     Project project = new Project();
     project.setId(cursor.getLong(cursor.getColumnIndex(Columns._ID)));
     project.setName(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME)));
+    project.setDescription(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_DESCRIPTION)));
     String date = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
     project.setDueDate(DateUtil.stringToDate(date));
     //TODO: Use enum constants in all places or change field types
@@ -120,8 +123,9 @@ public class ProjectDataSource {
   public List<Project> getAllProjects() {
     List<Project> Projects = new ArrayList<Project>();
 
+    Set<String> projections = projectProjectionMap.keySet();
     Cursor cursor = db.query(Tables.PROJECT,
-                             projectProjectionMap.keySet().toArray(new String[0]), null, null, null, null, Columns.SORT_ORDER_PROJECT);
+                             projections.toArray(new String[projections.size()]), null, null, null, null, Columns.SORT_ORDER_PROJECT);
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {

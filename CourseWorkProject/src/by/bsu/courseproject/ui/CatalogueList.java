@@ -37,17 +37,7 @@ public class CatalogueList extends ListActivity {
 
     setListAdapter(new ArrayAdapter<String>(this,
                                             android.R.layout.simple_list_item_1, mCategories));
-  //  getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
-
-  public static final String PROJECT_PROJECTNAME = "PROJECTNAME";
-  public static final String PROJECT_PROJECTDUEDATE = "PROJECTDUEDATE";
-  public static final String PROJECT_CATEGORY = "CATEGORY";
-  public static final String PROJECT_STATUS = "STATUS";
-  public static final String PROJECT_PRIORITY = "PRIORITY";
-  public static final String PROJECT_PROJECTDESCRIPTION = "PROJECTDESCRIPTION";
-
-
 
 
   @Override
@@ -57,7 +47,7 @@ public class CatalogueList extends ListActivity {
 
     Intent intent = new Intent();
     intent.setClass(CatalogueList.this, CatalogueFragment.class);
-    String[] projection = null;
+    String[] projection;
     intent.putExtra(CatalogueFragment.FROM_LIST, position);
 
     switch (position) {
@@ -65,28 +55,21 @@ public class CatalogueList extends ListActivity {
       projection = new String[]{
           Columns._ID,
           Columns.PROJECT_PROJECTNAME,
+          Columns.PROJECT_DESCRIPTION,
           Columns.PROJECT_CATEGORY,
           Columns.PROJECT_PRIORITY,
           Columns.PROJECT_STATUS,
-          Columns.PROJECT_PROJECTDUEDATE/*,
-          Columns.PERSON_FIRSTNAME,
-          Columns.PERSON_MIDDLENAME,
-          Columns.PERSON_LASTNAME*/
+          Columns.PROJECT_PROJECTDUEDATE
       };
 
       intent.setData(ProjectManagerProvider.CONTENT_URI);
       intent.putExtra(CatalogueListFragment.ARG_FILTER_COLUMNS,
                       new String[]{Columns.PROJECT_PROJECTNAME,
+                                   Columns.PROJECT_DESCRIPTION,
                                    Columns.PROJECT_CATEGORY,
                                    Columns.PROJECT_PRIORITY,
                                    Columns.PROJECT_STATUS,
-                                   Columns.PROJECT_PROJECTDUEDATE/*,
-                                   Columns.PERSON_FIRSTNAME,
-                                   Columns.PERSON_MIDDLENAME,
-                                   Columns.PERSON_LASTNAME,
-                                   Columns.PERSON_FIRSTNAME,
-                                   Columns.PERSON_MIDDLENAME,
-                                   Columns.PERSON_LASTNAME*/});
+                                   Columns.PROJECT_PROJECTDUEDATE});
       intent.putExtra(CatalogueListFragment.ARG_ADAPTER_FROM,
 
                       new String[]{Columns.PROJECT_PROJECTNAME, Columns.PROJECT_CATEGORY, Columns.PROJECT_PROJECTDUEDATE});

@@ -8,9 +8,7 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
-import static by.bsu.courseproject.util.ImportExportUtil.NULL_VALUE;
-import static by.bsu.courseproject.util.ImportExportUtil.getStorageDir;
-import static by.bsu.courseproject.util.ImportExportUtil.isExternalStorageReadable;
+import static by.bsu.courseproject.util.ImportExportUtil.*;
 
 /**
  * User: Artyom Strok
@@ -38,9 +36,9 @@ public class ImportData {
             reader.close();
             fileReader.close();
           } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
           } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
           }
 
         }
@@ -79,34 +77,35 @@ public class ImportData {
     String line;
     try {
       while (!(line = reader.readLine()).isEmpty()) {
-        if (line.equals("Persons")){
+        if (line.equals("Persons")) {
           continue;
         }
         ContentValues values = stringToPerson(line);
         context.getContentResolver().insert(ProjectManagerProvider.PERSON_URI, values);
       }
     } catch (IOException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+      e.printStackTrace();
     }
 
   }
 
-  private static ContentValues stringToProject(String line){
+  private static ContentValues stringToProject(String line) {
     StringTokenizer tokenizer = new StringTokenizer(line, DELIMITER);
     ContentValues values = new ContentValues();
     values.put(Columns._ID, Long.valueOf(tokenizer.nextToken().trim()));
     values.put(Columns.PROJECT_PROJECTNAME, tokenizer.nextToken().trim());
+    values.put(Columns.PROJECT_DESCRIPTION, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_PROJECTDUEDATE, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_CATEGORY, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_STATUS, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_PRIORITY, Integer.valueOf(tokenizer.nextToken().trim()));
     String customer = tokenizer.nextToken().trim();
-    if (!customer.equals(NULL_VALUE)){
+    if (!customer.equals(NULL_VALUE)) {
       values.put(Columns.PROJECT_CUSTOMER_ID, Long.valueOf(customer));
     }
     String investor = tokenizer.nextToken().trim();
-    if (!investor.equals(NULL_VALUE)){
-     values.put(Columns.PROJECT_INVESTOR_ID, Long.valueOf(investor));
+    if (!investor.equals(NULL_VALUE)) {
+      values.put(Columns.PROJECT_INVESTOR_ID, Long.valueOf(investor));
     }
     return values;
   }
@@ -115,7 +114,7 @@ public class ImportData {
     String line;
     try {
       while (!(line = reader.readLine()).isEmpty()) {
-        if (line.equals("Projects")){
+        if (line.equals("Projects")) {
           continue;
         }
         ContentValues values = stringToProject(line);
@@ -125,7 +124,8 @@ public class ImportData {
       e.printStackTrace();
     }
   }
-  private static ContentValues stringToStage(String line){
+
+  private static ContentValues stringToStage(String line) {
     StringTokenizer tokenizer = new StringTokenizer(line, DELIMITER);
     ContentValues values = new ContentValues();
     values.put(Columns._ID, Long.valueOf(tokenizer.nextToken().trim()));
@@ -140,7 +140,7 @@ public class ImportData {
     String line;
     try {
       while (!(line = reader.readLine()).isEmpty()) {
-        if (line.equals("Stages")){
+        if (line.equals("Stages")) {
           continue;
         }
         ContentValues values = stringToStage(line);
@@ -151,7 +151,7 @@ public class ImportData {
     }
   }
 
-  private static ContentValues stringToStageEmployee(String line){
+  private static ContentValues stringToStageEmployee(String line) {
     StringTokenizer tokenizer = new StringTokenizer(line, DELIMITER);
     ContentValues values = new ContentValues();
     values.put(Columns._ID, Long.valueOf(tokenizer.nextToken().trim()));
@@ -164,7 +164,7 @@ public class ImportData {
     String line;
     try {
       while (!(line = reader.readLine()).isEmpty()) {
-        if (line.equals("Stage-Person")){
+        if (line.equals("Stage-Person")) {
           continue;
         }
         ContentValues values = stringToStageEmployee(line);

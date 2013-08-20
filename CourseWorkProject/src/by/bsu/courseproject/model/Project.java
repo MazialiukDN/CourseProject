@@ -14,6 +14,7 @@ import java.util.Date;
 public class Project extends BasicEntity {
 
   private String name;
+  private String description;
   private Date dueDate;
   private ProjectCategory category;
   private ProjectStatus status;
@@ -76,5 +77,13 @@ public class Project extends BasicEntity {
 
   public void setCustomer(Customer customer) {
     this.customer = customer;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 }

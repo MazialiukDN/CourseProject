@@ -1,316 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
- >
-    
-        
-   
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
-        android:padding="10dip" >
+        android:padding="10dip">
 
-        <LinearLayout
-            android:layout_width="0dip"
+      <LinearLayout
+          android:layout_width="0dip"
+          android:layout_height="fill_parent"
+
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/dark_blue"
+            android:text="Основная информация"
+            android:textSize="24dip"/>
+
+        <TableLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/dark_blue"
-                android:text="Основная информация"
-                android:textSize="24dip" />
-
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical"
-                android:padding="10dip" >
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Имя проекта"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextProjectName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10" >
-
-                        <requestFocus />
-                    </EditText>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:text="Заказчик"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextCustl"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextCustf"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextCustm"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:text="Инвестор"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextInvl"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextInvf"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="150dip"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/editTextInvm"
-                        android:layout_width="180dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:inputType="text" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="5dip" >
+            android:padding="10dip">
+
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/dark_blue"
-                android:layout_marginBottom="5dip"
-                android:text="Дополнительная информация"
-                android:textSize="24dip" />
+                android:text="Имя проекта"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/editTextProjectName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_weight="1"
+                android:ems="10">
 
-                <TextView
-                    android:layout_width="150dip"
-                    android:layout_height="wrap_content"
-                    android:text="Категория"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+              <requestFocus/>
+            </EditText>
+          </TableRow>
 
-                <EditText
-                    android:id="@+id/editTextCategory"
-                    android:layout_width="180dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dip">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="150dip"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:text="Заказчик"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <TextView
-                    android:layout_width="150dip"
-                    android:layout_height="wrap_content"
-                    android:text="Статус"
-                    
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <EditText
-                    android:id="@+id/editTextStatus"
-                    android:layout_width="180dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/editTextCustl"
+                android:layout_width="180dip"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
 
-                <TextView
-                    android:layout_width="150dip"
-                    android:layout_height="wrap_content"
-                    android:text="Приоритет"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/editTextPriority"
-                    android:layout_width="180dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="150dip"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <TextView
-                    android:layout_width="150dip"
-                    android:layout_height="130dip"
-                    android:text="Дата завершения"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            <EditText
+                android:id="@+id/editTextCustf"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
 
-                <EditText
-                    android:id="@+id/editDate"
-                    android:layout_width="180dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="date" />
-            </LinearLayout>
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/editTextCustm"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
+
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dip">
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:text="Инвестор"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/editTextInvl"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
+
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/editTextInvf"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
+
+          <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/editTextInvm"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="text"/>
+          </TableRow>
+        </TableLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="0dip"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          android:paddingBottom="10dip"
+          android:paddingLeft="10dip"
+          android:paddingRight="10dip"
+          android:paddingTop="5dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/dark_blue"
+            android:layout_marginBottom="5dip"
+            android:text="Дополнительная информация"
+            android:textSize="24dip"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:text="Категория"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/editTextCategory"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:text="Статус"
+
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/editTextStatus"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:text="Приоритет"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/editTextPriority"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="130dip"
+              android:text="Дата завершения"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/editDate"
+              android:layout_width="180dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:focusable="false"
+              android:inputType="date"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="150dip"
+              android:layout_height="130dip"
+              android:text="Описание"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+          <EditText
+              android:id="@+id/projectDescription"
+              android:layout_width="180dip"
+              android:layout_height="fill_parent"
+              android:layout_weight="1"
+              android:inputType="textMultiLine|textNoSuggestions"
+              android:scrollbars="vertical"
+              android:fadeScrollbars="false"/>
+        </LinearLayout>
+      </LinearLayout>
     </LinearLayout>
 
-     <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip" >
+        android:layout_marginRight="10dip">
 
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="13dip"
-            android:layout_weight="1"
-            android:text="Отменить" />
+      <Button
+          android:id="@+id/buttonCancel"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dip"
+          android:layout_marginRight="13dip"
+          android:layout_weight="1"
+          android:text="Отменить"/>
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dip"
-            android:layout_marginRight="8dip"
-            android:layout_weight="1"
-            android:text="Сохранить" />
+      <Button
+          android:id="@+id/buttonSave"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="7dip"
+          android:layout_marginRight="8dip"
+          android:layout_weight="1"
+          android:text="Сохранить"/>
     </LinearLayout>
-     </LinearLayout>
+  </LinearLayout>
 </ScrollView>

@@ -20,20 +20,20 @@ import by.bsu.courseproject.PMApplication;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
-import by.bsu.courseproject.model.Employee;
 import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
 
-import static by.bsu.courseproject.project.ProjectPriority.*;
+import static by.bsu.courseproject.project.ProjectPriority.NORMAL;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
   public static String FROM_LIST = "FROM_LIST";
   public static int ITEM = 1;
-  public static int MENU = 2;
   private ContentValues oldValues;
 
   private static final int DATE_PICKER_DIALOG = 1;
@@ -49,9 +49,6 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   private int mCustId = -1;
 
   private int mPendingView;
-  //  private ProjectPriority priority = ProjectPriority.NORMAL;
-//  private String mDate = "";
-//  private ProjectStatus status = ProjectStatus.PRORPOSED;
   private int mPriority = 2;
   private String mDate = "";
   private int mStatus = -1;
@@ -88,11 +85,12 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   }
 
 
-  @Override protected void onResume() {
-	  super.onResume();
-	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-  };
-  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  }
+
   @Override
   protected Dialog onCreateDialog(int dialogId) {
     switch (dialogId) {
@@ -179,11 +177,12 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), new String[]{Columns._ID,
+                                                           Columns.PROJECT_PROJECTNAME,
+                                                           Columns.PROJECT_DESCRIPTION,
                                                            Columns.PROJECT_CATEGORY,
                                                            Columns.PROJECT_STATUS,
                                                            Columns.PROJECT_PRIORITY,
                                                            Columns.PROJECT_PROJECTDUEDATE,
-                                                           Columns.PROJECT_PROJECTNAME,
                                                            Columns.PROJECT_INVESTOR_ID,
                                                            Columns.PROJECT_CUSTOMER_ID}, null, null, null);
 
@@ -197,6 +196,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
         if (colIndex != -1) {
           ((EditText) findViewById(R.id.editTextProjectName)).setText(c.getString(colIndex));
           oldValues.put(Columns.PROJECT_PROJECTNAME, c.getString(colIndex));
+        }
+        colIndex = c.getColumnIndex(Columns.PROJECT_DESCRIPTION);
+        if (colIndex != -1) {
+          ((EditText) findViewById(R.id.projectDescription)).setText(c.getString(colIndex));
+          oldValues.put(Columns.PROJECT_DESCRIPTION, c.getString(colIndex));
         }
 
         colIndex = c.getColumnIndex(Columns.PROJECT_CATEGORY);
@@ -216,8 +220,8 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
           if (c.getString(colIndex).equals("Отклоненный")) mStatus = 5;
 
         }
-        
-     
+
+
         colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
         if (colIndex != -1) {
           ((EditText) findViewById(R.id.editTextPriority)).setText(ProjectPriority.values()[c.getInt(colIndex)].getIdName());
@@ -492,6 +496,10 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
         oldValues.getAsString(Columns.PROJECT_PROJECTNAME))) {
       return true;
     }
+    if (oldValues.containsKey(Columns.PROJECT_DESCRIPTION) && !((EditText) findViewById(R.id.projectDescription)).getText().toString().equals(
+        oldValues.getAsString(Columns.PROJECT_DESCRIPTION))) {
+      return true;
+    }
     if (oldValues.containsKey(Columns.PROJECT_CATEGORY) && !((EditText) findViewById(R.id.editTextCategory)).getText().toString().equals(
         oldValues.getAsString(Columns.PROJECT_CATEGORY))) {
       return true;
@@ -517,12 +525,13 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   private void saveToDB() {
     ContentValues cv = new ContentValues();
     cv.put(Columns.PROJECT_PROJECTNAME, ((EditText) findViewById(R.id.editTextProjectName)).getText().toString());
+    cv.put(Columns.PROJECT_DESCRIPTION, ((EditText) findViewById(R.id.projectDescription)).getText().toString());
     cv.put(Columns.PROJECT_CATEGORY, ((EditText) findViewById(R.id.editTextCategory)).getText().toString());
     cv.put(Columns.PROJECT_STATUS, ((EditText) findViewById(R.id.editTextStatus)).getText().toString());
     cv.put(Columns.PROJECT_PROJECTDUEDATE, ((EditText) findViewById(R.id.editDate)).getText().toString());
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
-    cv.put(Columns.PROJECT_PRIORITY,mPriority);
+    cv.put(Columns.PROJECT_PRIORITY, mPriority);
 
     if (mIsNew) {
       Uri uri = getContentResolver().insert(ProjectManagerProvider.PROJECT_URI, cv);
@@ -535,7 +544,6 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
         project.setId(ContentUris.parseId(uri));
         stage.setProject(project);
         stage.setType(stageType);
-        by.bsu.courseproject.model.Employee manager = new Employee();
         PMApplication.getPMDB().getStageDataSource().persistStage(stage);
       }
     } else {

@@ -36,9 +36,6 @@ public class ProjectManagerProvider extends ContentProvider {
   private static final int CUSTOMER_INVESTOR = 9;
   private static final int CUSTOMER_INVESTOR_ID = 10;
 
-  private static final int VIEW_NAME = 11;
-  private static final int VIEW_NAME_ID = 12;
-
   private static final int AUTHORIZATION = 14;
   private static final int AUTHORIZATION_ID = 15;
 
@@ -98,13 +95,14 @@ public class ProjectManagerProvider extends ContentProvider {
     projectProjectionMap = new HashMap<String, String>();
     projectProjectionMap.put(Columns._ID, Columns._ID);
     projectProjectionMap.put(Columns.PROJECT_PROJECTNAME, Columns.PROJECT_PROJECTNAME);
+    projectProjectionMap.put(Columns.PROJECT_DESCRIPTION, Columns.PROJECT_DESCRIPTION);
     projectProjectionMap.put(Columns.PROJECT_PROJECTDUEDATE, Columns.PROJECT_PROJECTDUEDATE);
     projectProjectionMap.put(Columns.PROJECT_CATEGORY, Columns.PROJECT_CATEGORY);
     projectProjectionMap.put(Columns.PROJECT_STATUS, Columns.PROJECT_STATUS);
     projectProjectionMap.put(Columns.PROJECT_PRIORITY, Columns.PROJECT_PRIORITY);
     projectProjectionMap.put(Columns.PROJECT_INVESTOR_ID, Columns.PROJECT_INVESTOR_ID);
     projectProjectionMap.put(Columns.PROJECT_CUSTOMER_ID, Columns.PROJECT_CUSTOMER_ID);
-   
+
     personProjectionMap = new HashMap<String, String>();
     personProjectionMap.put(Columns._ID, Columns._ID);
     personProjectionMap.put(Columns.PERSON_DISCRIMINATOR, Columns.PERSON_DISCRIMINATOR);
@@ -125,12 +123,12 @@ public class ProjectManagerProvider extends ContentProvider {
     stageProjectionMap.put(Columns.STAGE_TYPE, Columns.STAGE_TYPE);
     stageProjectionMap.put(Columns.STAGE_PROJECT_ID, Columns.STAGE_PROJECT_ID);
     stageProjectionMap.put(Columns.STAGE_MANAGER, Columns.STAGE_MANAGER);
-    
+
     stageEmployeenProjectionMap = new HashMap<String, String>();
     stageEmployeenProjectionMap.put(Columns._ID, Columns._ID);
     stageEmployeenProjectionMap.put(Columns.STAGE_ID, Columns.STAGE_ID);
     stageEmployeenProjectionMap.put(Columns.EMPLOYEE_ID, Columns.EMPLOYEE_ID);
-    
+
   }
 
 
@@ -304,7 +302,7 @@ public class ProjectManagerProvider extends ContentProvider {
       qb.setTables(uri.getLastPathSegment());
       qb.setProjectionMap(projectProjectionMap);
       if (sortOrder == null) {
-    	  sortOrder = Columns.SORT_ORDER_PROJECT;
+        sortOrder = Columns.SORT_ORDER_PROJECT;
       }
       break;
     case PROJECT_ID:
@@ -319,7 +317,7 @@ public class ProjectManagerProvider extends ContentProvider {
       qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
       if (sortOrder == null) {
-    	  sortOrder = Columns.SORT_ORDER_EMP;
+        sortOrder = Columns.SORT_ORDER_EMP;
       }
       break;
 
@@ -350,7 +348,7 @@ public class ProjectManagerProvider extends ContentProvider {
       qb.setTables(Tables.PERSON);
       qb.setProjectionMap(personProjectionMap);
       if (sortOrder == null) {
-    	  sortOrder = Columns.SORT_ORDER_EMP;
+        sortOrder = Columns.SORT_ORDER_EMP;
       }
       break;
 
@@ -362,20 +360,20 @@ public class ProjectManagerProvider extends ContentProvider {
           selectionArgs, new String[]{uri.getLastPathSegment()});
       break;
     case STAGE:
-        qb.setTables(Tables.STAGE);
-        qb.setProjectionMap(stageProjectionMap);
-        if (sortOrder == null) {
-          sortOrder = Columns.SORT_ORDER_ASC;
-        }
-        break;
+      qb.setTables(Tables.STAGE);
+      qb.setProjectionMap(stageProjectionMap);
+      if (sortOrder == null) {
+        sortOrder = Columns.SORT_ORDER_ASC;
+      }
+      break;
 
-      case STAGE_ID:
-        qb.setTables(Tables.STAGE);
-        qb.setProjectionMap(stageProjectionMap);
-        qb.appendWhere(Columns._ID + "=?");
-        selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
-            selectionArgs, new String[]{uri.getLastPathSegment()});
-        break;
+    case STAGE_ID:
+      qb.setTables(Tables.STAGE);
+      qb.setProjectionMap(stageProjectionMap);
+      qb.appendWhere(Columns._ID + "=?");
+      selectionArgs = DatabaseUtilsCompat.appendSelectionArgs(
+          selectionArgs, new String[]{uri.getLastPathSegment()});
+      break;
     case STAGE_EMPLOYEE:
       qb.setTables(Tables.STAGE_EMPLOYEE);
       qb.setProjectionMap(stageEmployeenProjectionMap);

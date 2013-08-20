@@ -16,10 +16,6 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  */
 public class PMDB {
   private static final String DATABASE_NAME = "project_manager.db";
-  private static final int DATABASE_VERSION = 1;
-
-  private Context context;
-  //TODO:delete static
   private SQLiteDatabase db;
   private ProjectDataSource projectDataSource;
   private PersonDataSource personDataSource;
@@ -42,11 +38,11 @@ public class PMDB {
       "INSERT INTO \"person\" VALUES(13,'C', 'cusFN3',   'cusLN3',   'cusP3', 'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23-01-1991','','IBA','','');",
       "INSERT INTO \"person\" VALUES(14,'I', 'invFN3',   'invLN3',   'invP3', 'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23-01-1991','','IBA','','');",
 
-      "INSERT INTO \"project\" VALUES(1,'Проект 1','22-05-2012','Образование', 'Действующий', 2, 11, 10);",
-      "INSERT INTO \"project\" VALUES(2,'Проект 2','22-06-2012','Консультационные услуги', 'Действующий', 2, 13, 12);",
-      "INSERT INTO \"project\" VALUES(3,'Проект 3','05-04-2012','Консультационные услуги', 'Действующий', 2, 13, 14);",
-      "INSERT INTO \"project\" VALUES(4,'Проект 4','23-04-2012','Консультационные услуги', 'Действующий', 2, 11, 10);",
-      "INSERT INTO \"project\" VALUES(5,'Проект 5','07-11-2012','Консультационные услуги', 'Действующий', 2, 11, 12);",
+      "INSERT INTO \"project\" VALUES(1,'Проект 1','Описание 1','22-05-2012','Образование', 'Действующий', 2, 11, 10);",
+      "INSERT INTO \"project\" VALUES(2,'Проект 2','Описание 2','22-06-2012','Консультационные услуги', 'Действующий', 2, 13, 12);",
+      "INSERT INTO \"project\" VALUES(3,'Проект 3','Описание 3','05-04-2012','Консультационные услуги', 'Действующий', 2, 13, 14);",
+      "INSERT INTO \"project\" VALUES(4,'Проект 4','Описание 4','23-04-2012','Консультационные услуги', 'Действующий', 2, 11, 10);",
+      "INSERT INTO \"project\" VALUES(5,'Проект 5','Описание 5','07-11-2012','Консультационные услуги', 'Действующий', 2, 11, 12);",
 
       "INSERT INTO \"stage\" VALUES(1, 0, 1, 1)",
       "INSERT INTO \"stage\" VALUES(2, 1, 1, 2)",
@@ -82,6 +78,7 @@ public class PMDB {
   private final String CREATE_TABLE_PROJECT = "CREATE TABLE " + Tables.PROJECT + "("
                                               + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                                               + Columns.PROJECT_PROJECTNAME + " TEXT NOT NULL,"
+                                              + Columns.PROJECT_DESCRIPTION + " TEXT,"
                                               + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
                                               + Columns.PROJECT_CATEGORY + " TEXT,"
                                               + Columns.PROJECT_STATUS + " TEXT,"
@@ -110,27 +107,6 @@ public class PMDB {
                                              + Columns.EMPLOYEE_EXPERIENCE + " TEXT,"
                                              + Columns.EMPLOYEE_EDUCATION + " TEXT );";
 
-/*  private final String CREATE_VIEW_PROJECT = "CREATE VIEW "
-                                               + Tables.PROJECT_VIEW
-                                               + " AS SELECT "
-                                               + "P." + Columns._ID
-                                               + ",P." + Columns.PROJECT_PROJECTNAME
-                                               + ",P." + Columns.PROJECT_PROJECTDUEDATE
-                                               + ",P." + Columns.PROJECT_CATEGORY
-                                               + ",P." + Columns.PROJECT_STATUS
-                                               + ",P." + Columns.PROJECT_PRIORITY
-                                               + ",P. " + Columns.PROJECT_INVESTOR_ID
-                                               + ",P. " + Columns.PROJECT_CUSTOMER_ID
-                                               + ",i. " + Columns.PERSON_FIRSTNAME + " as " + Columns.INVESTOR_FIRSTNAME
-                                               + ",i. " + Columns.PERSON_MIDDLENAME + " as " + Columns.INVESTOR_MIDDLENAME
-                                               + ",i. " + Columns.PERSON_LASTNAME + " as " + Columns.INVESTOR_LASTNAME
-                                               + ",cust. " + Columns.PERSON_FIRSTNAME + " as " + Columns.CUSTOMER_FIRSTNAME
-                                               + ",cust. " + Columns.PERSON_MIDDLENAME + " as " + Columns.CUSTOMER_MIDDLENAME
-                                               + ",cust. " + Columns.PERSON_LASTNAME + " as " + Columns.CUSTOMER_LASTNAME
-                                               + " FROM  project p"
-                                               + " LEFT OUTER JOIN " + Tables.PERSON + " i ON  p._ID = i._id "
-                                               + " LEFT OUTER JOIN " + Tables.PERSON + " cust ON  p._ID = cust._id ";*/
-
   private final String CREATE_TABLE_STAGE_EMPLOYEE = "CREATE TABLE " + Tables.STAGE_EMPLOYEE + " ("
                                                      + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                                                      + Columns.STAGE_ID + " INTEGER NOT NULL ,"
@@ -149,7 +125,6 @@ public class PMDB {
   private final String DROP_TABLE_AUTHORIZATION = "DROP TABLE IF EXISTS " + Tables.AUTHORIZATION;
 
   public PMDB(Context context) {
-    this.context = context;
     db = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
     if (isNotInitialized) {
       createDBStructure();
@@ -167,46 +142,13 @@ public class PMDB {
     db.execSQL(CREATE_TABLE_AUTHORIZATION);
     db.execSQL(CREATE_TABLE_PROJECT);
     db.execSQL(CREATE_TABLE_PERSON);
-//    db.execSQL(CREATE_VIEW_PROJECT);
     db.execSQL(CREATE_TABLE_STAGE_EMPLOYEE);
     db.execSQL(CREATE_TABLE_STAGE);
-    /*db.execSQL("CREATE VIEW "
-               + Tables.PROJECT_VIEW
-               + " AS SELECT "
-               + "P." + Columns._ID
-               + ",P." + Columns.PROJECT_PROJECTNAME
-               + ",P." + Columns.PROJECT_PROJECTDUEDATE
-               + ",P." + Columns.PROJECT_CATEGORY
-               + ",P." + Columns.PROJECT_STATUS
-               + ",P." + Columns.PROJECT_PRIORITY
-               + ",P. " + Columns.PROJECT_COLUMN_PROJECTDESCRIPTION
-               + ",P. " + Columns.STAGE1
-               + ",P. " + Columns.STAGE2
-               + ",P. " + Columns.STAGE3
-               + ",P. " + Columns.STAGE4
-               + ",P. " + Columns.STAGE5
-               + ",E1." + Columns.PERSON_FIRSTNAME + " as " + Columns.EMPLOYEE_COLUMN_EMPLNAME1
-               + ",E2." + Columns.PERSON_FIRSTNAME + " as " + Columns.EMPLOYEE_COLUMN_EMPLNAME2
-               + ",E3." + Columns.PERSON_FIRSTNAME + " as " + Columns.EMPLOYEE_COLUMN_EMPLNAME3
-               + ",E4." + Columns.PERSON_FIRSTNAME + " as " + Columns.EMPLOYEE_COLUMN_EMPLNAME4
-               + ",E5." + Columns.PERSON_FIRSTNAME + " as " + Columns.EMPLOYEE_COLUMN_EMPLNAME5
-               + " FROM  PROJECT P"
-               + " LEFT OUTER JOIN STAGE S1 ON P.STAGE1 = S1._id "
-               + " LEFT OUTER JOIN PERSON E1 ON S1.MANAGER_ID = E1._id"
-               + " LEFT OUTER JOIN STAGE S2 ON P.STAGE2 = S2._id "
-               + " LEFT OUTER JOIN PERSON E2 ON S2.MANAGER_ID = E2._id"
-               + " LEFT OUTER JOIN STAGE S3 ON P.STAGE3 = S3._id "
-               + " LEFT OUTER JOIN PERSON E3 ON S3.MANAGER_ID = E3._id"
-               + " LEFT OUTER JOIN STAGE S4 ON P.STAGE4 = S4._id "
-               + " LEFT OUTER JOIN PERSON E4 ON S4.MANAGER_ID = E4._id"
-               + " LEFT OUTER JOIN STAGE S5 ON P.STAGE5 = S5._id "
-               + " LEFT OUTER JOIN PERSON E5 ON S5.MANAGER_ID = E5._id");
-    */
   }
 
   private void dumpImport() {
-    for (int i = 0; i < sqlDump.length; i++) {
-      db.execSQL(sqlDump[i]);
+    for (String aSqlDump : sqlDump) {
+      db.execSQL(aSqlDump);
     }
   }
 
