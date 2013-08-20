@@ -82,7 +82,7 @@ public class Startup extends Activity {
   }
 
 
-  public void welcome() {
+  void welcome() {
     Intent intent = new Intent();
     intent.setClass(this, Navigator.class);
     startActivity(intent);

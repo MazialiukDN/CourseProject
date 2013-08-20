@@ -1,8 +1,5 @@
 package by.bsu.courseproject.ui;
 
-import java.util.Calendar;
-import java.util.StringTokenizer;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -24,11 +21,14 @@ import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 
+import java.util.Calendar;
+import java.util.StringTokenizer;
+
 public class Employee extends Activity implements OnDateSetListener, View.OnClickListener {
 
-  public static String FROM_LIST = "FROM_LIST";
-  public static int ITEM = 1;
-  public static int MENU = 2;
+  public static final String FROM_LIST = "FROM_LIST";
+  public static final int ITEM = 1;
+  public static final int MENU = 2;
   private ContentValues oldValues;
   private static final int DATE_PICKER_DIALOG = 1;
   private boolean mIsNew;
@@ -87,10 +87,11 @@ public class Employee extends Activity implements OnDateSetListener, View.OnClic
     }
   }
 
-  @Override protected void onResume() {
-	  super.onResume();
-	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-  };
+  @Override
+  protected void onResume() {
+    super.onResume();
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  }
 
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), null, null, null, null);
@@ -168,10 +169,10 @@ public class Employee extends Activity implements OnDateSetListener, View.OnClic
 
   }
 
-  protected void AddListeners() {
-    findViewById(R.id.buttonCancel).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.buttonSave).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.editTextBirthDate).setOnClickListener((android.view.View.OnClickListener) this);
+  void AddListeners() {
+    findViewById(R.id.buttonCancel).setOnClickListener(this);
+    findViewById(R.id.buttonSave).setOnClickListener(this);
+    findViewById(R.id.editTextBirthDate).setOnClickListener(this);
 
   }
 

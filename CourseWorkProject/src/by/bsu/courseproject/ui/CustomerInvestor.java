@@ -22,12 +22,11 @@ import static by.bsu.courseproject.db.DBConstants.Columns;
 
 public class CustomerInvestor extends Activity implements View.OnClickListener {
 
-  public static String INV = "INV";
+  public static final String INV = "INV";
   public static final int inv = 1;
   public static final int cust = 2;
-  public static String FROM_LIST = "FROM_LIST";
-  public static int ITEM = 1;
-  public static int MENU = 2;
+  private static final String FROM_LIST = "FROM_LIST";
+  private static final int ITEM = 1;
   private ContentValues oldValues;
   private boolean mIsNew;
   private int mId = -1;
@@ -71,11 +70,12 @@ public class CustomerInvestor extends Activity implements View.OnClickListener {
   }
 
 
-  @Override protected void onResume() {
-	  super.onResume();
-	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-  };
-  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  }
+
   private void completeForm(Intent intent) {
     Cursor c = managedQuery(intent.getData(), null, null, null, null);
 
@@ -140,9 +140,9 @@ public class CustomerInvestor extends Activity implements View.OnClickListener {
 
   }
 
-  protected void AddListeners() {
-    findViewById(R.id.buttonCancel).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.buttonSave).setOnClickListener((android.view.View.OnClickListener) this);
+  void AddListeners() {
+    findViewById(R.id.buttonCancel).setOnClickListener(this);
+    findViewById(R.id.buttonSave).setOnClickListener(this);
 
   }
 

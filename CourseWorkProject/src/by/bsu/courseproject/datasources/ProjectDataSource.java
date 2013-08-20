@@ -45,7 +45,7 @@ public class ProjectDataSource {
     projectProjectionMap.put(Columns.PROJECT_INVESTOR_ID, Columns.PROJECT_INVESTOR_ID);
   }
 
-  private SQLiteDatabase db;
+  private final SQLiteDatabase db;
 
   public ProjectDataSource(SQLiteDatabase db) {
     this.db = db;

@@ -19,7 +19,7 @@ public enum ProjectCategory {
     this.idName = idName;
   }
 
-  private String idName;
+  private final String idName;
 
   public String getIdName() {
     return idName;

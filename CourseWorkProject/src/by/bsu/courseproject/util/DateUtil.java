@@ -12,8 +12,8 @@ import java.util.Date;
  * Time: 22:49
  */
 public class DateUtil {
-  public static final String DATE_FORMAT = "dd-MM-yyyy";
-  public static final int DEFAULT_OFFSET = 30;
+  private static final String DATE_FORMAT = "dd-MM-yyyy";
+  private static final int DEFAULT_OFFSET = 30;
 
   public static Date stringToDate(String date) {
     DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);

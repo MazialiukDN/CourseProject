@@ -22,10 +22,10 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  */
 public class StageDataSource {
 
-  private SQLiteDatabase db;
+  private final SQLiteDatabase db;
   private PersonDataSource personDataSource;
-  private HashMap<String, String> stageProjectionMap = new HashMap<String, String>();
-  private HashMap<String, String> stageEmployeeProjectionMap = new HashMap<String, String>();
+  private final HashMap<String, String> stageProjectionMap = new HashMap<String, String>();
+  private final HashMap<String, String> stageEmployeeProjectionMap = new HashMap<String, String>();
 
   {
     stageProjectionMap.put(Columns._ID, Columns._ID);
@@ -100,11 +100,10 @@ public class StageDataSource {
     db.delete(Tables.STAGE, Columns.STAGE_PROJECT_ID + " = " + projectId, null);
   }
 
-  public Stage cursorToStage(Cursor cursor) {
+  Stage cursorToStage(Cursor cursor) {
     Stage stage = new Stage();
     stage.setId(cursor.getLong(cursor.getColumnIndex(Columns._ID)));
     stage.setType(StageType.values()[cursor.getInt(cursor.getColumnIndex(Columns.STAGE_TYPE))]);
-    //stage.setProject();
     Long managerID = cursor.getLong(cursor.getColumnIndex(Columns.STAGE_MANAGER));
     if (managerID != -1) {
       stage.setManager((Employee) personDataSource.load(managerID));

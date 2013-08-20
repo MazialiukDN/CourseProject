@@ -32,8 +32,8 @@ import static by.bsu.courseproject.project.ProjectPriority.NORMAL;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
-  public static String FROM_LIST = "FROM_LIST";
-  public static int ITEM = 1;
+  private static final String FROM_LIST = "FROM_LIST";
+  private static final int ITEM = 1;
   private ContentValues oldValues;
 
   private static final int DATE_PICKER_DIALOG = 1;
@@ -50,7 +50,6 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
   private int mPendingView;
   private int mPriority = 2;
-  private String mDate = "";
   private int mStatus = -1;
   private final int REQUEST_CUSTOMER = 101;
   private final int REQUEST_INVESTOR = 102;
@@ -78,8 +77,8 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       mPriority = 2;
       mStatus = 1;
       Date date = DateUtil.getCurrentDateWithDefaultOffset();
-      mDate = DateUtil.dateToString(date);
-      ((EditText) findViewById(R.id.editDate)).setText(mDate);
+      String convertedDate = DateUtil.dateToString(date);
+      ((EditText) findViewById(R.id.editDate)).setText(convertedDate);
     }
 
   }
@@ -153,9 +152,9 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     super.onPrepareDialog(id, dialog);
     switch (id) {
     case DATE_PICKER_DIALOG:
-      String val = ((EditText) findViewById(mPendingView)).getText().toString();
-      if (!val.equals("")) {
-        StringTokenizer strtok = new StringTokenizer(val, "-");
+      String date = ((EditText) findViewById(mPendingView)).getText().toString();
+      if (!date.isEmpty()) {
+        StringTokenizer strtok = new StringTokenizer(date, "-");
         int day = Integer.parseInt(strtok.nextToken());
         int month = Integer.parseInt(strtok.nextToken());
         int year = Integer.parseInt(strtok.nextToken());
@@ -307,7 +306,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
   }
 
-  protected void AddListeners() {
+  void AddListeners() {
     findViewById(R.id.buttonCancel).setOnClickListener(this);
     findViewById(R.id.buttonSave).setOnClickListener(this);
     findViewById(R.id.editDate).setOnClickListener(this);

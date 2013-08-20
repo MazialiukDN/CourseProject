@@ -8,7 +8,7 @@ import by.bsu.courseproject.db.PMDB;
  * Date: 25.03.13
  * Time: 16:32
  */
-public class PMApplication extends Application{
+public class PMApplication extends Application {
 
   private static PMDB pmdb;
 
@@ -18,7 +18,7 @@ public class PMApplication extends Application{
     super.onCreate();
   }
 
-  public static PMDB getPMDB(){
+  public static PMDB getPMDB() {
     return pmdb;
   }
 

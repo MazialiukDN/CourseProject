@@ -16,7 +16,7 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  */
 public class PMDB {
   private static final String DATABASE_NAME = "project_manager.db";
-  private SQLiteDatabase db;
+  private final SQLiteDatabase db;
   private ProjectDataSource projectDataSource;
   private PersonDataSource personDataSource;
   private StageDataSource stageDataSource;
@@ -75,54 +75,54 @@ public class PMDB {
       "INSERT INTO \"stage\" VALUES(25, 4, 5, 1)"
   };
 
-  private final String CREATE_TABLE_PROJECT = "CREATE TABLE " + Tables.PROJECT + "("
-                                              + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                              + Columns.PROJECT_PROJECTNAME + " TEXT NOT NULL,"
-                                              + Columns.PROJECT_DESCRIPTION + " TEXT,"
-                                              + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
-                                              + Columns.PROJECT_CATEGORY + " TEXT,"
-                                              + Columns.PROJECT_STATUS + " TEXT,"
-                                              + Columns.PROJECT_PRIORITY + " INTEGER,"
-                                              + Columns.PROJECT_CUSTOMER_ID + " INTEGER,"
-                                              + Columns.PROJECT_INVESTOR_ID + " INTEGER );";
-
-  private final String CREATE_TABLE_AUTHORIZATION = "CREATE TABLE " + Tables.AUTHORIZATION + " ("
-                                                    + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                    + Columns.LOGIN + " BLOB,"
-                                                    + Columns.SALT + " TEXT,"
-                                                    + Columns.PASSWORD + " BLOB );";
-
-  private final String CREATE_TABLE_PERSON = "CREATE TABLE " + Tables.PERSON + " ("
-                                             + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                             + Columns.PERSON_DISCRIMINATOR + " TEXT,"
-                                             + Columns.PERSON_LASTNAME + " TEXT,"
-                                             + Columns.PERSON_FIRSTNAME + " TEXT,"
-                                             + Columns.PERSON_MIDDLENAME + " TEXT,"
-                                             + Columns.PERSON_EMAIL + " TEXT,"
-                                             + Columns.PERSON_SKYPE + " TEXT,"
-                                             + Columns.PERSON_PHONE + " TEXT,"
-                                             + Columns.PERSON_BIRTHDAY + " TEXT,"
-                                             + Columns.PERSON_INFO + " TEXT,"
-                                             + Columns.CUSTOMER_INVESTOR_COMPANY + " TEXT,"
-                                             + Columns.EMPLOYEE_EXPERIENCE + " TEXT,"
-                                             + Columns.EMPLOYEE_EDUCATION + " TEXT );";
-
-  private final String CREATE_TABLE_STAGE_EMPLOYEE = "CREATE TABLE " + Tables.STAGE_EMPLOYEE + " ("
+  private static final String CREATE_TABLE_PROJECT = "CREATE TABLE " + Tables.PROJECT + "("
                                                      + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                     + Columns.STAGE_ID + " INTEGER NOT NULL ,"
-                                                     + Columns.EMPLOYEE_ID + " INTEGER NOT NULL );";
+                                                     + Columns.PROJECT_PROJECTNAME + " TEXT NOT NULL,"
+                                                     + Columns.PROJECT_DESCRIPTION + " TEXT,"
+                                                     + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
+                                                     + Columns.PROJECT_CATEGORY + " TEXT,"
+                                                     + Columns.PROJECT_STATUS + " TEXT,"
+                                                     + Columns.PROJECT_PRIORITY + " INTEGER,"
+                                                     + Columns.PROJECT_CUSTOMER_ID + " INTEGER,"
+                                                     + Columns.PROJECT_INVESTOR_ID + " INTEGER );";
 
-  private final String CREATE_TABLE_STAGE = "CREATE TABLE " + Tables.STAGE + " ("
-                                            + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                            + Columns.STAGE_TYPE + " INTEGER NOT NULL ,"
-                                            + Columns.STAGE_PROJECT_ID + " INTEGER NOT NULL ,"
-                                            + Columns.STAGE_MANAGER + " INTEGER NOT NULL );";
+  private static final String CREATE_TABLE_AUTHORIZATION = "CREATE TABLE " + Tables.AUTHORIZATION + " ("
+                                                           + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                           + Columns.LOGIN + " BLOB,"
+                                                           + Columns.SALT + " TEXT,"
+                                                           + Columns.PASSWORD + " BLOB );";
 
-  private final String DROP_TABLE_STAGE = "DROP TABLE IF EXISTS " + Tables.STAGE;
-  private final String DROP_TABLE_STAGE_EMPLOYEE = "DROP TABLE IF EXISTS " + Tables.STAGE_EMPLOYEE;
-  private final String DROP_TABLE_PERSON = "DROP TABLE IF EXISTS " + Tables.PERSON;
-  private final String DROP_TABLE_PROJECT = "DROP TABLE IF EXISTS " + Tables.PROJECT;
-  private final String DROP_TABLE_AUTHORIZATION = "DROP TABLE IF EXISTS " + Tables.AUTHORIZATION;
+  private static final String CREATE_TABLE_PERSON = "CREATE TABLE " + Tables.PERSON + " ("
+                                                    + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                    + Columns.PERSON_DISCRIMINATOR + " TEXT,"
+                                                    + Columns.PERSON_LASTNAME + " TEXT,"
+                                                    + Columns.PERSON_FIRSTNAME + " TEXT,"
+                                                    + Columns.PERSON_MIDDLENAME + " TEXT,"
+                                                    + Columns.PERSON_EMAIL + " TEXT,"
+                                                    + Columns.PERSON_SKYPE + " TEXT,"
+                                                    + Columns.PERSON_PHONE + " TEXT,"
+                                                    + Columns.PERSON_BIRTHDAY + " TEXT,"
+                                                    + Columns.PERSON_INFO + " TEXT,"
+                                                    + Columns.CUSTOMER_INVESTOR_COMPANY + " TEXT,"
+                                                    + Columns.EMPLOYEE_EXPERIENCE + " TEXT,"
+                                                    + Columns.EMPLOYEE_EDUCATION + " TEXT );";
+
+  private static final String CREATE_TABLE_STAGE_EMPLOYEE = "CREATE TABLE " + Tables.STAGE_EMPLOYEE + " ("
+                                                            + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                            + Columns.STAGE_ID + " INTEGER NOT NULL ,"
+                                                            + Columns.EMPLOYEE_ID + " INTEGER NOT NULL );";
+
+  private static final String CREATE_TABLE_STAGE = "CREATE TABLE " + Tables.STAGE + " ("
+                                                   + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                   + Columns.STAGE_TYPE + " INTEGER NOT NULL ,"
+                                                   + Columns.STAGE_PROJECT_ID + " INTEGER NOT NULL ,"
+                                                   + Columns.STAGE_MANAGER + " INTEGER NOT NULL );";
+
+  private static final String DROP_TABLE_STAGE = "DROP TABLE IF EXISTS " + Tables.STAGE;
+  private static final String DROP_TABLE_STAGE_EMPLOYEE = "DROP TABLE IF EXISTS " + Tables.STAGE_EMPLOYEE;
+  private static final String DROP_TABLE_PERSON = "DROP TABLE IF EXISTS " + Tables.PERSON;
+  private static final String DROP_TABLE_PROJECT = "DROP TABLE IF EXISTS " + Tables.PROJECT;
+  private static final String DROP_TABLE_AUTHORIZATION = "DROP TABLE IF EXISTS " + Tables.AUTHORIZATION;
 
   public PMDB(Context context) {
     db = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
@@ -165,7 +165,7 @@ public class PMDB {
     return projectDataSource;
   }
 
-  public PersonDataSource getPersonDataSource() {
+  PersonDataSource getPersonDataSource() {
     if (personDataSource == null) {
       personDataSource = new PersonDataSource(db);
     }

@@ -1,7 +1,7 @@
 package by.bsu.courseproject.project;
 
 public enum ProjectStatus {
-  PRORPOSED("Предлагаемый"),
+  PROPOSED("Предлагаемый"),
   ACTIVE("Действующий"),
   INTERRUPTED("Прерванный"),
   CLOSED("Закрытый"),
@@ -11,7 +11,7 @@ public enum ProjectStatus {
     this.idName = idName;
   }
 
-  private String idName;
+  private final String idName;
 
   public String getIdName() {
     return idName;

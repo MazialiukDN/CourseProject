@@ -23,8 +23,6 @@ import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.stage.StageType;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static android.view.View.*;
@@ -46,21 +44,10 @@ public class Projects extends FragmentActivity implements OnClickListener {
     ((TableLayout) findViewById(R.id.tableProjects)).removeAllViews();
     addHeader();
     List<by.bsu.courseproject.model.Project> projects = PMApplication.getPMDB().getProjectDataSource().getAllProjects();
-//    Collections.sort(projects, new Comparator<by.bsu.courseproject.model.Project>() {
-//      @Override
-//      public int compare(by.bsu.courseproject.model.Project project, by.bsu.courseproject.model.Project project2) {
-//        if(project.getPriority().ordinal() == project2.getPriority().ordinal()){
-//          return (int) (project2.getId() - project.getId());
-//        }
-//        return project2.getPriority().ordinal() - project.getPriority().ordinal();
-//      }
-//    });
     for (by.bsu.courseproject.model.Project project : projects) {
       addRow(project);
     }
   }
-
-  ;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,41 +140,25 @@ public class Projects extends FragmentActivity implements OnClickListener {
                                                     null);
     LinearLayout stageInitiationLayout = (LinearLayout) tableRow.findViewById(R.id.stage1);
     prepareStageCell(StageType.INITIATION, project, stageInitiationLayout);
-    //LayoutParams params = (LinearLayout.LayoutParams)stageInitiationLayout.getLayoutParams();
-    //params.height = height;
-    // stageInitiationLayout.setLayoutParams(params);
 
     LinearLayout stagePlanningLayout = (LinearLayout) tableRow.findViewById(R.id.stage2);
     prepareStageCell(StageType.PLANNING_AND_DESIGN, project, stagePlanningLayout);
-    // stagePlanningLayout.setLayoutParams(params);
+
     LinearLayout stageExecutingLayout = (LinearLayout) tableRow.findViewById(R.id.stage3);
     prepareStageCell(StageType.EXECUTING, project, stageExecutingLayout);
-    //stageExecutingLayout.setLayoutParams(params);
+
     LinearLayout stageMonitoringLayout = (LinearLayout) tableRow.findViewById(R.id.stage4);
     prepareStageCell(StageType.MONITORING_AND_CONTROLLING, project, stageMonitoringLayout);
-    // stageMonitoringLayout.setLayoutParams(params);
+
     LinearLayout stageClosingLayout = (LinearLayout) tableRow.findViewById(R.id.stage5);
     prepareStageCell(StageType.CLOSING, project, stageClosingLayout);
-    // stageClosingLayout.setLayoutParams(params);
 
-    /*TableRow.LayoutParams paramst = new TableRow.LayoutParams(1, height);
-    paramst.height = height;
-    View v = tableRow.findViewById(R.id.sep1);
-    v.setLayoutParams(paramst);
-    v = tableRow.findViewById(R.id.sep2);
-    v.setLayoutParams(paramst);
-    v = tableRow.findViewById(R.id.sep3);
-    v.setLayoutParams(paramst);
-    v = tableRow.findViewById(R.id.sep4);
-    v.setLayoutParams(paramst);
-    v = tableRow.findViewById(R.id.sep5);
-    v.setLayoutParams(paramst);*/
     View projectInfo = tableRow.findViewById(R.id.projectInfo);
     projectInfo.setOnLongClickListener(new OnLongClickListener() {
       public boolean onLongClick(View view) {
         afterLongClick = true;
         showDialog(view);
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
       }
     });
     projectInfo.setVisibility(VISIBLE);
@@ -234,9 +205,6 @@ public class Projects extends FragmentActivity implements OnClickListener {
             PMApplication.getPMDB().getProjectDataSource().deleteProject(id);
             TableLayout tableLayout = (TableLayout) findViewById(R.id.tableProjects);
             tableLayout.removeView(row);
-//            Intent intent = getIntent();
-//            finish();
-//            startActivity(intent);
           }
         }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialogInterface, int i) {
@@ -248,7 +216,7 @@ public class Projects extends FragmentActivity implements OnClickListener {
     alert.show();
   }
 
-  
+
   private void prepareStageCell(StageType stageType, by.bsu.courseproject.model.Project project, LinearLayout stageLayout) {
     stageLayout.setId(stageType.ordinal());
     stageLayout.setTag(project.getId());
@@ -266,8 +234,6 @@ public class Projects extends FragmentActivity implements OnClickListener {
       TextView managerPatronymic = (TextView) stageLayout.findViewById(R.id.ManagerPatronymic);
       managerPatronymic.setText(stage.getManager().getMiddleName());
     }
-    /*TextView stageStatus = (TextView)stageLayout.findViewById(R.id.StageStatus);
-    stageStatus.setText(stage);*/
   }
 
   public void onClick(View view) {

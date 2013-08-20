@@ -9,10 +9,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Tools {
+class Tools {
 
-  public static final String LOGIN_PREFERENCES = "LOGIN_PREFERENCES";
-  public static final String TIME = "TIME";
+  private static final String LOGIN_PREFERENCES = "LOGIN_PREFERENCES";
+  private static final String TIME = "TIME";
 
   public static void setTime(Context context) {
     SharedPreferences settings = context.getSharedPreferences(LOGIN_PREFERENCES, 0);
@@ -35,7 +35,7 @@ public class Tools {
   public static byte[] getCipher(String info, String salt) {
 
     String finalInfo = info.concat(salt);
-    byte[] bInfo = null;
+    byte[] bInfo;
     try {
       bInfo = finalInfo.getBytes("UTF-8");
       MessageDigest messageDigest;

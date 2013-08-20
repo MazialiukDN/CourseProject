@@ -2,6 +2,7 @@ package by.bsu.courseproject.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.widget.Toast;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 
 import java.io.*;
@@ -15,9 +16,9 @@ import static by.bsu.courseproject.util.ImportExportUtil.*;
  * Date: 08.07.13
  * Time: 12:23
  */
-public class ImportData {
+class ImportData {
 
-  public static final String DELIMITER = "|";
+  private static final String DELIMITER = "|";
 
   public static boolean importData(Context context) {
     if (isExternalStorageReadable()) {
@@ -35,7 +36,9 @@ public class ImportData {
             writeStagePerson(context, reader);
             reader.close();
             fileReader.close();
+            return true;
           } catch (FileNotFoundException e) {
+            Toast.makeText(context, "File is not found", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
           } catch (IOException e) {
             e.printStackTrace();

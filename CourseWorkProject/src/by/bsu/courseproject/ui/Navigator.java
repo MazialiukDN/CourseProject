@@ -26,8 +26,8 @@ public class Navigator extends Activity implements View.OnClickListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.navigator);
 
-    findViewById(R.id.imageView_catalogue).setOnClickListener((android.view.View.OnClickListener) this);
-    findViewById(R.id.imageView_projects).setOnClickListener((android.view.View.OnClickListener) this);
+    findViewById(R.id.imageView_catalogue).setOnClickListener(this);
+    findViewById(R.id.imageView_projects).setOnClickListener(this);
   }
 
   @Override
@@ -55,7 +55,6 @@ public class Navigator extends Activity implements View.OnClickListener {
       break;
     }
     startActivity(intent);
-    return;
   }
 
   @Override

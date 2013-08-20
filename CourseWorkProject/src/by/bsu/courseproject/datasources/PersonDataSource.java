@@ -13,6 +13,7 @@ import by.bsu.courseproject.util.DateUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static by.bsu.courseproject.db.DBConstants.Columns;
 import static by.bsu.courseproject.db.DBConstants.Tables;
@@ -23,11 +24,11 @@ import static by.bsu.courseproject.db.DBConstants.Tables;
  * Time: 12:40
  */
 public class PersonDataSource {
-  public static final String EMPLOYEE_DISCRIMINATOR = "E";
-  public static final String CUSTOMER_DISCRIMINATOR = "C";
-  public static final String INVESTOR_DISCRIMINATOR = "I";
-  private SQLiteDatabase db;
-  private HashMap<String, String> personProjectionMap = new HashMap<String, String>();
+  private static final String EMPLOYEE_DISCRIMINATOR = "E";
+  private static final String CUSTOMER_DISCRIMINATOR = "C";
+  private static final String INVESTOR_DISCRIMINATOR = "I";
+  private final SQLiteDatabase db;
+  private final HashMap<String, String> personProjectionMap = new HashMap<String, String>();
 
   {
     personProjectionMap.put(Columns._ID, Columns._ID);
@@ -106,11 +107,12 @@ public class PersonDataSource {
     db.delete(Tables.PERSON, Columns._ID + " = " + id, null);
   }
 
-  private List getAllPersons(String personDiscriminator) {
+  private List<? extends Person> getAllPersons(String personDiscriminator) {
     List<Person> persons = new ArrayList<Person>();
     final String where = Columns.PERSON_DISCRIMINATOR + " = \"" + personDiscriminator + "\"";
+    Set<String> projection = personProjectionMap.keySet();
     Cursor cursor = db.query(Tables.PERSON,
-                             personProjectionMap.keySet().toArray(new String[0]), where, null, null, null, null);
+                             projection.toArray(new String[projection.size()]), where, null, null, null, null);
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {

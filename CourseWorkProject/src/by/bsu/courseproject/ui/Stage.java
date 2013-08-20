@@ -19,7 +19,6 @@ import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.model.Employee;
-import by.bsu.courseproject.stage.StageType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +29,10 @@ import java.util.Set;
  * Time: 23:01
  */
 public class Stage extends Activity implements View.OnClickListener {
-  public static final int REQUEST_MANAGER = 301;
-  public static final int REQUEST_EMPLOYEE = 302;
+  private static final int REQUEST_MANAGER = 301;
+  private static final int REQUEST_EMPLOYEE = 302;
   private by.bsu.courseproject.model.Stage stage;
-  private Set<Long> stageEmployeesIds = new HashSet<Long>();
+  private final Set<Long> stageEmployeesIds = new HashSet<Long>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +47,23 @@ public class Stage extends Activity implements View.OnClickListener {
     Long projectId = intent.getLongExtra(DBConstants.Columns.STAGE_PROJECT_ID, -1L);
     int stageType = intent.getIntExtra(DBConstants.Columns.STAGE_TYPE, -1);
     if (!projectId.equals(-1L) && stageType != -1) {
-     // ((TextView) findViewById(R.id.stageName)).setText(StageType.values()[stageType].toString());
-      switch(stageType) {
+      switch (stageType) {
       case 0:
-          ((TextView) findViewById(R.id.stageName)).setText("Инициация");
-          break;
-        case 1:
-          ((TextView) findViewById(R.id.stageName)).setText("Планирование");
-          break;
-        case 2:
-          ((TextView) findViewById(R.id.stageName)).setText("Выполнение");
-          break;
-        case 3:
-          ((TextView) findViewById(R.id.stageName)).setText("Контроль");
-          break;
-        case 4:
-          ((TextView) findViewById(R.id.stageName)).setText("Завершение");
-          break;
-        
+        ((TextView) findViewById(R.id.stageName)).setText("Инициация");
+        break;
+      case 1:
+        ((TextView) findViewById(R.id.stageName)).setText("Планирование");
+        break;
+      case 2:
+        ((TextView) findViewById(R.id.stageName)).setText("Выполнение");
+        break;
+      case 3:
+        ((TextView) findViewById(R.id.stageName)).setText("Контроль");
+        break;
+      case 4:
+        ((TextView) findViewById(R.id.stageName)).setText("Завершение");
+        break;
+
       }
       ((EditText) findViewById(R.id.editTextProjectName)).setText(intent.getStringExtra(DBConstants.Columns.PROJECT_PROJECTNAME));
       stage = PMApplication.getPMDB().getStageDataSource().load(projectId, stageType, true);
@@ -83,7 +81,7 @@ public class Stage extends Activity implements View.OnClickListener {
 
   }
 
-  
+
   private void addEmployee(TableLayout tableLayout, Employee employee) {
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     TableRow tableRow = (TableRow) inflater.inflate(R.layout.stage_employees,
@@ -130,7 +128,6 @@ public class Stage extends Activity implements View.OnClickListener {
     findViewById(R.id.stageManagerLN).setOnClickListener(this);
     findViewById(R.id.stageManagerP).setOnClickListener(this);
   }
-
 
 
   public void onClick(View view) {
@@ -194,11 +191,12 @@ public class Stage extends Activity implements View.OnClickListener {
 
   }
 
-  @Override protected void onResume() {
-	  super.onResume();
-	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-  };
-  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+  }
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -207,7 +205,7 @@ public class Stage extends Activity implements View.OnClickListener {
                                                                 DBConstants.Columns.PERSON_FIRSTNAME,
                                                                 DBConstants.Columns.PERSON_MIDDLENAME,
                                                                 DBConstants.Columns.PERSON_LASTNAME
-                                                                }, null, null, null);
+      }, null, null, null);
 
       if (cursor != null && cursor.moveToFirst()) {
         ((EditText) findViewById(R.id.stageManagerFN)).setText(cursor.getString(cursor.getColumnIndex(DBConstants.Columns.PERSON_FIRSTNAME)));

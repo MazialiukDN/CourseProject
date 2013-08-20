@@ -49,12 +49,11 @@ public class CatalogueListFragment extends ListFragment
   public static final int MONTH = 3;
 
   private int mFilter = 0;
-  public static final String FILTER = "FILTER";
 
-  SimpleCursorAdapter mAdapter;
-  String mCurFilter;
-  Intent data = null;
-  Uri contentURI = null;
+  private SimpleCursorAdapter mAdapter;
+  private String mCurFilter;
+  private Intent data = null;
+  private Uri contentURI = null;
 
 
   @Override
@@ -91,7 +90,6 @@ public class CatalogueListFragment extends ListFragment
     TextView filter = (TextView) getActivity().findViewById(R.id.editFilter);
     if (filter != null) filter.addTextChangedListener(this);
     registerForContextMenu(getListView());
-//getListView().setBackgroundColor(getResources().getColor(R.color.gray));
   }
 
 
@@ -113,7 +111,6 @@ public class CatalogueListFragment extends ListFragment
           ((TextView) view).setText(cursor.getString(columnIndex));
           View parentView = (View) view.getParent();
           if (dateDB != null && dateDB.compareTo(today) < 0) {
-           // parentView.setBackgroundColor(getResources().getColor(R.color.red));
             parentView.setBackgroundColor(0);
           } else {
             parentView.setBackgroundColor(0);
@@ -152,9 +149,9 @@ public class CatalogueListFragment extends ListFragment
     String[] projection = data.getStringArrayExtra(ARG_PROJECTION);
     String[] filterColumns = data.getStringArrayExtra(ARG_FILTER_COLUMNS);
 
-    String select = "";
+    String select;
     String tempSelect = "";
-    int days = 0;
+    int days;
 
     if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.PROJECT) {
 
@@ -212,7 +209,7 @@ public class CatalogueListFragment extends ListFragment
       select = null;
     }
 
-    if (!tempSelect.equals("")) {
+    if (!tempSelect.isEmpty()) {
       select = DatabaseUtilsCompat.concatenateWhere(select, tempSelect);
     }
 

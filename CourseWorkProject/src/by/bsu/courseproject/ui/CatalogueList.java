@@ -19,17 +19,14 @@ public class CatalogueList extends ListActivity {
   public static final int INVESTOR = 2;
   public static final int EMPLOYEE = 3;
 
-  private final int SIZE = 4;
-
-  private String[] mCategories;
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
 
-    mCategories = new String[SIZE];
+    final int categoriesSize = 4;
+    final String[] mCategories = new String[categoriesSize];
     mCategories[PROJECT] = this.getString(R.string.label_projects);
     mCategories[CUSTOMER] = this.getString(R.string.label_customers);
     mCategories[INVESTOR] = this.getString(R.string.label_investors);

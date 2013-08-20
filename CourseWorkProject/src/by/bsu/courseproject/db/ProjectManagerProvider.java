@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class ProjectManagerProvider extends ContentProvider {
 
-  public static final String AUTHORITY = "by.bsu.courseproject.ProjectManagerProvider";
+  private static final String AUTHORITY = "by.bsu.courseproject.ProjectManagerProvider";
 
   private static final int PROJECT = 1;
   private static final int PROJECT_ID = 2;
@@ -48,13 +48,13 @@ public class ProjectManagerProvider extends ContentProvider {
   private final HashMap<String, String> stageEmployeenProjectionMap;
   private final HashMap<String, String> authorizationProjectionMap;
 
-  public static final String CONTENT_NAME_PREFIX = "content://";
+  private static final String CONTENT_NAME_PREFIX = "content://";
 
   //The content:// style URL for this table
   public static final Uri PROJECT_URI = Uri.parse(CONTENT_NAME_PREFIX
                                                   + AUTHORITY + "/" + Tables.PROJECT);
-  public static final Uri AUTHORIZATION_URI = Uri.parse(CONTENT_NAME_PREFIX
-                                                        + AUTHORITY + "/" + Tables.AUTHORIZATION);
+  private static final Uri AUTHORIZATION_URI = Uri.parse(CONTENT_NAME_PREFIX
+                                                         + AUTHORITY + "/" + Tables.AUTHORIZATION);
   public static final Uri PERSON_URI = Uri.parse(CONTENT_NAME_PREFIX
                                                  + AUTHORITY + "/" + Tables.PERSON);
   public static final Uri STAGE_EMPLOYEE_URI = Uri.parse(CONTENT_NAME_PREFIX
