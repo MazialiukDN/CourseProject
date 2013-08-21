@@ -6,11 +6,15 @@ package by.bsu.courseproject.project;
  * Time: 18:56
  */
 public enum ProjectPriority {
-  LOWEST("Самый низкий"),
-  LOW("Низкий"),
-  NORMAL("Нормальный"),
-  HIGH("Высокий"),
-  HIGHEST("Самый высокий");
+	HIGHEST("Самый высокий"),
+	HIGH("Высокий"),
+	NORMAL("Нормальный"),
+	LOW("Низкий"),
+	LOWEST("Самый низкий");
+
+
+ 
+  
 
   private ProjectPriority(String idName) {
     this.idName = idName;

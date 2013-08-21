@@ -15,15 +15,18 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 import by.bsu.courseproject.R;
+import by.bsu.courseproject.db.ProjectManagerProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -81,7 +84,8 @@ public class CatalogueListFragment extends ListFragment
                                          android.R.layout.simple_list_item_2, null,
                                          from, to, 0);
       getActivity().setTitle("Проекты (все)");
-
+      
+     
       setViewBinder();
 
     }
@@ -131,6 +135,7 @@ public class CatalogueListFragment extends ListFragment
     super.onResume();
     setListShown(false);
     getLoaderManager().restartLoader(0, null, this);
+    getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
   }
 
   public void afterTextChanged(Editable s) {
@@ -241,6 +246,13 @@ public class CatalogueListFragment extends ListFragment
   public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
     mAdapter.swapCursor(arg1);
 
+    Cursor cursor =  getActivity().getContentResolver().query(ProjectManagerProvider.PROJECT_URI, null, null, null, null);
+	if (cursor != null && cursor.moveToFirst()) {
+    do {
+		Log.d("debug", cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE)));
+	}	while (cursor.moveToNext())  ;
+	}
+	
     if (isResumed()) {
       setListShown(true);
     } else {
