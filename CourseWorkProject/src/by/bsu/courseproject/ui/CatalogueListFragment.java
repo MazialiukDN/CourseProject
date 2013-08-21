@@ -10,7 +10,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.database.DatabaseUtilsCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.Editable;
@@ -23,8 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.ProjectManagerProvider;
+import by.bsu.courseproject.util.DateUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -93,12 +92,8 @@ public class CatalogueListFragment extends ListFragment
 
         if (columnIndex == cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME)) {
           Calendar calendar = Calendar.getInstance();
-          String datePattern = "yyyyMMdd";
-          SimpleDateFormat sdf = new SimpleDateFormat();
-          sdf.applyPattern(datePattern);
           Date date = new Date(calendar.getTimeInMillis());
-          String today = sdf.format(date);
-
+          String today = DateUtil.dateToString(date);
           String dateDB = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
           ((TextView) view).setText(cursor.getString(columnIndex));
           View parentView = (View) view.getParent();
@@ -142,44 +137,33 @@ public class CatalogueListFragment extends ListFragment
     String[] projection = data.getStringArrayExtra(ARG_PROJECTION);
     String[] filterColumns = data.getStringArrayExtra(ARG_FILTER_COLUMNS);
 
-    String select;
-    String tempSelect = "";
+    boolean isFilterExist = false;
+    StringBuilder selectionBuilder = new StringBuilder();
     if (mCurFilter != null) {
-      select = "(";
+      isFilterExist = true;
+      selectionBuilder.append("(");
       for (int i = 0; i < filterColumns.length; i++) {
         if (i != 0) {
-          select += " OR ";
+          selectionBuilder.append(" OR ");
         }
-        select += "LOWER(" + filterColumns[i] + ") LIKE '%" + mCurFilter.toLowerCase() + "%'";
+        selectionBuilder.append("LOWER(").append(filterColumns[i]).append(") LIKE '%").append(mCurFilter.toLowerCase()).append("%'");
       }
-      select += ")";
-    } else {
-      select = null;
+      selectionBuilder.append(")");
     }
-
-    if (!tempSelect.isEmpty()) {
-      select = DatabaseUtilsCompat.concatenateWhere(select, tempSelect);
-    }
-
-    String sel;
-
+    String discriminatorRestriction;
     if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.INVESTOR) {
-      sel = Columns.PERSON_DISCRIMINATOR + "=\"I\"";
-      select = (select == null) ? sel : select + " AND " + sel;
-    }
-
-    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.CUSTOMER) {
-      sel = Columns.PERSON_DISCRIMINATOR + "=\"C\"";
-      select = (select == null) ? sel : select + " AND " + sel;
-    }
-
-    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.EMPLOYEE) {
-      sel = Columns.PERSON_DISCRIMINATOR + "=\"E\"";
-      select = (select == null) ? sel : select + " AND " + sel;
+      discriminatorRestriction = Columns.PERSON_DISCRIMINATOR + "=\"I\"";
+      selectionBuilder.append(isFilterExist ? " AND " + discriminatorRestriction : discriminatorRestriction);
+    } else if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.CUSTOMER) {
+      discriminatorRestriction = Columns.PERSON_DISCRIMINATOR + "=\"C\"";
+      selectionBuilder.append(isFilterExist ? " AND " + discriminatorRestriction : discriminatorRestriction);
+    } else if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.EMPLOYEE) {
+      discriminatorRestriction = Columns.PERSON_DISCRIMINATOR + "=\"E\"";
+      selectionBuilder.append(isFilterExist ? " AND " + discriminatorRestriction : discriminatorRestriction);
     }
 
     return new CursorLoader(getActivity(), contentURI,
-                            projection, select, null,
+                            projection, selectionBuilder.toString(), null,
                             null);
   }
 
