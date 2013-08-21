@@ -16,12 +16,8 @@ import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextMenu;
+import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,14 +40,6 @@ public class CatalogueListFragment extends ListFragment
   public static final String ARG_ADAPTER_TO = "ADAPTER_TO";
 
   private static final int IDM_DELETE = 10;
-
-
-  public static final int ALL = 0;
-  public static final int TODAY = 1;
-  public static final int WEEK = 2;
-  public static final int MONTH = 3;
-
-  private int mFilter = 0;
 
   private SimpleCursorAdapter mAdapter;
   private String mCurFilter;
@@ -83,8 +71,8 @@ public class CatalogueListFragment extends ListFragment
                                          android.R.layout.simple_list_item_2, null,
                                          from, to, 0);
       getActivity().setTitle("Проекты (все)");
-      
-     
+
+
       setViewBinder();
 
     }
@@ -156,59 +144,13 @@ public class CatalogueListFragment extends ListFragment
 
     String select;
     String tempSelect = "";
-    int days;
-
-    if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.PROJECT) {
-
-      Calendar calendar = Calendar.getInstance();
-      String datePattern = "dd-MM-yyyy";
-      SimpleDateFormat sdf = new SimpleDateFormat();
-      sdf.applyPattern(datePattern);
-      Date date = new Date(calendar.getTimeInMillis());
-      String today = sdf.format(date);
-      
-      
-    /*  switch (mFilter) {
-
-      case TODAY:
-        tempSelect = Columns.PROJECT_PROJECTDUEDATE + " = " + today;
-        break;
-      case WEEK:
-        days = 7;
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, days);
-        date = new Date(calendar.getTimeInMillis());
-        sdf.applyPattern(datePattern);
-        String week = sdf.format(date);
-        tempSelect = Columns.PROJECT_PROJECTDUEDATE
-                     + " >= " + today
-                     + " AND " + Columns.PROJECT_PROJECTDUEDATE
-                     + " < " + week;
-        tempSelect = DatabaseUtilsCompat.concatenateWhere(tempSelect, "PROJECTDUEDATE IS NOT NULL");
-        break;
-      case MONTH:
-        days = 31;
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, days);
-        date = new Date(calendar.getTimeInMillis());
-        sdf.applyPattern(datePattern);
-        String month = sdf.format(date);
-        tempSelect = Columns.PROJECT_PROJECTDUEDATE
-                     + " >= " + today
-                     + " AND " + Columns.PROJECT_PROJECTDUEDATE
-                     + " < " + month;
-        tempSelect = DatabaseUtilsCompat.concatenateWhere(tempSelect, "PROJECTDUEDATE IS NOT NULL");
-        break;
-      }*/
-    }
-
     if (mCurFilter != null) {
       select = "(";
       for (int i = 0; i < filterColumns.length; i++) {
         if (i != 0) {
           select += " OR ";
         }
-        select += filterColumns[i] + " LIKE '%" + mCurFilter + "%'";
+        select += "LOWER(" + filterColumns[i] + ") LIKE '%" + mCurFilter.toLowerCase() + "%'";
       }
       select += ")";
     } else {
@@ -244,13 +186,13 @@ public class CatalogueListFragment extends ListFragment
   public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
     mAdapter.swapCursor(arg1);
 
-    Cursor cursor =  getActivity().getContentResolver().query(ProjectManagerProvider.PROJECT_URI, null, null, null, null);
-	if (cursor != null && cursor.moveToFirst()) {
-    do {
-		Log.d("debug", cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE)));
-	}	while (cursor.moveToNext())  ;
-	}
-	
+    Cursor cursor = getActivity().getContentResolver().query(ProjectManagerProvider.PROJECT_URI, null, null, null, null);
+    if (cursor != null && cursor.moveToFirst()) {
+      do {
+        Log.d("debug", cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE)));
+      } while (cursor.moveToNext());
+    }
+
     if (isResumed()) {
       setListShown(true);
     } else {
@@ -287,17 +229,6 @@ public class CatalogueListFragment extends ListFragment
 
       menu.add(Menu.NONE, IDM_DELETE, Menu.NONE, R.string.label_delete);
     }
-  }
-
-  public boolean changeFilter(int filter) {
-    mFilter = filter;
-    setListShown(false);
-
-    // Prepare the loader.  Either re-connect with an existing one,
-    // or start a new one.
-    getLoaderManager().restartLoader(0, null, this);
-
-    return true;
   }
 
   @Override
