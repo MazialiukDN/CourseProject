@@ -164,13 +164,14 @@ public class CatalogueListFragment extends ListFragment
     if (data.getExtras().getInt(CatalogueFragment.FROM_LIST, -1) == CatalogueList.PROJECT) {
 
       Calendar calendar = Calendar.getInstance();
-      String datePattern = "yyyyMMdd";
+      String datePattern = "dd-MM-yyyy";
       SimpleDateFormat sdf = new SimpleDateFormat();
       sdf.applyPattern(datePattern);
       Date date = new Date(calendar.getTimeInMillis());
       String today = sdf.format(date);
-
-      switch (mFilter) {
+      
+      
+    /*  switch (mFilter) {
 
       case TODAY:
         tempSelect = Columns.PROJECT_PROJECTDUEDATE + " = " + today;
@@ -201,7 +202,7 @@ public class CatalogueListFragment extends ListFragment
                      + " < " + month;
         tempSelect = DatabaseUtilsCompat.concatenateWhere(tempSelect, "PROJECTDUEDATE IS NOT NULL");
         break;
-      }
+      }*/
     }
 
     if (mCurFilter != null) {
