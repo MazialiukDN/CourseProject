@@ -53,10 +53,10 @@ public class CatalogueFragment extends FragmentActivity {
     switch (mCurrList) {
     case CatalogueList.PROJECT:
       menu.add(Menu.NONE, IDM_NEW_PROJECT, Menu.NONE, R.string.label_new_project);
-      menu.add(1, IDM_ALL, Menu.NONE, "Все").setIcon(android.R.drawable.ic_menu_sort_alphabetically);
-      menu.add(1, IDM_TODAY, Menu.NONE, "На сегодня").setIcon(android.R.drawable.ic_menu_today);
-      menu.add(1, IDM_WEEK, Menu.NONE, "На неделю").setIcon(android.R.drawable.ic_menu_week);
-      menu.add(1, IDM_MONTH, Menu.NONE, "На месяц").setIcon(android.R.drawable.ic_menu_month);
+     // menu.add(1, IDM_ALL, Menu.NONE, "Все").setIcon(android.R.drawable.ic_menu_sort_alphabetically);
+     // menu.add(1, IDM_TODAY, Menu.NONE, "На сегодня").setIcon(android.R.drawable.ic_menu_today);
+     // menu.add(1, IDM_WEEK, Menu.NONE, "На неделю").setIcon(android.R.drawable.ic_menu_week);
+      //menu.add(1, IDM_MONTH, Menu.NONE, "На месяц").setIcon(android.R.drawable.ic_menu_month);
       break;
     case CatalogueList.EMPLOYEE:
       menu.add(Menu.NONE, IDM_NEW_EMPLOYEE, Menu.NONE, R.string.label_new_employee).setIcon(android.R.drawable.ic_menu_add);
@@ -82,7 +82,7 @@ public class CatalogueFragment extends FragmentActivity {
       intent.setClass(getApplicationContext(), Project.class);
       startActivity(intent);
       break;
-    case IDM_ALL:
+   /* case IDM_ALL:
       this.setTitle("Проекты (все)");
       ((CatalogueListFragment) getSupportFragmentManager().findFragmentById(R.id.CatalogueListFragment)).changeFilter(CatalogueListFragment.ALL);
       break;
@@ -97,7 +97,7 @@ public class CatalogueFragment extends FragmentActivity {
     case IDM_MONTH:
       this.setTitle("Проекты (на месяц)");
       ((CatalogueListFragment) getSupportFragmentManager().findFragmentById(R.id.CatalogueListFragment)).changeFilter(CatalogueListFragment.MONTH);
-      break;
+      break;*/
     case IDM_NEW_EMPLOYEE:
       intent.setClass(getApplicationContext(), Employee.class);
       startActivity(intent);
