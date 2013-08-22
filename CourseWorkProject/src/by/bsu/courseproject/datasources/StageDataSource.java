@@ -81,11 +81,11 @@ public class StageDataSource {
   public void updateStage(Stage stage) {
     ContentValues values = new ContentValues();
     Employee manager = stage.getManager();
+    long id = stage.getId();
     if (manager != null) {
       values.put(Columns.STAGE_MANAGER, manager.getId());
+      db.update(Tables.STAGE, values, Columns._ID + " = " + id, null);
     }
-    long id = stage.getId();
-    db.update(Tables.STAGE, values, Columns._ID + " = " + id, null);
     db.delete(Tables.STAGE_EMPLOYEE, Columns.STAGE_ID + " = " + id, null);
     for (Employee employee : stage.getEmployees()) {
       ContentValues contentValues = new ContentValues();
