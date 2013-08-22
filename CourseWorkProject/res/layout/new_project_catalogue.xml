@@ -16,7 +16,10 @@
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
-        android:padding="10dip">
+        android:paddingTop="2dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        >
 
       <LinearLayout
           android:layout_width="0dip"
@@ -75,7 +78,7 @@
 
             <EditText
                 android:id="@+id/editTextCustl"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -94,7 +97,7 @@
 
             <EditText
                 android:id="@+id/editTextCustf"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -113,7 +116,7 @@
 
             <EditText
                 android:id="@+id/editTextCustm"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -134,7 +137,7 @@
 
             <EditText
                 android:id="@+id/editTextInvl"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -153,7 +156,7 @@
 
             <EditText
                 android:id="@+id/editTextInvf"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -172,7 +175,7 @@
 
             <EditText
                 android:id="@+id/editTextInvm"
-                android:layout_width="180dip"
+                android:layout_width="323dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -187,7 +190,7 @@
           android:layout_height="fill_parent"
           android:layout_weight="1"
           android:orientation="vertical"
-          android:paddingBottom="10dip"
+          android:paddingBottom="2dip"
           android:paddingLeft="10dip"
           android:paddingRight="10dip"
           android:paddingTop="5dip">
@@ -214,7 +217,7 @@
 
           <EditText
               android:id="@+id/editTextCategory"
-              android:layout_width="180dip"
+              android:layout_width="323dip"
               android:layout_height="wrap_content"
               android:layout_weight="1"/>
         </LinearLayout>
@@ -269,7 +272,7 @@
 
           <TextView
               android:layout_width="150dip"
-              android:layout_height="130dip"
+              android:layout_height="wrap_content"
               android:text="Дата завершения"
               android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -283,21 +286,21 @@
               android:inputType="date"/>
         </LinearLayout>
 
+        <TextView
+              android:layout_width="150dip"
+              android:layout_height="wrap_content"
+              android:text="Описание"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-          <TextView
-              android:layout_width="150dip"
-              android:layout_height="130dip"
-              android:text="Описание"
-              android:textAppearance="?android:attr/textAppearanceMedium"/>
-
           <EditText
               android:id="@+id/projectDescription"
-              android:layout_width="180dip"
-              android:layout_height="fill_parent"
+              android:layout_width="500dip"
+              android:layout_height="150dip"
               android:layout_weight="1"
               android:inputType="textMultiLine|textNoSuggestions"
               android:scrollbars="vertical"

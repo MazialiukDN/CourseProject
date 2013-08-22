@@ -41,7 +41,8 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeLastName"
@@ -63,7 +64,8 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeFirstName"
@@ -74,14 +76,15 @@
 
           <EditText
               android:id="@+id/editTextEmployeeFirstName"
-              android:layout_width="180dip"
+              android:layout_width="323dip"
               android:layout_height="wrap_content"
               android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeMiddleName"
@@ -100,7 +103,8 @@
         <TableRow
             android:id="@+id/tableRowEmployeeBirthDate"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeBirthDate"
@@ -122,7 +126,8 @@
         <TableRow
             android:id="@+id/tableRowEmployeeEmail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeEmail"
@@ -141,7 +146,8 @@
         <TableRow
             android:id="@+id/tableRowEmployeeSkypeAccount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip">
 
           <TextView
               android:id="@+id/textViewEmployeeSkypeAccount"
@@ -160,7 +166,8 @@
         <TableRow
             android:id="@+id/tableRowEmployeePhone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
           <TextView
               android:id="@+id/textViewEmployeePhone"
@@ -241,7 +248,7 @@
           android:id="@+id/editTextInfo"
           android:layout_width="match_parent"
           android:layout_height="90dip"
-          android:layout_marginBottom="10dip"
+          android:layout_marginBottom="2dip"
           android:capitalize="sentences"
           android:fadingEdge="vertical"
           android:gravity="top"
