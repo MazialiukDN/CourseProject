@@ -1,13 +1,14 @@
 package by.bsu.courseproject.db;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import by.bsu.courseproject.datasources.PersonDataSource;
 import by.bsu.courseproject.datasources.ProjectDataSource;
 import by.bsu.courseproject.datasources.StageDataSource;
-
-import static by.bsu.courseproject.db.DBConstants.Columns;
-import static by.bsu.courseproject.db.DBConstants.Tables;
+import by.bsu.courseproject.db.DBConstants.Columns;
+import by.bsu.courseproject.db.DBConstants.Tables;
 
 /**
  * User: Artyom Strok
@@ -126,11 +127,17 @@ public class PMDB {
 
   public PMDB(Context context) {
     db = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
-    if (isNotInitialized) {
+    SharedPreferences sharedPrefs = context.getSharedPreferences("PMDB", Activity.MODE_PRIVATE);
+    boolean isDBExist =sharedPrefs.getBoolean("isDBExist", false);
+    if (!isDBExist) {
+    	createDBStructure();
+    	sharedPrefs.edit().putBoolean("isDBExist", true).commit();
+    }
+    /*if (isNotInitialized) {
       createDBStructure();
       dumpImport();
       isNotInitialized = false;
-    }
+    }*/
   }
 
   private void createDBStructure() {
