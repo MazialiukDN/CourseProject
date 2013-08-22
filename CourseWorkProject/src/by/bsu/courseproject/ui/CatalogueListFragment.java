@@ -147,6 +147,7 @@ public class CatalogueListFragment extends ListFragment
           selectionBuilder.append(" OR ");
         }
         selectionBuilder.append("LOWER(").append(filterColumns[i]).append(") LIKE '%").append(mCurFilter.toLowerCase()).append("%'");
+//        selectionBuilder.append(filterColumns[i]).append(" LIKE '%").append(mCurFilter.toLowerCase()).append("%' COLLATE UNICODE");
       }
       selectionBuilder.append(")");
     }

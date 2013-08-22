@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static by.bsu.courseproject.util.ImportExportUtil.*;
 
-public class ExportData {
+class ExportData {
 
   public static boolean exportData(Context context) {
     if (isExternalStorageReadable()) {

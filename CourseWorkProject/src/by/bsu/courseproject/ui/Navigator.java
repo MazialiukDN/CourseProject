@@ -69,14 +69,10 @@ public class Navigator extends Activity implements View.OnClickListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case SAVE_DATA:
-      mProgress = new ProgressDialog(this);
-      new SynchronizationTask(this,
-                              mProgress, true).execute();
+      new SynchronizationTask(this, true).execute();
       break;
     case LOAD_DATA:
-      mProgress = new ProgressDialog(this);
-      new SynchronizationTask(this,
-                              mProgress, false).execute();
+      new SynchronizationTask(this, false).execute();
       break;
     default:
       return false;

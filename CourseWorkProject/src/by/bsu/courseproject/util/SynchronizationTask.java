@@ -1,6 +1,5 @@
 package by.bsu.courseproject.util;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,10 +14,7 @@ public class SynchronizationTask extends AsyncTask<Object, String, Boolean> {
   private ProgressDialog mProgress;
   private final boolean isExport;
 
-  public SynchronizationTask(Context context, ProgressDialog progress, boolean isExport) {
-    if (progress != null) {
-      setProgressDialog(progress);
-    }
+  public SynchronizationTask(Context context, boolean isExport) {
     this.mContext = context;
     this.isExport = isExport;
   }
@@ -44,10 +40,15 @@ public class SynchronizationTask extends AsyncTask<Object, String, Boolean> {
   @Override
   protected void onPreExecute() {
     super.onPreExecute();
-    if (mProgress != null) {
-      if (!mProgress.isShowing()) {
-        ((Activity) mContext).showDialog(PROGRESS_DLG_ID);
-      }
+//    if (mProgress != null) {
+//      if (!mProgress.isShowing()) {
+//        ((Activity) mContext).showDialog(PROGRESS_DLG_ID);
+//      }
+//    }
+    if (isExport) {
+      mProgress = ProgressDialog.show(mContext, "Ожидайте", "Сохранение данных ...");
+    } else {
+      mProgress = ProgressDialog.show(mContext, "Ожидайте", "Загрузка данных ...");
     }
   }
 
@@ -56,11 +57,6 @@ public class SynchronizationTask extends AsyncTask<Object, String, Boolean> {
     return isExport ? ExportData.exportData(mContext) : ImportData.importData(mContext);
   }
 
-
-  @Override
-  protected void onCancelled() {
-    super.onCancelled();
-  }
 
   @Override
   protected void onPostExecute(Boolean result) {
