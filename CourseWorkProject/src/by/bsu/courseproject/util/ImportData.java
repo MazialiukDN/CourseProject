@@ -100,7 +100,7 @@ class ImportData {
     values.put(Columns.PROJECT_DESCRIPTION, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_PROJECTDUEDATE, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_CATEGORY, tokenizer.nextToken().trim());
-    values.put(Columns.PROJECT_STATUS, tokenizer.nextToken().trim());
+    values.put(Columns.PROJECT_STATUS, Integer.valueOf(tokenizer.nextToken().trim()));
     values.put(Columns.PROJECT_PRIORITY, Integer.valueOf(tokenizer.nextToken().trim()));
     String customer = tokenizer.nextToken().trim();
     if (!customer.equals(NULL_VALUE)) {

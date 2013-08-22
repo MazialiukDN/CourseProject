@@ -8,7 +8,6 @@ import by.bsu.courseproject.model.Customer;
 import by.bsu.courseproject.model.Investor;
 import by.bsu.courseproject.model.Project;
 import by.bsu.courseproject.model.Stage;
-import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.project.ProjectStatus;
 import by.bsu.courseproject.stage.StageType;
@@ -58,11 +57,9 @@ public class ProjectDataSource {
     project.setDescription(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_DESCRIPTION)));
     String date = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
     project.setDueDate(DateUtil.stringToDate(date));
-    //TODO: Use enum constants in all places or change field types
-//    project.setCategory(ProjectCategory.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
-//    project.setStatus(ProjectStatus.valueOf(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
+    project.setCategory(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY)));
+    project.setStatus(ProjectStatus.values()[(cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_STATUS)))]);
     project.setPriority(ProjectPriority.values()[cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))]);
-    project.setCategory(ProjectCategory.CONSULTING_SERVICE);
     project.setStatus(ProjectStatus.ACTIVE);
     project.setPriority(ProjectPriority.NORMAL);
     Long customerId = cursor.getLong(cursor.getColumnIndex(Columns.PROJECT_CUSTOMER_ID));

@@ -38,11 +38,11 @@ public class PMDB {
       "INSERT INTO \"person\" VALUES(13,'C', 'cusFN3',   'cusLN3',   'cusP3', 'sokolov@gmail.com', 'mishail.sokolov', '(8-025) 234-45-23','23-01-1991','','IBA','','');",
       "INSERT INTO \"person\" VALUES(14,'I', 'invFN3',   'invLN3',   'invP3', 'sokolov@gmail.com', 'mishail.sokolov', '(8-029) 342-12-32','23-01-1991','','IBA','','');",
 
-      "INSERT INTO \"project\" VALUES(1,'Проект 1','Описание 1','22-05-2012','Образование', 'Действующий', 2, 11, 10);",
-      "INSERT INTO \"project\" VALUES(2,'Проект 2','Описание 2','22-06-2012','Консультационные услуги', 'Действующий', 2, 13, 12);",
-      "INSERT INTO \"project\" VALUES(3,'Проект 3','Описание 3','05-04-2012','Консультационные услуги', 'Действующий', 2, 13, 14);",
-      "INSERT INTO \"project\" VALUES(4,'Проект 4','Описание 4','23-04-2012','Консультационные услуги', 'Действующий', 2, 11, 10);",
-      "INSERT INTO \"project\" VALUES(5,'Проект 5','Описание 5','07-11-2012','Консультационные услуги', 'Действующий', 2, 11, 12);",
+      "INSERT INTO \"project\" VALUES(1,'Проект 1','Описание 1','22-05-2012', 'Категория 1', 1, 2, 11, 10);",
+      "INSERT INTO \"project\" VALUES(2,'Проект 2','Описание 2','22-06-2012', 'Категория 2', 1, 2, 13, 12);",
+      "INSERT INTO \"project\" VALUES(3,'Проект 3','Описание 3','05-04-2012', 'Категория 3', 1, 2, 13, 14);",
+      "INSERT INTO \"project\" VALUES(4,'Проект 4','Описание 4','23-04-2012', 'Категория 4', 1, 2, 11, 10);",
+      "INSERT INTO \"project\" VALUES(5,'Проект 5','Описание 5','07-11-2012', 'Категория 5', 1, 2, 11, 12);",
 
       "INSERT INTO \"stage\" VALUES(1, 0, 1, 1)",
       "INSERT INTO \"stage\" VALUES(2, 1, 1, 2)",
@@ -81,7 +81,7 @@ public class PMDB {
                                                      + Columns.PROJECT_DESCRIPTION + " TEXT,"
                                                      + Columns.PROJECT_PROJECTDUEDATE + " TEXT,"
                                                      + Columns.PROJECT_CATEGORY + " TEXT,"
-                                                     + Columns.PROJECT_STATUS + " TEXT,"
+                                                     + Columns.PROJECT_STATUS + " INTEGER,"
                                                      + Columns.PROJECT_PRIORITY + " INTEGER,"
                                                      + Columns.PROJECT_CUSTOMER_ID + " INTEGER,"
                                                      + Columns.PROJECT_INVESTOR_ID + " INTEGER );";

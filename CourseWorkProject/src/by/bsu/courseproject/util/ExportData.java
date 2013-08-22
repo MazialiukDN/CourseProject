@@ -121,7 +121,7 @@ class ExportData {
           out.write(" | ".getBytes());
           out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY))));
           out.write(" | ".getBytes());
-          out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_STATUS))));
+          out.write(cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_STATUS)));
           out.write(" | ".getBytes());
 
           if (cursor.isNull(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))) {

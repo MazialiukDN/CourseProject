@@ -1,6 +1,5 @@
 package by.bsu.courseproject.model;
 
-import by.bsu.courseproject.project.ProjectCategory;
 import by.bsu.courseproject.project.ProjectPriority;
 import by.bsu.courseproject.project.ProjectStatus;
 
@@ -16,7 +15,7 @@ public class Project extends BasicEntity {
   private String name;
   private String description;
   private Date dueDate;
-  private ProjectCategory category;
+  private String category;
   private ProjectStatus status;
   private ProjectPriority priority;
   private Investor investor;
@@ -39,11 +38,11 @@ public class Project extends BasicEntity {
     this.dueDate = dueDate;
   }
 
-  public ProjectCategory getCategory() {
+  public String getCategory() {
     return category;
   }
 
-  public void setCategory(ProjectCategory category) {
+  public void setCategory(String category) {
     this.category = category;
   }
 

@@ -21,6 +21,7 @@ import by.bsu.courseproject.R;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 import by.bsu.courseproject.project.ProjectPriority;
+import by.bsu.courseproject.project.ProjectStatus;
 import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
 
@@ -29,6 +30,8 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 import static by.bsu.courseproject.project.ProjectPriority.NORMAL;
+import static by.bsu.courseproject.project.ProjectStatus.PROPOSED;
+import static by.bsu.courseproject.project.ProjectStatus.values;
 
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
@@ -73,9 +76,9 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       this.setTitle("Новый проект");
 
       ((EditText) findViewById(R.id.editTextPriority)).setText(NORMAL.getIdName());
-      ((EditText) findViewById(R.id.editTextStatus)).setText("Предлагаемый");
-      mPriority = 2;
-      mStatus = 1;
+      ((EditText) findViewById(R.id.editTextStatus)).setText(PROPOSED.getIdName());
+      mPriority = NORMAL.ordinal();
+      mStatus = PROPOSED.ordinal();
       Date date = DateUtil.getCurrentDateWithDefaultOffset();
       String convertedDate = DateUtil.dateToString(date);
       ((EditText) findViewById(R.id.editDate)).setText(convertedDate);
@@ -115,24 +118,8 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
           .setTitle("Статус")
           .setSingleChoiceItems(R.array.select_status, 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-              switch (whichButton) {
-              case 0:
-                ((EditText) findViewById(R.id.editTextStatus)).setText("Предлагаемый");
-                break;
-              case 1:
-                ((EditText) findViewById(R.id.editTextStatus)).setText("Действующий");
-                break;
-              case 2:
-                ((EditText) findViewById(R.id.editTextStatus)).setText("Прерванный");
-                break;
-              case 3:
-                ((EditText) findViewById(R.id.editTextStatus)).setText("Закрытый");
-                break;
-              case 4:
-                ((EditText) findViewById(R.id.editTextStatus)).setText("Отклоненный");
-                break;
-              }
-              mStatus = ++whichButton;
+              ((EditText) findViewById(R.id.editTextStatus)).setText(values()[whichButton].getIdName());
+              mStatus = whichButton;
 
 
             }
@@ -168,7 +155,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       ((AlertDialog) dialog).getListView().setItemChecked(mPriority, true);
       break;
     case DIALOG_STATUS:
-      ((AlertDialog) dialog).getListView().setItemChecked(mStatus - 1, true);
+      ((AlertDialog) dialog).getListView().setItemChecked(mStatus, true);
       break;
     }
   }
@@ -210,22 +197,17 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
         colIndex = c.getColumnIndex(Columns.PROJECT_STATUS);
         if (colIndex != -1) {
-          ((EditText) findViewById(R.id.editTextStatus)).setText(c.getString(colIndex));
-          oldValues.put(Columns.PROJECT_STATUS, c.getString(colIndex));
-          if (c.getString(colIndex).equals("Предлагаемый")) mStatus = 1;
-          if (c.getString(colIndex).equals("Действующий")) mStatus = 2;
-          if (c.getString(colIndex).equals("Прерванный")) mStatus = 3;
-          if (c.getString(colIndex).equals("Закрытый")) mStatus = 4;
-          if (c.getString(colIndex).equals("Отклоненный")) mStatus = 5;
-
+          mStatus = c.getInt(colIndex);
+          ((EditText) findViewById(R.id.editTextStatus)).setText(ProjectStatus.values()[mStatus].getIdName());
+          oldValues.put(Columns.PROJECT_STATUS, ProjectStatus.values()[mStatus].getIdName());
         }
 
 
         colIndex = c.getColumnIndex(Columns.PROJECT_PRIORITY);
         if (colIndex != -1) {
-          ((EditText) findViewById(R.id.editTextPriority)).setText(ProjectPriority.values()[c.getInt(colIndex)].getIdName());
-          oldValues.put(Columns.PROJECT_PRIORITY, c.getInt(colIndex));
           mPriority = c.getInt(colIndex);
+          ((EditText) findViewById(R.id.editTextPriority)).setText(ProjectPriority.values()[mPriority].getIdName());
+          oldValues.put(Columns.PROJECT_PRIORITY, ProjectPriority.values()[mPriority].getIdName());
         }
         colIndex = c.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE);
 
@@ -259,9 +241,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
             }
 
           }
-
           c.close();
-
         }
 
       }
@@ -526,7 +506,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     cv.put(Columns.PROJECT_PROJECTNAME, ((EditText) findViewById(R.id.editTextProjectName)).getText().toString());
     cv.put(Columns.PROJECT_DESCRIPTION, ((EditText) findViewById(R.id.projectDescription)).getText().toString());
     cv.put(Columns.PROJECT_CATEGORY, ((EditText) findViewById(R.id.editTextCategory)).getText().toString());
-    cv.put(Columns.PROJECT_STATUS, ((EditText) findViewById(R.id.editTextStatus)).getText().toString());
+    cv.put(Columns.PROJECT_STATUS, mStatus);
     cv.put(Columns.PROJECT_PROJECTDUEDATE, ((EditText) findViewById(R.id.editDate)).getText().toString());
     cv.put(Columns.PROJECT_INVESTOR_ID, mInvId);
     cv.put(Columns.PROJECT_CUSTOMER_ID, mCustId);
