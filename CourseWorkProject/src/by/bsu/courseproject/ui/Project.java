@@ -1,5 +1,13 @@
 package by.bsu.courseproject.ui;
 
+import static by.bsu.courseproject.project.ProjectPriority.NORMAL;
+import static by.bsu.courseproject.project.ProjectStatus.PROPOSED;
+import static by.bsu.courseproject.project.ProjectStatus.values;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,14 +33,6 @@ import by.bsu.courseproject.project.ProjectStatus;
 import by.bsu.courseproject.stage.StageType;
 import by.bsu.courseproject.util.DateUtil;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.StringTokenizer;
-
-import static by.bsu.courseproject.project.ProjectPriority.NORMAL;
-import static by.bsu.courseproject.project.ProjectStatus.PROPOSED;
-import static by.bsu.courseproject.project.ProjectStatus.values;
-
 public class Project extends Activity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
   private static final String FROM_LIST = "FROM_LIST";
@@ -56,6 +56,7 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   private int mStatus = -1;
   private final int REQUEST_CUSTOMER = 101;
   private final int REQUEST_INVESTOR = 102;
+  private final int REQUEST_DESCRIPTION_CODE = 103;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,9 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
   protected void onResume() {
     super.onResume();
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    //InputMethodManager imm = (InputMethodManager)getSystemService(
+    	   //   Context.INPUT_METHOD_SERVICE);
+    	//imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
   }
 
   @Override
@@ -301,6 +305,8 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
 
     findViewById(R.id.editTextPriority).setOnClickListener(this);
     findViewById(R.id.editTextStatus).setOnClickListener(this);
+    findViewById(R.id.projectDescription).setOnClickListener(this);
+    
 
   }
 
@@ -340,7 +346,15 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
     case R.id.editTextStatus:
       showDialog(DIALOG_STATUS);
       break;
-
+    case R.id.projectDescription:
+    	Intent intent = new Intent();
+    	intent.setClass(this, DescriptionEditor.class);
+    	int reqCode = REQUEST_DESCRIPTION_CODE;
+		String descriptionString = ((EditText) findViewById(R.id.projectDescription)).getText().toString();
+		intent.putExtra(DescriptionEditor.EXTRA_DESCRIPTION,
+				descriptionString == null ? "" : descriptionString);
+		startActivityForResult(intent, reqCode);
+		break;
     }
 
   }
@@ -401,6 +415,11 @@ public class Project extends Activity implements DatePickerDialog.OnDateSetListe
       case REQUEST_CUSTOMER:
         completeCustomer(data.getData());
         break;
+      case REQUEST_DESCRIPTION_CODE:
+    	  String descriptionString = data
+			.getStringExtra(DescriptionEditor.EXTRA_DESCRIPTION);
+    	  ((EditText) findViewById(R.id.projectDescription)).setText(descriptionString);
+    	  break;
       default:
         break;
       }

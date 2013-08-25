@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+	<view 
+	    class="by.bsu.courseproject.ui.DescriptionEditor$LinedEditText"
+	    android:id="@+id/description"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dip"
+	    
+	    android:padding="5dp"
+	    android:scrollbars="vertical"
+	    android:fadingEdge="vertical"
+	    android:gravity="top"
+	    android:textSize="22sp"
+	    android:capitalize="sentences"
+	    android:layout_weight="2"
+	    android:background="#ffffffff"
+	     />
+	
+	<LinearLayout android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#00000000">
+
+		<Button
+		    android:id="@+id/buttonCancel"
+		    android:layout_width="100dp"
+		    android:layout_height="wrap_content"		    
+		    android:text="Отменить"
+		    android:layout_weight="1" />
+		
+		<Button
+		    android:id="@+id/buttonSave"
+		    android:layout_width="100dp"
+		    android:layout_height="wrap_content"		    
+		    android:text="Сохранить"
+		    android:layout_weight="1" />
+
+	</LinearLayout>
+
+</LinearLayout>

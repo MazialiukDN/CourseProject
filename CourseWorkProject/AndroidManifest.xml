@@ -44,6 +44,14 @@
         android:screenOrientation="landscape">
 
     </activity>
+    
+    <activity
+        android:name=".ui.DescriptionEditor"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
+    </activity>
+    
+    
     <activity
         android:name=".ui.Employee"
         android:label="@string/label_new_employee"
