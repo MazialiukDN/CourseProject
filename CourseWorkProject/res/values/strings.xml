@@ -2,7 +2,7 @@
 <resources>
   <string name="app_auth">Авторизация</string>
   <string name="app_name">Проекты</string>
-  <string name="app_title">Система управления человеческими ресурсами проектов</string>
+  <string name="app_title">Проекты</string>
   <string name="label_initiating">Инициация</string>
   <string name="label_planning">Планирование</string>
   <string name="label_executing">Выполнение</string>

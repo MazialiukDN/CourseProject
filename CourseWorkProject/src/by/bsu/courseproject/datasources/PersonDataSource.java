@@ -72,7 +72,10 @@ public class PersonDataSource {
     person.setEmail(cursor.getString(cursor.getColumnIndex(Columns.PERSON_EMAIL)));
     person.setSkype(cursor.getString(cursor.getColumnIndex(Columns.PERSON_SKYPE)));
     person.setPhone(cursor.getString(cursor.getColumnIndex(Columns.PERSON_PHONE)));
-    person.setBirthdate(DateUtil.stringToDate(cursor.getString(cursor.getColumnIndex(Columns.PERSON_BIRTHDAY))));
+    String date = cursor.getString(cursor.getColumnIndex(Columns.PERSON_BIRTHDAY));
+    if (date != null){
+      person.setBirthdate(DateUtil.stringToDate(date));
+    }
     person.setInfo(cursor.getString(cursor.getColumnIndex(Columns.PERSON_INFO)));
     return person;
   }

@@ -2,6 +2,7 @@ package by.bsu.courseproject.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Base64;
 import android.widget.Toast;
 import by.bsu.courseproject.db.ProjectManagerProvider;
 
@@ -69,10 +70,22 @@ class ImportData {
     values.put(Columns.PERSON_SKYPE, tokenizer.nextToken().trim());
     values.put(Columns.PERSON_PHONE, tokenizer.nextToken().trim());
     values.put(Columns.PERSON_BIRTHDAY, tokenizer.nextToken().trim());
-    values.put(Columns.PERSON_INFO, tokenizer.nextToken().trim());
+      String personInfo = tokenizer.nextToken().trim();
+      if (!personInfo.equals(NULL_VALUE)){
+          personInfo = new String(Base64.decode(personInfo.getBytes(), Base64.NO_WRAP));
+          values.put(Columns.PERSON_INFO, personInfo);
+      }
     values.put(Columns.CUSTOMER_INVESTOR_COMPANY, tokenizer.nextToken().trim());
-    values.put(Columns.EMPLOYEE_EXPERIENCE, tokenizer.nextToken().trim());
-    values.put(Columns.EMPLOYEE_EDUCATION, tokenizer.nextToken().trim());
+      String experience = tokenizer.nextToken().trim();
+      if (!experience.equals(NULL_VALUE)){
+          experience = new String(Base64.decode(experience.getBytes(), Base64.NO_WRAP));
+          values.put(Columns.EMPLOYEE_EXPERIENCE, experience);
+      }
+      String education = tokenizer.nextToken().trim();
+      if (!education.equals(NULL_VALUE)){
+          education = new String(Base64.decode(education.getBytes(), Base64.NO_WRAP));
+          values.put(Columns.EMPLOYEE_EDUCATION, education);
+      }
     return values;
   }
 
@@ -97,7 +110,11 @@ class ImportData {
     ContentValues values = new ContentValues();
     values.put(Columns._ID, Long.valueOf(tokenizer.nextToken().trim()));
     values.put(Columns.PROJECT_PROJECTNAME, tokenizer.nextToken().trim());
-    values.put(Columns.PROJECT_DESCRIPTION, tokenizer.nextToken().trim());
+    String projectDescription = tokenizer.nextToken().trim();
+    if (!projectDescription.equals(NULL_VALUE)){
+      projectDescription = new String(Base64.decode(projectDescription.getBytes(), Base64.NO_WRAP));
+      values.put(Columns.PROJECT_DESCRIPTION, projectDescription);
+    }
     values.put(Columns.PROJECT_PROJECTDUEDATE, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_CATEGORY, tokenizer.nextToken().trim());
     values.put(Columns.PROJECT_STATUS, Integer.valueOf(tokenizer.nextToken().trim()));

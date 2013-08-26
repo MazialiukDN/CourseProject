@@ -56,7 +56,9 @@ public class ProjectDataSource {
     project.setName(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME)));
     project.setDescription(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_DESCRIPTION)));
     String date = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE));
-    project.setDueDate(DateUtil.stringToDate(date));
+    if(date != null){
+      project.setDueDate(DateUtil.stringToDate(date));
+    }
     project.setCategory(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_CATEGORY)));
     project.setStatus(ProjectStatus.values()[(cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_STATUS)))]);
     project.setPriority(ProjectPriority.values()[cursor.getInt(cursor.getColumnIndex(Columns.PROJECT_PRIORITY))]);

@@ -2,6 +2,7 @@ package by.bsu.courseproject.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Base64;
 import android.widget.Toast;
 import by.bsu.courseproject.db.DBConstants.Columns;
 import by.bsu.courseproject.db.ProjectManagerProvider;
@@ -115,7 +116,14 @@ class ExportData {
                     out.write(" | ".getBytes());
                     out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTNAME))));
                     out.write(" | ".getBytes());
-                    out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_DESCRIPTION))));
+                    String projectDescription = cursor.getString(cursor.getColumnIndex(Columns.PROJECT_DESCRIPTION));
+                    byte[] bytes;
+                    if (projectDescription != null && !projectDescription.isEmpty()){
+                        bytes = Base64.encode(projectDescription.getBytes(),Base64.NO_WRAP);
+                    }else {
+                        bytes = NULL_VALUE.getBytes();
+                    }
+                    out.write(bytes);
                     out.write(" | ".getBytes());
                     out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PROJECT_PROJECTDUEDATE))));
                     out.write(" | ".getBytes());
@@ -173,13 +181,34 @@ class ExportData {
                     out.write(" | ".getBytes());
                     out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PERSON_BIRTHDAY))));
                     out.write(" | ".getBytes());
-                    out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.PERSON_INFO))));
+                    String personInfo = cursor.getString(cursor.getColumnIndex(Columns.PERSON_INFO));
+                    byte[] bytes;
+                    if (personInfo != null && !personInfo.isEmpty()){
+                        bytes = Base64.encode(personInfo.getBytes(),Base64.NO_WRAP);
+                    }else {
+                        bytes = NULL_VALUE.getBytes();
+                    }
+                    out.write(bytes);
                     out.write(" | ".getBytes());
                     out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.CUSTOMER_INVESTOR_COMPANY))));
                     out.write(" | ".getBytes());
-                    out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.EMPLOYEE_EXPERIENCE))));
+                    String experience = cursor.getString(cursor.getColumnIndex(Columns.EMPLOYEE_EXPERIENCE));
+                    byte[] expBytes;
+                    if (experience != null && !experience.isEmpty()){
+                        expBytes = Base64.encode(experience.getBytes(),Base64.NO_WRAP);
+                    }else {
+                        expBytes = NULL_VALUE.getBytes();
+                    }
+                    out.write(expBytes);
                     out.write(" | ".getBytes());
-                    out.write(getData(cursor.getString(cursor.getColumnIndex(Columns.EMPLOYEE_EDUCATION))));
+                    String education = cursor.getString(cursor.getColumnIndex(Columns.EMPLOYEE_EDUCATION));
+                    byte[] edBytes;
+                    if (education != null && !education.isEmpty()){
+                        edBytes = Base64.encode(education.getBytes(),Base64.NO_WRAP);
+                    }else {
+                        edBytes = NULL_VALUE.getBytes();
+                    }
+                    out.write(edBytes);
                     out.write("\r\n".getBytes());
                 } while (cursor.moveToNext());
             }
